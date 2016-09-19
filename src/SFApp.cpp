@@ -63,6 +63,8 @@ int SFApp::OnExecute() {
     // handle our SFEvent
     OnEvent(sfevent);
   }
+
+  return 0;
 }
 
 void SFApp::OnUpdateWorld() {
