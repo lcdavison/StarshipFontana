@@ -1,7 +1,7 @@
 #ifndef SFWINDOW_H
 #define SFWINDOW_H
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 class SFWindow {
  public:

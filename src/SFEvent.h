@@ -1,7 +1,7 @@
 #ifndef SFEVENT_H
 #define SFEVENT_H
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 /**
  * Most of these SFEVENTs map onto game concepts apart from _NULL and _LAST.
