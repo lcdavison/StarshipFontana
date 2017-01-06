@@ -1,23 +1,19 @@
 # Starship Fontana #
 
-This is an example C++ application using the SDL library.
-It tries to be as nicely C++11 as possible but do keep in
-mind that SDL is written in C and, at some stage, you have
-to interface with it.
-
-## Story ##
-The evil b’Kuhn has stolen the code to Earth’s defence system.
-With this code he can, at any time, defeat the entire human race.
-Only one woman is brave enough to go after b’Kuhn. Will she be
-Earth’s hero? Puzzle your way though the universe in the company
-of Commander Fontana in **Starship Fontana**.
+This is an example C++ application using the SDL2 library.
 
 ## Installation ##
-You will have to have the SDL development libraries installed on
-your system.  The easiest way to compile is to use a command-line
+On Fedora (64bit) you can install the SDL2 library as follows:
 
 ```bash
-$ g++ -c -std=c++11 src/*.cpp
+$ sudo dnf install SDL2-devel.x86_64 SDL2_image-devel.x86_64 SDL2.x86_64 SDL2_image.x86_64
+```
+
+The easiest way to compile is to use a command-line
+(tested using g++ (GCC) 6.3.1 20161221 (Red Hat 6.3.1-1))
+
+```bash
+$ g++ -c src/*.cpp -I /usr/include/SDL2/
 $ g++ -o starship *.o -lSDL2 -lSDL2_image
 ```
 
