@@ -11,7 +11,7 @@ using namespace std;  // So that we can write `vector` rather than `std::vector`
 SDL_Window * g_window;
 SDL_Renderer * g_renderer;
 
-enum userEvents { UPDATE_EVENT };
+enum UserEvents { UPDATE_EVENT };
 
 Uint32 PushUpdateEvent(Uint32 interval, void *param) {
     SDL_Event event;
