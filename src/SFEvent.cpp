@@ -33,7 +33,6 @@ SFEvent::SFEvent(const SDL_Event & event) {
     }
 }
 
-
 SFEVENT SFEvent::GetCode() {
     return code;
 }
