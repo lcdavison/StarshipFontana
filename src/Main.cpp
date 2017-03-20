@@ -10,11 +10,6 @@ using namespace std;  // So that we can write `vector` rather than `std::vector`
 #define SECOND_MILLIS 1000
 #define FRAME_RATE 60
 
-// Very Uncool Global Variable
-// Fixme: Bonus points for making this go away.
-SDL_Window * g_window;
-SDL_Renderer * g_renderer;
-
 enum UserEvents { UPDATE_EVENT };
 
 Uint32 PushUpdateEvent(Uint32 interval, void *param) {
@@ -27,7 +22,7 @@ Uint32 PushUpdateEvent(Uint32 interval, void *param) {
     return interval;
 }
 
-SFError InitGraphics() {
+shared_ptr<SFWindow> InitGraphics() {
     Uint32 width = 640;
     Uint32 height = 480;
     SDL_Color drawColor = { 128, 128, 128, SDL_ALPHA_OPAQUE };
@@ -40,42 +35,42 @@ SFError InitGraphics() {
     }
 
     // Create a new window
-    g_window = SDL_CreateWindow("StarShip Fontana"
-        , SDL_WINDOWPOS_CENTERED
-        , SDL_WINDOWPOS_CENTERED
-        , width
-        , height
-        , SDL_WINDOW_SHOWN);
-    if (!g_window) {
-        cerr << "Failed to initialise video mode: " << SDL_GetError() << endl;
+    SDL_Window * window = SDL_CreateWindow(
+        "StarShip Fontana",
+        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+        width, height, SDL_WINDOW_SHOWN
+    );
+
+    if (!window) {
+        cerr << "Failed to create window: " << SDL_GetError() << endl;
         throw SF_ERROR_VIDEOMODE;
     }
     
-    g_renderer = SDL_CreateRenderer(g_window, FIRST_SUPPORTED, SDL_RENDERER_ACCELERATED);
-    if (!g_renderer) {
+    SDL_Renderer * renderer = SDL_CreateRenderer(window, FIRST_SUPPORTED, SDL_RENDERER_ACCELERATED);
+
+    if (!renderer) {
         cerr << "Failed to create renderer: " << SDL_GetError() << endl;
         throw SF_ERROR_VIDEOMODE;
     }
 
-    SDL_SetRenderDrawColor(g_renderer, drawColor.r, drawColor.g, drawColor.b, drawColor.a);
+    SDL_SetRenderDrawColor(renderer, drawColor.r, drawColor.g, drawColor.b, drawColor.a);
 
-    return SF_ERROR_NONE;
+    return make_shared<SFWindow>(window, renderer);
 }
 
 int main(int arc, char ** argv) {
-    shared_ptr<SFApp> sfapp = nullptr;
+    shared_ptr<SFWindow> window = nullptr;
 
     // Initialise graphics context
     try {
-        InitGraphics();
+        window = InitGraphics();
     }
     catch (SFError e) {
         return e;
     }
 
     // Initialise world
-    std::shared_ptr<SFWindow> window = make_shared<SFWindow>(g_window, g_renderer);
-    sfapp = shared_ptr<SFApp>(new SFApp(window));
+    shared_ptr<SFApp> sfapp = make_shared<SFApp>(window);
 
     // Set up top-level timer to UpdateWorld
     // Call the function "display" every delay milliseconds
