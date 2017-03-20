@@ -6,6 +6,10 @@ using namespace std;  // So that we can write `vector` rather than `std::vector`
 #include "SFCommon.h"
 #include "SFApp.h"
 
+#define FIRST_SUPPORTED -1
+#define SECOND_MILLIS 1000
+#define FRAME_RATE 60
+
 // Very Uncool Global Variable
 // Fixme: Bonus points for making this go away.
 SDL_Window * g_window;
@@ -26,6 +30,7 @@ Uint32 PushUpdateEvent(Uint32 interval, void *param) {
 SFError InitGraphics() {
     Uint32 width = 640;
     Uint32 height = 480;
+    SDL_Color drawColor = { 128, 128, 128, SDL_ALPHA_OPAQUE };
 
     // Initialise SDL - when using C/C++ it's common to have to
     // initialise libraries by calling a function within them.
@@ -45,14 +50,14 @@ SFError InitGraphics() {
         cerr << "Failed to initialise video mode: " << SDL_GetError() << endl;
         throw SF_ERROR_VIDEOMODE;
     }
-
-    g_renderer = SDL_CreateRenderer(g_window, -1, 0);
+    
+    g_renderer = SDL_CreateRenderer(g_window, FIRST_SUPPORTED, SDL_RENDERER_ACCELERATED);
     if (!g_renderer) {
         cerr << "Failed to create renderer: " << SDL_GetError() << endl;
         throw SF_ERROR_VIDEOMODE;
     }
 
-    SDL_SetRenderDrawColor(g_renderer, 128, 128, 128, 255);
+    SDL_SetRenderDrawColor(g_renderer, drawColor.r, drawColor.g, drawColor.b, drawColor.a);
 
     return SF_ERROR_NONE;
 }
@@ -74,7 +79,7 @@ int main(int arc, char ** argv) {
 
     // Set up top-level timer to UpdateWorld
     // Call the function "display" every delay milliseconds
-    int delay = 1000 / 60; // 1000 milis in a second, divide by 60 - the framerate
+    int delay = SECOND_MILLIS / FRAME_RATE;
     SDL_AddTimer(delay, PushUpdateEvent, NULL);
 
     // Start game loop
