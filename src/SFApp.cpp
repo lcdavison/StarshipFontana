@@ -6,14 +6,14 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : fire(0), is_running(true), sf_w
 
     app_box = make_shared<SFBoundingBox>(Vector2(canvas_w, canvas_h), canvas_w, canvas_h);
     player = make_shared<SFAsset>(SFASSET_PLAYER, sf_window);
-    auto player_pos = Point2(canvas_w / 2, 22);
+    auto player_pos = Point2(canvas_w / 2 - player->GetBoundingBox()->GetWidth() / 2, canvas_h - player->GetBoundingBox()->GetHeight());
     player->SetPosition(player_pos);
 
     const int number_of_aliens = 10;
     for (int i = 0; i < number_of_aliens; i++) {
         // place an alien at width/number_of_aliens * i
         auto alien = make_shared<SFAsset>(SFASSET_ALIEN, sf_window);
-        auto pos = Point2((canvas_w / number_of_aliens) * i, 200.0f);
+        auto pos = Point2((canvas_w / number_of_aliens) * i + alien->GetBoundingBox()->GetWidth() / 2, 200.0f);
         alien->SetPosition(pos);
         aliens.push_back(alien);
     }
@@ -127,7 +127,7 @@ void SFApp::OnRender() {
 
 void SFApp::FireProjectile() {
     auto pb = make_shared<SFAsset>(SFASSET_PROJECTILE, sf_window);
-    auto v = player->GetPosition();
-    pb->SetPosition(v);
+    auto v = player->GetCenter();
+    pb->SetPosition(Point2(v.getX() - pb->GetBoundingBox()->GetWidth() / 2, v.getY()));
     projectiles.push_back(pb);
 }

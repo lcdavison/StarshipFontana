@@ -30,7 +30,7 @@ SFAsset::SFAsset(SFASSETTYPE type, std::shared_ptr<SFWindow> window) : type(type
     SDL_QueryTexture(sprite, NULL, NULL, &w, &h);
 
     // Initialise bounding box
-    bbox = make_shared<SFBoundingBox>(SFBoundingBox(Vector2(0.0f, 0.0f), w, h));
+    bbox = make_shared<SFBoundingBox>(Point2(0.0f, 0.0f), w, h);
 }
 
 SFAsset::SFAsset(const SFAsset& a) {
@@ -48,30 +48,17 @@ SFAsset::~SFAsset() {
     }
 }
 
-/**
- * The logical coordinates in the game assume that the screen
- * is indexed from 0,0 in the bottom left corner.  The blittable
- * coordinates of the screen map 0,0 to the top left corner. We
- * need to convert between the two coordinate spaces.  We assume
- * that there is a 1-to-1 quantisation.
- */
-Vector2 GameSpaceToScreenSpace(SDL_Renderer* renderer, Vector2 &r) {
-    int w, h;
-    SDL_GetRendererOutputSize(renderer, &w, &h);
-
-    return Vector2(
-        r.getX(),
-        (h - r.getY())
-        );
-}
-
 void SFAsset::SetPosition(Point2 & point) {
     Vector2 v(point.getX(), point.getY());
-    bbox->SetCentre(v);
+    bbox->SetPosition(point);
 }
 
 Point2 SFAsset::GetPosition() {
-    return Point2(bbox->centre->getX(), bbox->centre->getY());
+    return Point2(bbox->GetX(), bbox->GetY());
+}
+
+Point2 SFAsset::GetCenter() {
+    return Point2(bbox->GetX() + bbox->GetWidth() / 2, bbox->GetY() + bbox->GetHeight() / 2);
 }
 
 SFAssetId SFAsset::GetId() {
@@ -80,42 +67,25 @@ SFAssetId SFAsset::GetId() {
 
 void SFAsset::OnRender() {
     // 1. Get the SDL_Rect from SFBoundingBox
-    SDL_Rect rect;
-
-    Vector2 gs = (*(bbox->centre) + (*(bbox->extent_x) * -1)) + (*(bbox->extent_y) * 1);
-    Vector2 ss = GameSpaceToScreenSpace(sf_window->getRenderer(), gs);
-    rect.x = ss.getX();
-    rect.y = ss.getY();
-    rect.w = bbox->extent_x->getX() * 2;
-    rect.h = bbox->extent_y->getY() * 2;
+    SDL_Rect rect = bbox->GetBox();
 
     // 2. Blit the sprite onto the level
     SDL_RenderCopy(sf_window->getRenderer(), sprite, NULL, &rect);
 }
 
 void SFAsset::GoWest() {
-    Vector2 c = *(bbox->centre) + Vector2(-5.0f, 0.0f);
-    if (!(c.getX() < 0)) {
-        bbox->centre.reset();
-        bbox->centre = make_shared<Vector2>(c);
-    }
+    Vector2 v = Vector2(-5.0f, 0);
+    bbox->Translate(v);
 }
 
 void SFAsset::GoEast() {
-    int w, h;
-    SDL_GetRendererOutputSize(sf_window->getRenderer(), &w, &h);
-
-    Vector2 c = *(bbox->centre) + Vector2(5.0f, 0.0f);
-    if (!(c.getX() > w)) {
-        bbox->centre.reset();
-        bbox->centre = make_shared<Vector2>(c);
-    }
+    Vector2 v = Vector2(5.0f, 0);
+    bbox->Translate(v);
 }
 
 void SFAsset::GoNorth() {
-    Vector2 c = *(bbox->centre) + Vector2(0.0f, 1.0f);
-    bbox->centre.reset();
-    bbox->centre = make_shared<Vector2>(c);
+    Vector2 v = Vector2(0.0f, -5.0f);
+    bbox->Translate(v);
 }
 
 bool SFAsset::CollidesWith(shared_ptr<SFAsset> other) {
