@@ -1,6 +1,6 @@
 #include "SFApp.h"
 
-SFApp::SFApp(std::shared_ptr<SFWindow> window) : fire(0), is_running(true), sf_window(window) {
+SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), sf_window(window) {
     int canvas_w, canvas_h;
     SDL_GetRendererOutputSize(sf_window->getRenderer(), &canvas_w, &canvas_h);
 
@@ -48,7 +48,6 @@ void SFApp::OnEvent(SFEvent& event) {
         player->GoEast();
         break;
     case SFEVENT_FIRE:
-        fire++;
         FireProjectile();
         break;
     }

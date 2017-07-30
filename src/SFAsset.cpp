@@ -1,9 +1,6 @@
 #include "SFAsset.h"
 
-int SFAsset::SFASSETID = 0;
-
 SFAsset::SFAsset(SFASSETTYPE type, std::shared_ptr<SFWindow> window) : type(type), sf_window(window) {
-    this->id = ++SFASSETID;
 
     switch (type) {
     case SFASSET_PLAYER:
@@ -59,10 +56,6 @@ Point2 SFAsset::GetPosition() {
 
 Point2 SFAsset::GetCenter() {
     return Point2(bbox->GetX() + bbox->GetWidth() / 2, bbox->GetY() + bbox->GetHeight() / 2);
-}
-
-SFAssetId SFAsset::GetId() {
-    return id;
 }
 
 void SFAsset::OnRender() {

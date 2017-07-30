@@ -7,6 +7,4 @@ enum SFError { SF_ERROR_NONE, SF_ERROR_INIT, SF_ERROR_VIDEOMODE, SF_ERROR_LOAD_A
 class SFEvent;
 class SFAsset;
 
-typedef int SFAssetId;
-
 #endif

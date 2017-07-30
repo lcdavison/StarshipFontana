@@ -2,9 +2,7 @@
 #define SFAPP_H
 
 #include <memory>   // Pull in std::shared_ptr
-#include <iostream> // Pull in std::cerr, std::endl
 #include <list>     // Pull in list
-#include <sstream>
 
 using namespace std;
 
@@ -13,9 +11,10 @@ using namespace std;
 #include "SFAsset.h"
 
 /**
- * Represents the StarshipFontana application.  It has responsibilities for
- * * Creating and destroying the app window
- * * Processing game events
+ * Represents the StarshipFontana application.  It has responsibilities for:
+ * 1. Process game events
+ * 2. Update game world
+ * 3. Render game world
  */
 class SFApp {
 public:
@@ -37,7 +36,6 @@ private:
     list<shared_ptr<SFAsset> > projectiles;
     list<shared_ptr<SFAsset> > aliens;
     list<shared_ptr<SFAsset> > coins;
-
-    int fire;
 };
+
 #endif

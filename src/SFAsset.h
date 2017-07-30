@@ -32,7 +32,6 @@ public:
     virtual void      SetPosition(Point2 &);
     virtual Point2    GetPosition();
     virtual Point2    GetCenter();
-    virtual SFAssetId GetId();
     virtual void      OnRender();
     virtual void      GoEast();
     virtual void      GoWest();
@@ -43,18 +42,12 @@ public:
 
     virtual bool                      CollidesWith(shared_ptr<SFAsset>);
     virtual shared_ptr<SFBoundingBox> GetBoundingBox();
+    
 private:
-    // it would be nice if we could make this into a smart pointer,
-    // but, because we need to call SDL_FreeSurface on it, we can't.
-    // (or we could use a std::shared_ptr with a custom Deleter, but
-    // that's a little too much right now)
     SDL_Texture               * sprite;
     shared_ptr<SFBoundingBox>   bbox;
     SFASSETTYPE                 type;
-    SFAssetId                   id;
     std::shared_ptr<SFWindow>   sf_window;
-
-    static int SFASSETID;
 };
 
 #endif
