@@ -128,6 +128,7 @@ void SFApp::OnRender() {
 void SFApp::FireProjectile() {
     auto pb = make_shared<SFAsset>(SFASSET_PROJECTILE, sf_window);
     auto v = player->GetCenter();
-    pb->SetPosition(Point2(v.getX() - pb->GetBoundingBox()->GetWidth() / 2, v.getY()));
+    auto pos = Point2(v.getX() - pb->GetBoundingBox()->GetWidth() / 2, v.getY());
+    pb->SetPosition(pos);
     projectiles.push_back(pb);
 }
