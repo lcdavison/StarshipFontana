@@ -1,24 +1,23 @@
 #include "SFApp.h"
 
-SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), sf_window(window) {
-    int canvas_w, canvas_h;
-    SDL_GetRendererOutputSize(sf_window->getRenderer(), &canvas_w, &canvas_h);
+SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window) {
+    int canvas_w = window->GetWidth();
+    int canvas_h = window->GetHeight();
 
-    app_box = make_shared<SFBoundingBox>(Vector2(canvas_w, canvas_h), canvas_w, canvas_h);
-    player = make_shared<SFAsset>(SFASSET_PLAYER, sf_window);
+    player = make_shared<SFAsset>(SFASSET_PLAYER, window);
     auto player_pos = Point2(canvas_w / 2 - player->GetBoundingBox()->GetWidth() / 2, canvas_h - player->GetBoundingBox()->GetHeight());
     player->SetPosition(player_pos);
 
     const int number_of_aliens = 10;
     for (int i = 0; i < number_of_aliens; i++) {
         // place an alien at width/number_of_aliens * i
-        auto alien = make_shared<SFAsset>(SFASSET_ALIEN, sf_window);
+        auto alien = make_shared<SFAsset>(SFASSET_ALIEN, window);
         auto pos = Point2((canvas_w / number_of_aliens) * i + alien->GetBoundingBox()->GetWidth() / 2, 200.0f);
         alien->SetPosition(pos);
         aliens.push_back(alien);
     }
 
-    auto coin = make_shared<SFAsset>(SFASSET_COIN, sf_window);
+    auto coin = make_shared<SFAsset>(SFASSET_COIN, window);
     auto pos = Point2((canvas_w / 4), 100);
     coin->SetPosition(pos);
     coins.push_back(coin);
@@ -37,7 +36,7 @@ void SFApp::OnEvent(SFEvent& event) {
         is_running = false;
         break;
     case SFEVENT_UPDATE:
-        OnUpdateWorld();
+        OnUpdate();
         OnRender();
         break;
     case SFEVENT_PLAYER_LEFT:
@@ -52,35 +51,36 @@ void SFApp::OnEvent(SFEvent& event) {
     }
 }
 
-int SFApp::OnExecute() {
-    // Execute the app
+void SFApp::StartMainLoop() {
     SDL_Event event;
     while (SDL_WaitEvent(&event) && is_running) {
+        
         // wrap an SDL_Event with our SFEvent
         SFEvent sfevent((const SDL_Event)event);
+        
         // handle our SFEvent
         OnEvent(sfevent);
     }
-
-    return 0;
 }
 
-void SFApp::OnUpdateWorld() {
-    // Update projectile positions
+void SFApp::OnUpdate() {
+    
+    // 1. Move / update game objects
     for (auto p : projectiles) {
         p->GoNorth();
     }
 
+    // coins
     for (auto c : coins) {
         c->GoNorth();
     }
 
-    // Update enemy positions
+    // enemies
     for (auto a : aliens) {
         // do something here
     }
 
-    // Detect collisions
+    // 2. Detect collisions
     for (auto p : projectiles) {
         for (auto a : aliens) {
             if (p->CollidesWith(a)) {
@@ -90,7 +90,7 @@ void SFApp::OnUpdateWorld() {
         }
     }
 
-    // remove dead aliens (the long way)
+    // 3. Remove dead aliens (the long way)
     list<shared_ptr<SFAsset>> tmp;
     for (auto a : aliens) {
         if (a->IsAlive()) {
@@ -102,31 +102,36 @@ void SFApp::OnUpdateWorld() {
 }
 
 void SFApp::OnRender() {
-    SDL_RenderClear(sf_window->getRenderer());
+    // 1. Clear visible content
+    window->ClearScreen();
 
-    // draw the player
+    // 2. Draw game objects off-screen
     player->OnRender();
 
     for (auto p : projectiles) {
-        if (p->IsAlive()) { p->OnRender(); }
+        if (p->IsAlive()) { 
+            p->OnRender(); 
+        }
     }
 
     for (auto a : aliens) {
-        if (a->IsAlive()) { a->OnRender(); }
+        if (a->IsAlive()) { 
+            a->OnRender(); 
+        }
     }
 
     for (auto c : coins) {
         c->OnRender();
     }
 
-    // Switch the off-screen buffer to be on-screen
-    SDL_RenderPresent(sf_window->getRenderer());
+    // 3. Switch the off-screen buffer to be on-screen
+    window->ShowScreen();
 }
 
 void SFApp::FireProjectile() {
-    auto pb = make_shared<SFAsset>(SFASSET_PROJECTILE, sf_window);
+    auto bullet = make_shared<SFAsset>(SFASSET_PROJECTILE, window);
     auto v = player->GetCenter();
-    auto pos = Point2(v.getX() - pb->GetBoundingBox()->GetWidth() / 2, v.getY());
-    pb->SetPosition(pos);
-    projectiles.push_back(pb);
+    auto pos = Point2(v.getX() - bullet->GetBoundingBox()->GetWidth() / 2, v.getY());
+    bullet->SetPosition(pos);
+    projectiles.push_back(bullet);
 }

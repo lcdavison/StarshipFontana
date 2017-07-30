@@ -27,6 +27,26 @@ SFWindow::~SFWindow() {
     SDL_DestroyWindow(window);
 }
 
+void SFWindow::ClearScreen() {
+    SDL_RenderClear(renderer);
+}
+
+void SFWindow::ShowScreen() {
+    SDL_RenderPresent(renderer);
+}
+
+int SFWindow::GetWidth() {
+    int w;
+    SDL_GetRendererOutputSize(renderer, &w, NULL);
+    return w;
+}
+
+int SFWindow::GetHeight() {
+    int h;
+    SDL_GetRendererOutputSize(renderer, NULL, &h);
+    return h;
+}
+
 SDL_Window* SFWindow::getWindow() {
     return window;
 }

@@ -40,11 +40,9 @@ shared_ptr<SFWindow> InitGraphics() {
 
 int main(int arc, char ** argv) {
 
-    shared_ptr<SFWindow> window = nullptr;
-
     try {
         // Initialise graphics context
-        window = InitGraphics();
+        shared_ptr<SFWindow> window = InitGraphics();
         
         // Initialise world
         shared_ptr<SFApp> game = make_shared<SFApp>(window);
@@ -54,8 +52,7 @@ int main(int arc, char ** argv) {
         // Set up the timer to call "PushUpdateEvent" every delay milliseconds
         SDL_AddTimer(delay, PushUpdateEvent, NULL);
 
-        // Start game loop
-        game->OnExecute();
+        game->StartMainLoop();
         
     } catch (SFException& e) {
         cout << "Exception occurred!" << endl;
