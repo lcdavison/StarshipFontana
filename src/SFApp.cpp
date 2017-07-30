@@ -24,8 +24,7 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), sf_window(win
     coins.push_back(coin);
 }
 
-SFApp::~SFApp() {
-}
+SFApp::~SFApp() {}
 
 /**
  * Handle all events that come from SDL.

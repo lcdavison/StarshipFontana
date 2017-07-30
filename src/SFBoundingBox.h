@@ -8,8 +8,6 @@
 
 using namespace std;
 
-enum AXIS { X, Y };
-
 class SFBoundingBox {
 public:
     SFBoundingBox(const Point2, const int, const int);

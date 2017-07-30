@@ -18,8 +18,7 @@ SFAsset::SFAsset(SFASSETTYPE type, std::shared_ptr<SFWindow> window) : type(type
     }
 
     if (!sprite) {
-        cerr << "Could not load asset of type " << type << endl;
-        throw SF_ERROR_LOAD_ASSET;
+        throw SFException("Couldn't load asset");
     }
 
     // Get texture width & height

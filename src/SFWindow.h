@@ -2,10 +2,14 @@
 #define SFWINDOW_H
 
 #include <SDL.h>
+#include "SFCommon.h"
+
+#define FIRST_SUPPORTED -1
 
 class SFWindow {
 public:
-    SFWindow(SDL_Window*, SDL_Renderer*);
+    SFWindow(Uint32 w, Uint32 h, SDL_Color drawColor);
+    ~SFWindow();
     SDL_Window* getWindow();
     SDL_Renderer* getRenderer();
 private:

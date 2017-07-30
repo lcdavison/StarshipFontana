@@ -1,12 +1,11 @@
-#include <SDL.h> // Pull in the SDL definitions
-#include <memory>     // Pull in std::shared_ptr
+#include <SDL.h>
+#include <memory>
 
-using namespace std;  // So that we can write `vector` rather than `std::vector`
+using namespace std;
 
 #include "SFCommon.h"
 #include "SFApp.h"
 
-#define FIRST_SUPPORTED -1
 #define SECOND_MILLIS 1000
 #define FRAME_RATE 60
 
@@ -23,64 +22,46 @@ Uint32 PushUpdateEvent(Uint32 interval, void *param) {
 }
 
 shared_ptr<SFWindow> InitGraphics() {
-    Uint32 width = 640;
-    Uint32 height = 480;
-    SDL_Color drawColor = { 128, 128, 128, SDL_ALPHA_OPAQUE };
 
     // Initialise SDL - when using C/C++ it's common to have to
     // initialise libraries by calling a function within them.
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) < 0) {
-        cerr << "Failed to initialise SDL: " << SDL_GetError() << endl;
-        throw SF_ERROR_INIT;
+        throw SFException("Failed to initialise SDL");
     }
 
-    // Create a new window
-    SDL_Window * window = SDL_CreateWindow(
-        "StarShip Fontana",
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        width, height, SDL_WINDOW_SHOWN
-    );
-
-    if (!window) {
-        cerr << "Failed to create window: " << SDL_GetError() << endl;
-        throw SF_ERROR_VIDEOMODE;
-    }
+    Uint32 width = 640;
+    Uint32 height = 480;
     
-    SDL_Renderer * renderer = SDL_CreateRenderer(window, FIRST_SUPPORTED, SDL_RENDERER_ACCELERATED);
+    // color gray
+    SDL_Color drawColor = { 128, 128, 128, SDL_ALPHA_OPAQUE };
 
-    if (!renderer) {
-        cerr << "Failed to create renderer: " << SDL_GetError() << endl;
-        throw SF_ERROR_VIDEOMODE;
-    }
-
-    SDL_SetRenderDrawColor(renderer, drawColor.r, drawColor.g, drawColor.b, drawColor.a);
-
-    return make_shared<SFWindow>(window, renderer);
+    return make_shared<SFWindow>(width, height, drawColor);
 }
 
 int main(int arc, char ** argv) {
+
     shared_ptr<SFWindow> window = nullptr;
 
-    // Initialise graphics context
     try {
+        // Initialise graphics context
         window = InitGraphics();
+        
+        // Initialise world
+        shared_ptr<SFApp> game = make_shared<SFApp>(window);
+
+        int delay = SECOND_MILLIS / FRAME_RATE;
+        
+        // Set up the timer to call "PushUpdateEvent" every delay milliseconds
+        SDL_AddTimer(delay, PushUpdateEvent, NULL);
+
+        // Start game loop
+        game->OnExecute();
+        
+    } catch (SFException& e) {
+        cout << "Exception occurred!" << endl;
+        cout << e.what() << endl;
+        cout << "Exception details: " << SDL_GetError() << endl;
     }
-    catch (SFError e) {
-        return e;
-    }
 
-    // Initialise world
-    shared_ptr<SFApp> sfapp = make_shared<SFApp>(window);
-
-    // Set up top-level timer to UpdateWorld
-    // Call the function "display" every delay milliseconds
-    int delay = SECOND_MILLIS / FRAME_RATE;
-    SDL_AddTimer(delay, PushUpdateEvent, NULL);
-
-    // Start game loop
-    sfapp->OnExecute();
-
-    // Delete the app -- allows the SFApp object to do its own cleanup
-    sfapp.reset();
-    return SF_ERROR_NONE;
+    return 0;
 }
