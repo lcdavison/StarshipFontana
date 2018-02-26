@@ -78,7 +78,11 @@ void SFApp::OnUpdate() {
 
     // coins
     for (auto c : coins) {
-        c->GoNorth();
+        //c->GoNorth();
+	
+		if(c->CollidesWith(player))
+			c->Destroy();
+
     }
 
     // enemies
@@ -127,7 +131,9 @@ void SFApp::OnRender() {
     }
 
     for (auto c : coins) {
-        c->OnRender();
+		if(c->IsAlive()) {
+	        c->OnRender();
+		}
     }
 
     // 3. Switch the off-screen buffer to be on-screen
