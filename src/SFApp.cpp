@@ -45,6 +45,12 @@ void SFApp::OnEvent(SFEvent& event) {
     case SFEVENT_PLAYER_RIGHT:
         player->GoEast();
         break;
+	case SFEVENT_PLAYER_UP:
+		player->GoNorth();
+		break;
+	case SFEVENT_PLAYER_DOWN:
+		player->GoSouth();
+		break;
     case SFEVENT_FIRE:
         FireProjectile();
         break;
