@@ -1,2 +1,4 @@
 all:
-	@echo "We have intentionally not provided a build system for this project."
+	g++ -c src/*.cpp -I /usr/include/SDL2/
+	g++ -o starship *.o -lSDL2 -lSDL2_image
+	./starship

@@ -4,7 +4,7 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window
     int canvas_w = window->GetWidth();
     int canvas_h = window->GetHeight();
 
-    player = make_shared<SFAsset>(SFASSET_PLAYER, window);
+    player = make_shared<SFPlayer>(SFASSET_PLAYER, window);
     auto player_pos = Point2(canvas_w / 2 - player->GetBoundingBox()->GetWidth() / 2, canvas_h - player->GetBoundingBox()->GetHeight());
     player->SetPosition(player_pos);
 
@@ -78,16 +78,18 @@ void SFApp::OnUpdate() {
 
     // coins
     for (auto c : coins) {
-        //c->GoNorth();
-	
-		if(c->CollidesWith(player))
-			c->Destroy();
-
+		if(c->CollidesWith(player)) {
+			player->AddCoin();
+			c->Destroy();	
+		}
     }
 
     // enemies
     for (auto a : aliens) {
-        // do something here
+        if(a->CollidesWith(player)) {
+			player->TakeDamage(20);
+			//	Destroy Enemy
+		}
     }
 
     // 2. Detect collisions
@@ -100,18 +102,19 @@ void SFApp::OnUpdate() {
         }
     }
 
-    // 3. Remove dead aliens (the long way)
-    list<shared_ptr<SFAsset>> tmp;
-    for (auto a : aliens) {
-        if (a->IsAlive()) {
-            tmp.push_back(a);
-        }
-    }
-    aliens.clear();
-    aliens = list<shared_ptr<SFAsset>>(tmp);
+    // 3. Remove dead aliens
+    ClearDeadAliens();
+
+	//Remove collected coins
+	ClearDeadCoins();
 }
 
 void SFApp::OnRender() {
+	
+	SDL_Color color = { 0, 0, 0, 255 };
+
+	SF_UILabel::DrawText("Hello World", 0, 0, color, window);
+
     // 1. Clear visible content
     window->ClearScreen();
 
@@ -146,4 +149,12 @@ void SFApp::FireProjectile() {
     auto pos = Point2(v.getX() - bullet->GetBoundingBox()->GetWidth() / 2, v.getY());
     bullet->SetPosition(pos);
     projectiles.push_back(bullet);
+}
+
+void SFApp::ClearDeadCoins() {
+	coins.remove_if([](shared_ptr<SFAsset> coin) { return !coin->IsAlive(); });
+}
+
+void SFApp::ClearDeadAliens() {
+	aliens.remove_if([](shared_ptr<SFAsset> alien) { return !alien->IsAlive(); });
 }

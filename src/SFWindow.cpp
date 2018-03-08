@@ -54,3 +54,7 @@ SDL_Window* SFWindow::getWindow() {
 SDL_Renderer* SFWindow::getRenderer() {
     return renderer;
 }
+
+TTF_Font* SFWindow::getFont() {
+	return font;
+}

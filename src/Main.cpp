@@ -29,6 +29,11 @@ shared_ptr<SFWindow> InitGraphics() {
         throw SFException("Failed to initialise SDL");
     }
 
+	// Initialize TTF
+	if (TTF_Init() < 0) {
+		throw SFException("Failed to initialise TTF");
+	}
+
     Uint32 width = 640;
     Uint32 height = 480;
     

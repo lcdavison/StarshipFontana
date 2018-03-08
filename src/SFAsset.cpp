@@ -108,7 +108,5 @@ void SFAsset::HandleCollision() {
 }
 
 void SFAsset::Destroy() {
-	
 	type = SFASSET_DEAD;	
-
 }
