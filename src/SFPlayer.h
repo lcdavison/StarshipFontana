@@ -9,8 +9,9 @@
 class SFPlayer: public SFAsset {
 
 private:
-	short Coins;
-	short Health = 100;
+	short coins = 0;
+	short health = 100;
+	short damage = 25;
 public:
 	SFPlayer(const SFASSETTYPE, const std::shared_ptr<SFWindow>);
 	
@@ -21,6 +22,10 @@ public:
 	//	Player's Health
 	void TakeDamage(short);
 	short GetHealth();
-};
+	bool IsDead();
 
+	//	Player Damage
+	short GetDamage();
+	void ModifyDamage(short);
+};
 #endif

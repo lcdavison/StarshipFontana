@@ -20,6 +20,11 @@ SFWindow::SFWindow(Uint32 w, Uint32 h, SDL_Color drawColor) {
     }
 
     SDL_SetRenderDrawColor(renderer, drawColor.r, drawColor.g, drawColor.b, drawColor.a);
+
+	font = TTF_OpenFont("assets/fonts/arial.ttf", 20);
+	
+	if(!font)
+		printf("Failed To Load Font");
 }
 
 SFWindow::~SFWindow() {

@@ -28,7 +28,6 @@ shared_ptr<SFWindow> InitGraphics() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) < 0) {
         throw SFException("Failed to initialise SDL");
     }
-
 	// Initialize TTF
 	if (TTF_Init() < 0) {
 		throw SFException("Failed to initialise TTF");
