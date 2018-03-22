@@ -1,5 +1,7 @@
 #include "SFApp.h"
 
+// TODO: Vary the enemy types when starting the level.
+
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window) {
     int canvas_w = window->GetWidth();
     int canvas_h = window->GetHeight();
@@ -11,7 +13,7 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window
     const int number_of_aliens = 10;
     for (int i = 0; i < number_of_aliens; i++) {
         // place an alien at width/number_of_aliens * i
-        auto alien = make_shared<SFAsset>(SFASSET_ALIEN, window);
+        auto alien = make_shared<SFEnemy>(SFASSET_ALIEN, window, ELITE);
         auto pos = Point2((canvas_w / number_of_aliens) * i + alien->GetBoundingBox()->GetWidth() / 2, 200.0f);
         alien->SetPosition(pos);
         aliens.push_back(alien);
@@ -96,11 +98,18 @@ void SFApp::OnUpdate() {
     for (auto p : projectiles) {
         for (auto a : aliens) {
             if (p->CollidesWith(a)) {
+				
+				a->TakeDamage(p->GetDamage());
+				
                 p->HandleCollision();
-                a->HandleCollision();
+				
+				if(a->IsDead()) a->HandleCollision();
             }
         }
     }
+
+	// Remove projectiles
+	ClearProjectiles();
 
     // 3. Remove dead aliens
     ClearDeadAliens();
@@ -110,13 +119,12 @@ void SFApp::OnUpdate() {
 }
 
 void SFApp::OnRender() {
-	
-	SDL_Color color = { 0, 0, 0, 255 };
-
-	SF_UILabel::DrawText("Hello World", 0, 0, color, window);
 
     // 1. Clear visible content
     window->ClearScreen();
+	
+	//	Draw HUD
+	DrawHUD();
 
     // 2. Draw game objects off-screen
     player->OnRender();
@@ -144,11 +152,25 @@ void SFApp::OnRender() {
 }
 
 void SFApp::FireProjectile() {
-    auto bullet = make_shared<SFAsset>(SFASSET_PROJECTILE, window);
+    auto bullet = make_shared<SFProjectile>(SFASSET_PROJECTILE, window);
+
+	bullet->SetDamage(player->GetDamage());
+
     auto v = player->GetCenter();
     auto pos = Point2(v.getX() - bullet->GetBoundingBox()->GetWidth() / 2, v.getY());
     bullet->SetPosition(pos);
     projectiles.push_back(bullet);
+}
+
+void SFApp::DrawHUD() {
+	
+	SDL_Color textColour = { 0, 255, 0, 255 };
+
+	std::string healthText = "HEALTH : " + std::to_string(player->GetHealth());
+	std::string coinText = "COINS : " + std::to_string(player->GetCoins());
+
+	SF_UILabel::DrawText(healthText, 10, 0, textColour, window);
+	SF_UILabel::DrawText(coinText, 10, 30, textColour, window);	
 }
 
 void SFApp::ClearDeadCoins() {
@@ -156,5 +178,9 @@ void SFApp::ClearDeadCoins() {
 }
 
 void SFApp::ClearDeadAliens() {
-	aliens.remove_if([](shared_ptr<SFAsset> alien) { return !alien->IsAlive(); });
+	aliens.remove_if([](shared_ptr<SFEnemy> alien) { return !alien->IsAlive(); });
+}
+
+void SFApp::ClearProjectiles() {
+	projectiles.remove_if([](shared_ptr<SFProjectile> projectile) { return !projectile->IsAlive(); });
 }

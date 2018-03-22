@@ -10,6 +10,8 @@ using namespace std;
 #include "SFEvent.h"
 #include "SFAsset.h"
 #include "SFPlayer.h"
+#include "SFEnemy.h"
+#include "SFProjectile.h"
 #include "SF_UILabel.h"
 
 /**
@@ -31,8 +33,10 @@ public:
     void FireProjectile();
 private:
 	
+	void DrawHUD();
 	void ClearDeadCoins();
 	void ClearDeadAliens();
+	void ClearProjectiles();
 
     bool is_running;
 
@@ -40,8 +44,8 @@ private:
 
     shared_ptr<SFPlayer> player;
     
-    list<shared_ptr<SFAsset> > projectiles;
-    list<shared_ptr<SFAsset> > aliens;
+    list<shared_ptr<SFProjectile> > projectiles;
+    list<shared_ptr<SFEnemy> > aliens;
     list<shared_ptr<SFAsset> > coins;
 };
 
