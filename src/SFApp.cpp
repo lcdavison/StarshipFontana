@@ -152,7 +152,7 @@ void SFApp::OnRender() {
 }
 
 void SFApp::FireProjectile() {
-    auto bullet = make_shared<SFProjectile>(SFASSET_PROJECTILE, window);
+	auto bullet = make_shared<SFProjectile>(SFASSET_PROJECTILE, window);
 
 	bullet->SetDamage(player->GetDamage());
 

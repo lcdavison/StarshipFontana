@@ -37,7 +37,7 @@ shared_ptr<SFWindow> InitGraphics() {
     Uint32 height = 480;
     
     // color gray
-    SDL_Color drawColor = { 128, 128, 128, SDL_ALPHA_OPAQUE };
+    SDL_Color drawColor = { 0, 100, 255, SDL_ALPHA_OPAQUE };
 
     return make_shared<SFWindow>(width, height, drawColor);
 }
