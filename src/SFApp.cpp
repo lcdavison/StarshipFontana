@@ -184,3 +184,5 @@ void SFApp::ClearDeadAliens() {
 void SFApp::ClearProjectiles() {
 	projectiles.remove_if([](shared_ptr<SFProjectile> projectile) { return !projectile->IsAlive(); });
 }
+
+shared_ptr<SFPlayer> SFApp::GetPlayer() { return player; }

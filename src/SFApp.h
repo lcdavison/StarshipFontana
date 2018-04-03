@@ -31,6 +31,8 @@ public:
     void OnRender();
 
     void FireProjectile();
+	shared_ptr<SFPlayer> GetPlayer();
+
 private:
 	
 	void DrawHUD();

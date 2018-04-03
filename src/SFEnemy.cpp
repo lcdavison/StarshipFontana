@@ -19,18 +19,18 @@ SFEnemy::SFEnemy(const SFASSETTYPE assetType, const std::shared_ptr<SFWindow> wi
 	}
 }
 
-void SFEnemy::TakeDamage(short damage) {
-	health -= damage;
-}
+void SFEnemy::TakeDamage(short damage) { health -= damage; }
 
-short SFEnemy::GetHealth() {
-	return health;
-}
+short SFEnemy::GetHealth() { return health; }
 
-bool SFEnemy::IsDead() {
-	return health <= 0;
+bool SFEnemy::IsDead() { return health <= 0; }
+
+int SFEnemy::DistanceToAsset(SFAsset other) {
+	//int distance = GetPosition();
+	return 0;
 }
 
 void SFEnemy::Move() {
-	//	TODO:	Make the enemy automatically move around the screen
+	//	TODO:	Make the enemy automatically move around the screen	
+	
 }

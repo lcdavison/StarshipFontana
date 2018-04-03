@@ -20,5 +20,9 @@ public:
 
 	//	Enemy Movement
 	void Move();
+
+	//	Distance To Player
+	int DistanceToAsset(SFAsset);
 };
+
 #endif
