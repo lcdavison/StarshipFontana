@@ -18,11 +18,12 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window
         alien->SetPosition(pos);
         aliens.push_back(alien);
     }
-
+/*
     auto coin = make_shared<SFAsset>(SFASSET_COIN, window);
     auto pos = Point2((canvas_w / 4), 100);
     coin->SetPosition(pos);
     coins.push_back(coin);
+*/
 }
 
 SFApp::~SFApp() {}
@@ -53,7 +54,7 @@ void SFApp::OnEvent(SFEvent& event) {
 	case SFEVENT_PLAYER_DOWN:
 		player->GoSouth();
 		break;
-    case SFEVENT_FIRE:
+    case SFEVENT_FIRE:	
         FireProjectile();
         break;
     }
@@ -82,15 +83,18 @@ void SFApp::OnUpdate() {
     for (auto c : coins) {
 		if(c->CollidesWith(player)) {
 			player->AddCoin();
-			c->Destroy();	
+			c->SetNotAlive();	
 		}
     }
 
     // enemies
     for (auto a : aliens) {
+
+		a->Move();
+
         if(a->CollidesWith(player)) {
 			player->TakeDamage(20);
-			//	Destroy Enemy
+			a->SetNotAlive();
 		}
     }
 
@@ -152,11 +156,11 @@ void SFApp::OnRender() {
 }
 
 void SFApp::FireProjectile() {
-	auto bullet = make_shared<SFProjectile>(SFASSET_PROJECTILE, window);
+	shared_ptr<SFProjectile> bullet = make_shared<SFProjectile>(SFASSET_PROJECTILE, window, BULLET);
 
 	bullet->SetDamage(player->GetDamage());
 
-    auto v = player->GetCenter();
+    auto v = player->GetCenter(); 
     auto pos = Point2(v.getX() - bullet->GetBoundingBox()->GetWidth() / 2, v.getY());
     bullet->SetPosition(pos);
     projectiles.push_back(bullet);

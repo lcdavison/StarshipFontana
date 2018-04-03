@@ -1,7 +1,7 @@
 #include "SFAsset.h"
 
 SFAsset::SFAsset(SFASSETTYPE type, std::shared_ptr<SFWindow> window) : type(type), sf_window(window) {
-
+/*
     switch (type) {
     case SFASSET_PLAYER:
         sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/sprites/player.png");
@@ -16,17 +16,19 @@ SFAsset::SFAsset(SFASSETTYPE type, std::shared_ptr<SFWindow> window) : type(type
         sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/sprites/coin.png");
         break;
     }
+    
+	if (!sprite) {
+		throw SFException("Couldn't load asset");
+	}
 
-    if (!sprite) {
-        throw SFException("Couldn't load asset");
-    }
+   // Get texture width & height
+   int w, h;
+   SDL_QueryTexture(sprite, NULL, NULL, &w, &h);
 
-    // Get texture width & height
-    int w, h;
-    SDL_QueryTexture(sprite, NULL, NULL, &w, &h);
-
-    // Initialise bounding box
-    bbox = make_shared<SFBoundingBox>(Point2(0.0f, 0.0f), w, h);
+   
+   // Initialise bounding box
+   bbox = make_shared<SFBoundingBox>(Point2(0.0f, 0.0f), w, h); 
+   */
 }
 
 SFAsset::SFAsset(const SFAsset& a) {
@@ -43,6 +45,8 @@ SFAsset::~SFAsset() {
         sprite = nullptr;
     }
 }
+
+void SFAsset::SetupSprite(){}
 
 void SFAsset::SetPosition(Point2 & point) {
     Vector2 v(point.getX(), point.getY());
@@ -105,8 +109,4 @@ void SFAsset::HandleCollision() {
     if (SFASSET_PROJECTILE == type || SFASSET_ALIEN == type) {
         SetNotAlive();
     }
-}
-
-void SFAsset::Destroy() {
-	type = SFASSET_DEAD;	
 }

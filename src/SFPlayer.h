@@ -12,6 +12,8 @@ private:
 	short coins = 0;
 	short health = 100;
 	short damage = 25;
+
+	void SetupSprite();
 public:
 	SFPlayer(const SFASSETTYPE, const std::shared_ptr<SFWindow>);
 	

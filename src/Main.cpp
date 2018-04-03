@@ -33,6 +33,10 @@ shared_ptr<SFWindow> InitGraphics() {
 		throw SFException("Failed to initialise TTF");
 	}
 
+	// Initialize IMG
+	if(IMG_Init(IMG_INIT_PNG) < 0)
+		throw SFException("Failed to initialize IMG ");
+
     Uint32 width = 640;
     Uint32 height = 480;
     

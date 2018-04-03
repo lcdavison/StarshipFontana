@@ -7,9 +7,6 @@ enum SFENEMYTYPE { GRUNT, BRAWLER, ELITE, BOSS };
 
 class SFEnemy : public SFAsset {
 
-private:
-	short health;
-	SFENEMYTYPE type;
 public:
 	SFEnemy(const SFASSETTYPE, const std::shared_ptr<SFWindow>, const SFENEMYTYPE);
 	
@@ -22,7 +19,11 @@ public:
 	void Move();
 
 	//	Distance To Player
-	int DistanceToAsset(SFAsset);
-};
+	float DistanceToAsset(std::shared_ptr<SFAsset>);
+private:
+	void SetupSprite();
 
-#endif
+	short health;
+	SFENEMYTYPE type;
+};                                                                        
+#endif                               	

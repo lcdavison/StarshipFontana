@@ -28,7 +28,7 @@ public:
     SFAsset(const SFASSETTYPE, const std::shared_ptr<SFWindow>);
     SFAsset(const SFAsset&);
     virtual ~SFAsset();
-
+ 
     virtual void      SetPosition(Point2 &);
     virtual Point2    GetPosition();
     virtual Point2    GetCenter();
@@ -40,16 +40,16 @@ public:
     virtual void      SetNotAlive();
     virtual bool      IsAlive();
     virtual void      HandleCollision();
-    virtual void      Destroy();
 
     virtual bool                      CollidesWith(shared_ptr<SFAsset>);
     virtual shared_ptr<SFBoundingBox> GetBoundingBox();
-    
-private:
-    SDL_Texture               * sprite;
-    shared_ptr<SFBoundingBox>   bbox;
-    SFASSETTYPE                 type;
-    std::shared_ptr<SFWindow>   sf_window;
+protected:
+    	virtual void SetupSprite(); 
+
+	SDL_Texture               * sprite;
+	shared_ptr<SFBoundingBox>   bbox;
+	SFASSETTYPE                 type;
+	std::shared_ptr<SFWindow>   sf_window;
 };
 
 #endif
