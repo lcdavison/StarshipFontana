@@ -12,6 +12,18 @@ $ sudo dnf install SDL2-devel.x86_64 SDL2_image-devel.x86_64 SDL2.x86_64 SDL2_im
 The easiest way to compile is to use a command-line
 (tested using g++ (GCC) 6.3.1 20161221 (Red Hat 6.3.1-1))
 
+##FEDORA##
+
+```bash
+$ make fedora
+```
+##RASPBIAN##
+
+```bash
+$ make raspbian
+```
+##G++##
+
 ```bash
 $ g++ -c src/*.cpp -I /usr/include/SDL2/
 $ g++ -o starship *.o -lSDL2 -lSDL2_image
