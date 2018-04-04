@@ -22,37 +22,36 @@ using namespace std;
  * 3. Render game world
  */
 class SFApp {
-		public:
-				SFApp(std::shared_ptr<SFWindow>);
-				~SFApp();
+	public:
+		SFApp(std::shared_ptr<SFWindow>);
+		~SFApp();
 
-				void OnEvent(SFEvent &);
-				void StartMainLoop();
-				void OnUpdate();
-				void OnRender();
+		void OnEvent(SFEvent &);
+		void StartMainLoop();
+		void OnUpdate();
+		void OnRender();
 
-				void FireProjectile();
-				shared_ptr<SFPlayer> GetPlayer();
+		void FireProjectile();
+		shared_ptr<SFPlayer> GetPlayer();
+	private:
+		void DrawHUD();
 
-		private:
+		void SpawnCoin(Point2);
 
-				void DrawHUD();
+		void ClearDeadCoins();
+		void ClearDeadAliens();
+		void ClearProjectiles();
 
-				void SpawnCoin(Point2);
+		bool is_running;
+		int enemies_remaining;
 
-				void ClearDeadCoins();
-				void ClearDeadAliens();
-				void ClearProjectiles();
+		shared_ptr<SFWindow> window;
 
-				bool is_running;
+		shared_ptr<SFPlayer> player;
 
-				shared_ptr<SFWindow> window;
-
-				shared_ptr<SFPlayer> player;
-
-				list<shared_ptr<SFProjectile> > projectiles;
-				list<shared_ptr<SFEnemy> > aliens;
-				list<shared_ptr<SFCoin> > coins;
+		list<shared_ptr<SFProjectile> > projectiles;
+		list<shared_ptr<SFEnemy> > aliens;
+		list<shared_ptr<SFCoin> > coins;
 };
 
 #endif
