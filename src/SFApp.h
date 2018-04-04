@@ -11,6 +11,7 @@ using namespace std;
 #include "SFAsset.h"
 #include "SFPlayer.h"
 #include "SFEnemy.h"
+#include "SFCoin.h"
 #include "SFProjectile.h"
 #include "SF_UILabel.h"
 
@@ -21,34 +22,37 @@ using namespace std;
  * 3. Render game world
  */
 class SFApp {
-public:
-    SFApp(std::shared_ptr<SFWindow>);
-    ~SFApp();
-    
-    void OnEvent(SFEvent &);
-    void StartMainLoop();
-    void OnUpdate();
-    void OnRender();
+		public:
+				SFApp(std::shared_ptr<SFWindow>);
+				~SFApp();
 
-    void FireProjectile();
-	shared_ptr<SFPlayer> GetPlayer();
+				void OnEvent(SFEvent &);
+				void StartMainLoop();
+				void OnUpdate();
+				void OnRender();
 
-private:
-	
-	void DrawHUD();
-	void ClearDeadCoins();
-	void ClearDeadAliens();
-	void ClearProjectiles();
+				void FireProjectile();
+				shared_ptr<SFPlayer> GetPlayer();
 
-    bool is_running;
+		private:
 
-    shared_ptr<SFWindow> window;
+				void DrawHUD();
 
-    shared_ptr<SFPlayer> player;
-    
-    list<shared_ptr<SFProjectile> > projectiles;
-    list<shared_ptr<SFEnemy> > aliens;
-    list<shared_ptr<SFAsset> > coins;
+				void SpawnCoin(Point2);
+
+				void ClearDeadCoins();
+				void ClearDeadAliens();
+				void ClearProjectiles();
+
+				bool is_running;
+
+				shared_ptr<SFWindow> window;
+
+				shared_ptr<SFPlayer> player;
+
+				list<shared_ptr<SFProjectile> > projectiles;
+				list<shared_ptr<SFEnemy> > aliens;
+				list<shared_ptr<SFCoin> > coins;
 };
 
 #endif

@@ -16,14 +16,15 @@ public:
 	short GetHealth();
 
 	//	Enemy Movement
-	void Move();
-
-	//	Distance To Player
-	float DistanceToAsset(std::shared_ptr<SFAsset>);
+	void MoveTowards(std::shared_ptr<SFAsset>);
 private:
+	//	Texture Setup
 	void SetupSprite();
-
+	
+	//	Health
 	short health;
+
+	//	Enemy Type
 	SFENEMYTYPE type;
 };                                                                        
 #endif                               	

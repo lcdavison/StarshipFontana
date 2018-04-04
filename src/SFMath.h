@@ -1,6 +1,8 @@
 #ifndef SFMATH_H
 #define SFMATH_H
 
+#include <math.h>
+
 /**
  * A Vector representation somewhat in the style of the IBM/Sony Vectormath library.
  */
@@ -28,6 +30,12 @@ public:
     inline Point2(const Point2& p) : x(p.x), y(p.y) {}
     inline const float getX() const { return x; }
     inline const float getY() const { return y; }
+
+    static float Distance(Point2 a, Point2 b) {	
+	    float distX = b.getX() - a.getX();
+	    float distY = b.getY() - a.getY();
+	    return sqrt((distX * distX) + (distY * distY)); 
+    }
 private:
     float x, y;
 };

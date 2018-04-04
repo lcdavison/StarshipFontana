@@ -37,13 +37,11 @@ short SFEnemy::GetHealth() { return health; }
 
 bool SFEnemy::IsDead() { return health <= 0; }
 
-float SFEnemy::DistanceToAsset(std::shared_ptr<SFAsset> other) {
-	Point2 assetPos = GetPosition();
-	Point2 otherPos = other.GetPosition();
-	return 0;
-}
-
-void SFEnemy::Move() {
+void SFEnemy::MoveTowards(std::shared_ptr<SFAsset> other) {
 	//	TODO:	Make the enemy automatically move around the screen	
-	GoSouth();
+
+	float distance = Point2::Distance(GetPosition(), other->GetPosition());
+
+	if(distance > 5.0f)
+		GoSouth();
 }
