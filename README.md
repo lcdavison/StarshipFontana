@@ -22,7 +22,7 @@ $ make fedora
 ```bash
 $ make raspbian
 ```
-##G++##
+## GCC ##
 
 ```bash
 $ g++ -c src/*.cpp -I /usr/include/SDL2/
