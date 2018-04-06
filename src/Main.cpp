@@ -12,61 +12,63 @@ using namespace std;
 enum UserEvents { UPDATE_EVENT };
 
 Uint32 PushUpdateEvent(Uint32 interval, void *param) {
-    SDL_Event event;
-    event.type = SDL_USEREVENT;
-    event.user.code = UPDATE_EVENT;
-    event.user.data1 = 0;
-    event.user.data2 = 0;
-    SDL_PushEvent(&event);
-    return interval;
+		SDL_Event event;
+		event.type = SDL_USEREVENT;
+		event.user.code = UPDATE_EVENT;
+		event.user.data1 = 0;
+		event.user.data2 = 0;
+		SDL_PushEvent(&event);
+		return interval;
 }
 
 shared_ptr<SFWindow> InitGraphics() {
 
-    // Initialise SDL - when using C/C++ it's common to have to
-    // initialise libraries by calling a function within them.
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) < 0) {
-        throw SFException("Failed to initialise SDL");
-    }
-	// Initialize TTF
-	if (TTF_Init() < 0) {
-		throw SFException("Failed to initialise TTF");
-	}
+		// Initialise SDL - when using C/C++ it's common to have to
+		// initialise libraries by calling a function within them.
+		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) < 0) {
+				throw SFException("Failed to initialise SDL");
+		}
+		// Initialize TTF
+		if (TTF_Init() < 0) {
+				throw SFException("Failed to initialise TTF");
+		}
 
-	// Initialize IMG
-	if(IMG_Init(IMG_INIT_PNG) < 0)
-		throw SFException("Failed to initialize IMG ");
+		// Initialize IMG
+		if(IMG_Init(IMG_INIT_PNG) < 0)
+				throw SFException("Failed to initialize IMG ");
 
-    Uint32 width = 640;
-    Uint32 height = 480;
-    
-    // color gray
-    SDL_Color drawColor = { 0, 100, 255, SDL_ALPHA_OPAQUE };
+		Uint32 width = 640;
+		Uint32 height = 480;
 
-    return make_shared<SFWindow>(width, height, drawColor);
+		// color gray
+		SDL_Color drawColor = { 0, 100, 255, SDL_ALPHA_OPAQUE };
+
+		return make_shared<SFWindow>(width, height, drawColor);
 }
 
 int main(int arc, char ** argv) {
 
-    try {
-        // Initialise graphics context
-        shared_ptr<SFWindow> window = InitGraphics();
-        
-        // Initialise world
-        shared_ptr<SFApp> game = make_shared<SFApp>(window);
+		try {
+				// Initialise graphics context
+				shared_ptr<SFWindow> window = InitGraphics();
 
-        int delay = SECOND_MILLIS / FRAME_RATE;
-        
-        // Set up the timer to call "PushUpdateEvent" every delay milliseconds
-        SDL_AddTimer(delay, PushUpdateEvent, NULL);
+				// Initialise world
+				shared_ptr<SFApp> game = make_shared<SFApp>(window);
 
-        game->StartMainLoop();
-        
-    } catch (SFException& e) {
-        cout << "Exception occurred!" << endl;
-        cout << e.what() << endl;
-        cout << "Exception details: " << SDL_GetError() << endl;
-    }
+				int delay = SECOND_MILLIS / FRAME_RATE;
 
-    return 0;
+				// Set up the timer to call "PushUpdateEvent" every delay milliseconds
+				SDL_AddTimer(delay, PushUpdateEvent, NULL);
+
+				game->StartMainLoop();
+
+		} catch (SFException& e) {
+				cout << "Exception occurred!" << endl;
+				cout << e.what() << endl;
+				cout << "Exception details: " << SDL_GetError() << endl;
+		}
+
+		SDL_Quit();
+
+		return 0;
 }

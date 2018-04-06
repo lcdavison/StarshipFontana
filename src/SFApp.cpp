@@ -1,7 +1,9 @@
 #include "SFApp.h"
 
 // TODO: Vary the enemy types when starting the level.
-// TODO: Add Game states or potentially scenes to determine what should be drawn
+// TODO: Add scenes to determine game behaviour
+// TODO: Add Query To Retrieve the pixel width of text, to set central text
+// TODO: Adjust collisions to be handled in relevant classes, eg. Enemy Collision in SFEnemy class
 
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window) {
 	int canvas_w = window->GetWidth();
@@ -11,20 +13,11 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window
 	auto player_pos = Point2(canvas_w / 2 - player->GetBoundingBox()->GetWidth() / 2, canvas_h - player->GetBoundingBox()->GetHeight());
 	player->SetPosition(player_pos);
 
-	const int number_of_aliens = 10;
-	enemies_remaining = number_of_aliens;
-	for (int i = 0; i < number_of_aliens; i++) {
-		// place an alien at width/number_of_aliens * i
-		auto alien = make_shared<SFEnemy>(SFASSET_ALIEN, window, ELITE);
-		auto pos = Point2((canvas_w / number_of_aliens) * i + alien->GetBoundingBox()->GetWidth() / 2, 200.0f);
-		alien->SetPosition(pos);
-		aliens.push_back(alien);
-	}
+	SpawnEnemies(10);
 
-	auto coin = make_shared<SFCoin>(SFASSET_COIN, window);
-	auto pos = Point2((canvas_w / 4), 100);
-	coin->SetPosition(pos);
-	coins.push_back(coin);
+	state = SFGAME;
+
+	SFAssetManager::CreateAsset<SFPlayer>("Test", SFASSET_PLAYER, window);
 }
 
 SFApp::~SFApp() {}
@@ -75,12 +68,14 @@ void SFApp::StartMainLoop() {
 
 void SFApp::OnUpdate() {
 
+	player->Update();
+
 	// 1. Move / update game objects
 	for (auto p : projectiles) {
 		p->GoNorth();
 	}
 
-	// coins
+	// 2. Update Coins
 	for (auto c : coins) {
 		if(c->CollidesWith(player)) {
 			player->AddCoin();
@@ -88,18 +83,20 @@ void SFApp::OnUpdate() {
 		}
 	}
 
-	// enemies
+	// 3. Update Enemies
 	for (auto a : aliens) {
 
-		//a->MoveTowards(player);
+		a->Update();
+		a->MoveTowards(player);
 
 		if(a->CollidesWith(player)) {
 			player->TakeDamage(20);
-			a->SetNotAlive();
+			a->HandleCollision();
+			SpawnCoin(a->GetPosition());
 		}
 	}
 
-	// 2. Detect collisions
+	// 4. Detect collisions
 	for (auto p : projectiles) {
 		for (auto a : aliens) {
 			if (p->CollidesWith(a)) {
@@ -117,13 +114,13 @@ void SFApp::OnUpdate() {
 		}
 	}
 
-	// Remove projectiles
+	// 5. Remove projectiles
 	ClearProjectiles();
 
-	// 3. Remove dead aliens
+	// 6. Remove dead aliens
 	ClearDeadAliens();
 
-	//Remove collected coins
+	// 7. Remove collected coins
 	ClearDeadCoins();
 }
 
@@ -171,7 +168,6 @@ void SFApp::FireProjectile() {
 	projectiles.push_back(bullet);
 }
 
-//	TODO: Move Draw HUD to the window
 void SFApp::DrawHUD() {
 	SDL_Color textColour = { 0, 255, 0, 255 };
 
@@ -179,8 +175,8 @@ void SFApp::DrawHUD() {
 	std::string enemies_remainingText = "ENEMIES : " + std::to_string(enemies_remaining);
 	std::string coinText = "COINS : " + std::to_string(player->GetCoins());
 
-	SF_UILabel::DrawText(healthText, window->GetWidth() / 2, 0, textColour, window);
-	SF_UILabel::DrawText(enemies_remainingText, 0, 0, textColour, window);
+	SF_UILabel::DrawText(healthText, window->GetWidth() / 2 - healthText.length(), 0, textColour, window);
+	SF_UILabel::DrawText(enemies_remainingText, 10, 0, textColour, window);
 	SF_UILabel::DrawText(coinText, 10, 30, textColour, window);	
 }
 
@@ -188,6 +184,18 @@ void SFApp::SpawnCoin(Point2 position) {
 	auto coin = make_shared<SFCoin>	(SFASSET_COIN, window);
 	coin->SetPosition(position);
 	coins.push_back(coin);
+}
+
+void SFApp::SpawnEnemies(int amount) {
+	enemies_remaining = amount;
+
+	for (int i = 0; i < amount; i++) {
+		// place an alien at width/number_of_aliens * i
+		auto alien = make_shared<SFEnemy>(SFASSET_ALIEN, window, ELITE);
+		auto pos = Point2((window->GetWidth() / amount) * i + alien->GetBoundingBox()->GetWidth() / 2, 200.0f);
+		alien->SetPosition(pos);
+		aliens.push_back(alien);
+	}
 }
 
 void SFApp::ClearDeadCoins() {

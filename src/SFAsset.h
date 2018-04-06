@@ -24,32 +24,34 @@ using namespace std;
 enum SFASSETTYPE { SFASSET_DEAD, SFASSET_PLAYER, SFASSET_PROJECTILE, SFASSET_ALIEN, SFASSET_COIN };
 
 class SFAsset {
-public:
-    SFAsset(const SFASSETTYPE, const std::shared_ptr<SFWindow>);
-    SFAsset(const SFAsset&);
-    virtual ~SFAsset();
- 
-    virtual void      SetPosition(Point2 &);
-    virtual Point2    GetPosition();
-    virtual Point2    GetCenter();
-    virtual void      OnRender();
-    virtual void      GoEast();
-    virtual void      GoWest();
-    virtual void      GoNorth();
-    virtual void      GoSouth();
-    virtual void      SetNotAlive();
-    virtual bool      IsAlive();
-    virtual void      HandleCollision();
+	public:
+			SFAsset(const SFASSETTYPE, const std::shared_ptr<SFWindow>);
+			SFAsset(const SFAsset&);
+			virtual ~SFAsset();
 
-    virtual bool                      CollidesWith(shared_ptr<SFAsset>);
-    virtual shared_ptr<SFBoundingBox> GetBoundingBox();
-protected:
-    	virtual void SetupSprite(); 
+			virtual void Update();
 
-	SDL_Texture               * sprite;
-	shared_ptr<SFBoundingBox>   bbox;
-	SFASSETTYPE                 type;
-	std::shared_ptr<SFWindow>   sf_window;
+			virtual void      SetPosition(Point2 &);
+			virtual Point2    GetPosition();
+			virtual Point2    GetCenter();
+			virtual void      OnRender();
+			virtual void      GoEast();
+			virtual void      GoWest();
+			virtual void      GoNorth();
+			virtual void      GoSouth();
+			virtual void      SetNotAlive();
+			virtual bool      IsAlive();
+			virtual void      HandleCollision();
+
+			virtual bool                      CollidesWith(shared_ptr<SFAsset>);
+			virtual shared_ptr<SFBoundingBox> GetBoundingBox();
+	protected:
+			virtual void SetupSprite(); 
+
+			SDL_Texture               * sprite;
+			shared_ptr<SFBoundingBox>   bbox;
+			SFASSETTYPE                 type;
+			std::shared_ptr<SFWindow>   sf_window;
 };
 
 #endif

@@ -7,24 +7,41 @@ enum SFENEMYTYPE { GRUNT, BRAWLER, ELITE, BOSS };
 
 class SFEnemy : public SFAsset {
 
-public:
-	SFEnemy(const SFASSETTYPE, const std::shared_ptr<SFWindow>, const SFENEMYTYPE);
-	
-	//	Enemy Health
-	bool IsDead();
-	void TakeDamage(short);
-	short GetHealth();
+	public:
+		SFEnemy(const SFASSETTYPE, const std::shared_ptr<SFWindow>, const SFENEMYTYPE);
 
-	//	Enemy Movement
-	void MoveTowards(std::shared_ptr<SFAsset>);
-private:
-	//	Texture Setup
-	void SetupSprite();
-	
-	//	Health
-	short health;
+		void Update();
 
-	//	Enemy Type
-	SFENEMYTYPE type;
+		//	Enemy Health
+		bool IsDead();
+		void TakeDamage(short);
+		short GetHealth();
+
+		//	Enemy Movement
+		void MoveAround();
+		void MoveTowards(std::shared_ptr<SFAsset>);
+	private:
+		//	Enemy Movement
+		enum SFEnemyDirection { LEFT, RIGHT };
+
+		void GoEast();
+		void GoWest();
+
+		bool isMoving = false;
+		float movement_speed = 2.0f;
+		SFEnemyDirection movement_direction;
+
+		float initial_distance;
+		std::shared_ptr<Vector2> move_direction;
+		std::shared_ptr<Point2> end_point;
+
+		//	Texture Setup
+		void SetupSprite();
+
+		//	Health
+		short health;
+
+		//	Enemy Type
+		SFENEMYTYPE type;
 };                                                                        
 #endif                               	

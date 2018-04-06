@@ -40,6 +40,11 @@ void SFWindow::ShowScreen() {
     SDL_RenderPresent(renderer);
 }
 
+void SFWindow::DrawGUI() {
+
+	/*---TODO: DRAW GUI FROM LOADED SCENE---*/
+}
+
 int SFWindow::GetWidth() {
     int w;
     SDL_GetRendererOutputSize(renderer, &w, NULL);

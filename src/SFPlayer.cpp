@@ -13,6 +13,9 @@ void SFPlayer::SetupSprite() {
 	bbox = make_shared<SFBoundingBox>(Point2(0.0f, 0.0f), w, h);
 }
 
+void SFPlayer::Update() {
+}
+
 void SFPlayer::AddCoin() {
 	coins++;
 }

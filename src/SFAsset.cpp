@@ -20,6 +20,10 @@ SFAsset::~SFAsset() {
 
 void SFAsset::SetupSprite(){}
 
+void SFAsset::Update() {
+
+}
+
 void SFAsset::SetPosition(Point2 & point) {
 		Vector2 v(point.getX(), point.getY());
 		bbox->SetPosition(point);

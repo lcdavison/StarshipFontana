@@ -13,7 +13,7 @@ void SFBoundingBox::SetPosition(Point2 & p) {
 }
 
 void SFBoundingBox::Translate(Vector2 & v) {
-    box.x += v.getX();
+    box.x += v.getX(); 
     box.y += v.getY();
 }
 

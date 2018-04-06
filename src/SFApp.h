@@ -14,6 +14,7 @@ using namespace std;
 #include "SFCoin.h"
 #include "SFProjectile.h"
 #include "SF_UILabel.h"
+#include "SFAssetManager.h"
 
 /**
  * Represents the StarshipFontana application.  It has responsibilities for:
@@ -21,6 +22,8 @@ using namespace std;
  * 2. Update game world
  * 3. Render game world
  */
+enum SFGAMESTATE { SFGAME, SFEND };
+
 class SFApp {
 	public:
 		SFApp(std::shared_ptr<SFWindow>);
@@ -37,12 +40,16 @@ class SFApp {
 		void DrawHUD();
 
 		void SpawnCoin(Point2);
+		void SpawnEnemies(int);
 
 		void ClearDeadCoins();
 		void ClearDeadAliens();
 		void ClearProjectiles();
 
 		bool is_running;
+
+		SFGAMESTATE state;
+
 		int enemies_remaining;
 
 		shared_ptr<SFWindow> window;

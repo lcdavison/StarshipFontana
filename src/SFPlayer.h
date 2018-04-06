@@ -16,6 +16,8 @@ private:
 	void SetupSprite();
 public:
 	SFPlayer(const SFASSETTYPE, const std::shared_ptr<SFWindow>);
+
+	void Update();
 	
 	//	Player's Coins
 	void AddCoin();
