@@ -32,7 +32,7 @@ void SFEnemy::SetupSprite() {
 	bbox = make_shared<SFBoundingBox>(Point2(0.0f, 0.0f), w , h);
 }
 
-void SFEnemy::Update() {
+void SFEnemy::OnUpdate() {
 	//MoveAround();
 
 	//	Get Player From Asset Manager

@@ -17,7 +17,7 @@ class SFAssetManager {
 		template<class T> static void AddAsset(std::shared_ptr<T>);
 		template<class T> static void CreateAsset(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
 		template<class T> static std::shared_ptr<T> FindAssetByName(const std::string);
-		template<class T> static std::vector<T> FindAssetsOfType(const SFASSETTYPE);
+		template<class T> static std::vector<std::shared_ptr<T>> FindAssetsOfType(const SFASSETTYPE);
 
 		static AssetContainer RetrieveAllAssets();
 		static void UpdateAssets(AssetContainer);
@@ -49,8 +49,8 @@ std::shared_ptr<T> SFAssetManager::FindAssetByName(const std::string name) {
 }
 
 template<class T>
-std::vector<T> SFAssetManager::FindAssetsOfType(const SFASSETTYPE type) {
-	std::vector<T> found;
+std::vector<std::shared_ptr<T>> SFAssetManager::FindAssetsOfType(const SFASSETTYPE type) {
+	std::vector<std::shared_ptr<T>> found;
 
 	for(auto asset : assets) {
 		if(asset->GetType() == type) {

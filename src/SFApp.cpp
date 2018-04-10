@@ -90,7 +90,7 @@ void SFApp::OnUpdate() {
 	// 3. Update Enemies
 	for (auto a : aliens) {
 
-		a->Update();
+		//a->Update();
 		//a->MoveTowards(player);
 
 		if(a->CollidesWith(player)) {
@@ -122,7 +122,7 @@ void SFApp::OnUpdate() {
 	}
 
 	// 5. Remove projectiles
-	ClearProjectiles();
+	//ClearProjectiles();
 
 	// 6. Remove dead aliens
 	ClearDeadAliens();
@@ -143,15 +143,15 @@ void SFApp::OnRender() {
 	//player->OnRender();
 
 	for(auto asset : assets) {
-		//if(asset->IsAlive())
+		if(!asset->IsOutsideWindow() && asset->IsAlive())
 			asset->OnRender();
 	}
 	
-	for (auto p : projectiles) {
+	/*for (auto p : projectiles) {
 		if (p->IsAlive()) { 
 			p->OnRender(); 
 		}
-	}
+	}*/
 
 	for (auto a : aliens) {
 		if (a->IsAlive()) { 
@@ -209,7 +209,9 @@ void SFApp::SpawnEnemies(int amount) {
 		auto alien = make_shared<SFEnemy>("alien" + i, SFASSET_ALIEN, window, ELITE);
 		auto pos = Point2((window->GetWidth() / amount) * i + alien->GetBoundingBox()->GetWidth() / 2, 200.0f);
 		alien->SetPosition(pos);
-		aliens.push_back(alien);
+
+		SFAssetManager::AddAsset<SFEnemy>(alien);
+		//aliens.push_back(alien);
 	}
 }
 

@@ -4,6 +4,7 @@ SFProjectile::SFProjectile(std::string name, SFASSETTYPE type, std::shared_ptr<S
 	projectile = projectile_type;
 
 	SetupSprite();
+	lifetime = 1000;
 }
 
 void SFProjectile::SetupSprite() {
@@ -26,10 +27,14 @@ void SFProjectile::SetupSprite() {
 void SFProjectile::OnUpdate() {
 	GoNorth();
 
-	if(!IsInsideWindow()) {
-		SetNotAlive();
-		printf("Outside Screen");
+	for(auto a : SFAssetManager::FindAssetsOfType<SFEnemy>(SFASSET_ALIEN)) {
+
 	}
+
+
+	lifetime -= 10;
+
+	if(IsOutsideWindow() || lifetime == 0) SetNotAlive();
 }
 
 void SFProjectile::SetDamage(short amount) {

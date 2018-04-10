@@ -44,7 +44,7 @@ class SFAsset : public ISFAsset {
 		virtual void      SetPosition(Point2 &);
 		virtual Point2    GetPosition();
 		virtual Point2    GetCenter();
-		virtual bool	  IsInsideWindow();
+		virtual bool	  IsOutsideWindow();	//Culls Objects That Are Outside Window Boundaries
 
 		virtual void      GoEast();
 		virtual void      GoWest();
@@ -61,6 +61,7 @@ class SFAsset : public ISFAsset {
 		virtual void SetupSprite(); 
 		std::string name;
 		bool alive = true;
+		int lifetime;
 
 		SDL_Texture               * sprite;
 		shared_ptr<SFBoundingBox>   bbox;

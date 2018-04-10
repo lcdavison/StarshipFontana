@@ -1,7 +1,9 @@
 #ifndef SFPROJECTILE_H
 #define SFPROJECTILE_H
 
+#include "SFAssetManager.h"
 #include "SFAsset.h"
+#include "SFEnemy.h"
 
 enum PROJECTILE_TYPE { BULLET, ROCKET };
 
@@ -22,6 +24,8 @@ private:
 
 	short damage;
 	PROJECTILE_TYPE projectile;
+
+	//std::vector<std::shared_ptr<SFEnemy>> enemies;
 };
 
 #endif

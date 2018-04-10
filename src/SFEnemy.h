@@ -10,7 +10,7 @@ class SFEnemy : public SFAsset {
 	public:
 		SFEnemy(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>, const SFENEMYTYPE);
 
-		void Update();
+		void OnUpdate();
 
 		//	Enemy Health
 		bool IsDead();

@@ -33,8 +33,8 @@ Point2 SFAsset::GetCenter() {
 		return Point2(bbox->GetX() + bbox->GetWidth() / 2, bbox->GetY() + bbox->GetHeight() / 2);
 }
 
-bool SFAsset::IsInsideWindow() {
-	return bbox->GetY() + bbox->GetHeight() < 0;
+bool SFAsset::IsOutsideWindow() {
+	return bbox->GetY() + bbox->GetHeight() < 0 || bbox->GetY() + bbox->GetHeight() > sf_window->GetHeight() || bbox->GetX() + bbox->GetWidth() < 0 || bbox->GetX() + bbox->GetWidth() > sf_window->GetWidth();
 }
 
 std::string SFAsset::GetName() const { return name; }
@@ -59,7 +59,7 @@ void SFAsset::GoWest() {
 void SFAsset::GoEast() {
 		Vector2 v = Vector2(5.0f, 0);
 
-		//	Check that the ship is left of window width
+		//	Check that the asset is left of window width
 		if(GetPosition().getX() <= sf_window->GetWidth() - bbox->GetWidth())	bbox->Translate(v);
 }
 
