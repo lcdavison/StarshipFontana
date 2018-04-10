@@ -19,5 +19,4 @@ void SFCoin::SetupSprite() {
 }
 
 void SFCoin::OnUpdate() {
-	
 }

@@ -34,7 +34,6 @@ void SFApp::OnEvent(SFEvent& event) {
 			assets = SFAssetManager::RetrieveAllAssets();
 			OnUpdate();
 			OnRender();
-			SFAssetManager::UpdateAssets(assets);
 			break;
 		case SFEVENT_PLAYER_LEFT:
 			player->GoWest();
@@ -72,12 +71,12 @@ void SFApp::OnUpdate() {
 		asset->OnUpdate();
 	}
 
-//	player->OnUpdate();
+	//	player->OnUpdate();
 
 	// 1. Move / update game objects
-/*	for (auto p : projectiles) {
+	/*	for (auto p : projectiles) {
 		p->GoNorth();
-	}*/
+		}*/
 
 	// 2. Update Coins
 	for (auto c : coins) {
@@ -102,33 +101,38 @@ void SFApp::OnUpdate() {
 
 	// 4. Update Projectiles
 	for (auto p : projectiles) {
-//		p->GoNorth();
+		//		p->GoNorth();
 
 		for (auto a : aliens) {
-			if (p->CollidesWith(a)) {
+			//if (p->CollidesWith(a)) {
 
-				a->TakeDamage(p->GetDamage());
+			//	a->TakeDamage(p->GetDamage());
 
-				p->HandleCollision();
+			//	p->HandleCollision();
 
-				if(a->IsDead()) { 
-					a->HandleCollision();
-					enemies_remaining--;
-					SpawnCoin(a->GetPosition());
-				}
-			} 
+			//	if(a->IsDead()) { 
+			//		a->HandleCollision();
+			enemies_remaining--;
+			//SpawnCoin(a->GetPosition());
+			//	}
+
+			//}
+
 		}
-
 	}
+
+	ClearAllDead();
 
 	// 5. Remove projectiles
 	//ClearProjectiles();
 
 	// 6. Remove dead aliens
-	ClearDeadAliens();
+	//ClearDeadAliens();
 
 	// 7. Remove collected coins
-	ClearDeadCoins();
+	//ClearDeadCoins();
+
+
 }
 
 void SFApp::OnRender() {
@@ -146,12 +150,12 @@ void SFApp::OnRender() {
 		if(!asset->IsOutsideWindow() && asset->IsAlive())
 			asset->OnRender();
 	}
-	
+
 	/*for (auto p : projectiles) {
-		if (p->IsAlive()) { 
-			p->OnRender(); 
-		}
-	}*/
+	  if (p->IsAlive()) { 
+	  p->OnRender(); 
+	  }
+	  }*/
 
 	for (auto a : aliens) {
 		if (a->IsAlive()) { 
@@ -159,11 +163,11 @@ void SFApp::OnRender() {
 		}
 	}
 
-	for (auto c : coins) {
+	/*for (auto c : coins) {
 		if(c->IsAlive()) {
 			c->OnRender();
 		}
-	}
+	}*/
 
 	// 3. Switch the off-screen buffer to be on-screen
 	window->ShowScreen();
@@ -180,7 +184,7 @@ void SFApp::FireProjectile() {
 
 	SFAssetManager::AddAsset<SFProjectile>(bullet);
 
-//	projectiles.push_back(bullet);
+	//	projectiles.push_back(bullet);
 }
 
 void SFApp::DrawHUD() {
@@ -216,12 +220,8 @@ void SFApp::SpawnEnemies(int amount) {
 }
 
 void SFApp::ClearAllDead() {
-	for(std::vector<std::shared_ptr<SFAsset>>::iterator it = assets.begin(); it != assets.end(); ) {
-		if(!(*it)->IsAlive()) { 
-			it = assets.erase(it); 
-		} else {
-			++it;
-		}
+	for(auto asset : assets) {
+		if(!asset->IsAlive()) SFAssetManager::RemoveAsset(asset);
 	}
 }
 

@@ -4,14 +4,12 @@ SFAssetManager::AssetContainer SFAssetManager::assets;
 
 SFAssetManager::AssetContainer SFAssetManager::RetrieveAllAssets() { return assets; }
 
-void SFAssetManager::UpdateAssets(std::vector<std::shared_ptr<SFAsset>> updated) { 
-	assets.clear();
-
-	for(auto it = updated.begin(); it != updated.end(); ++it) {
-		if((*it)->IsAlive()) {
-			assets.push_back(*it);
+void SFAssetManager::RemoveAsset(std::shared_ptr<SFAsset> asset) {
+	for(auto it = assets.begin(); it != assets.end(); ) {
+		if((*it) == asset) {
+			it = assets.erase(it);
 		} else {
-			printf("Found Dead\n");
+			++it;
 		}
 	}
 }

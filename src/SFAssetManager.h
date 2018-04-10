@@ -16,11 +16,14 @@ class SFAssetManager {
 
 		template<class T> static void AddAsset(std::shared_ptr<T>);
 		template<class T> static void CreateAsset(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
+
 		template<class T> static std::shared_ptr<T> FindAssetByName(const std::string);
 		template<class T> static std::vector<std::shared_ptr<T>> FindAssetsOfType(const SFASSETTYPE);
 
+		template<class T> static void SpawnAtPosition(std::shared_ptr<T>, Point2);
+
 		static AssetContainer RetrieveAllAssets();
-		static void UpdateAssets(AssetContainer);
+		static void RemoveAsset(std::shared_ptr<SFAsset>);
 	private:
 		static AssetContainer assets;
 };
@@ -60,5 +63,11 @@ std::vector<std::shared_ptr<T>> SFAssetManager::FindAssetsOfType(const SFASSETTY
 	}
 
 	return found;
+}
+
+template<class T>
+void SFAssetManager::SpawnAtPosition(std::shared_ptr<T> asset, Point2 position) {
+	asset->SetPosition(position);
+	assets.push_back(asset);
 }
 #endif

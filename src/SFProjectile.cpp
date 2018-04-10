@@ -29,6 +29,16 @@ void SFProjectile::OnUpdate() {
 
 	for(auto a : SFAssetManager::FindAssetsOfType<SFEnemy>(SFASSET_ALIEN)) {
 
+		if(CollidesWith(a)) {
+			a->TakeDamage(GetDamage());
+
+			HandleCollision();
+
+			if(a->IsDead()) {
+				a->HandleCollision();
+				SFAssetManager::SpawnAtPosition<SFCoin>(std::make_shared<SFCoin>("coin", SFASSET_COIN, sf_window), a->GetPosition());
+			}
+		}
 	}
 
 
