@@ -1,6 +1,6 @@
 #include "SFEnemy.h"
 
-SFEnemy::SFEnemy(const SFASSETTYPE assetType, const std::shared_ptr<SFWindow> window, const SFENEMYTYPE enemyType) : SFAsset(assetType, window) {
+SFEnemy::SFEnemy(std::string name, SFASSETTYPE assetType, std::shared_ptr<SFWindow> window, SFENEMYTYPE enemyType) : SFAsset(name, assetType, window) {
 
 	SetupSprite();
 

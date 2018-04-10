@@ -21,37 +21,51 @@ using namespace std;
  * enum to mark the type of the SFAsset.  If we add more asset types then
  * the subclassing strategy becomes a better option.
  */
-enum SFASSETTYPE { SFASSET_DEAD, SFASSET_PLAYER, SFASSET_PROJECTILE, SFASSET_ALIEN, SFASSET_COIN };
+enum SFASSETTYPE { SFASSET_PLAYER, SFASSET_PROJECTILE, SFASSET_ALIEN, SFASSET_COIN };
 
-class SFAsset {
+/*--SFASSET INTERFACE--*/
+class ISFAsset {
 	public:
-			SFAsset(const SFASSETTYPE, const std::shared_ptr<SFWindow>);
-			SFAsset(const SFAsset&);
-			virtual ~SFAsset();
+		virtual void OnUpdate() = 0;
+};
 
-			virtual void Update();
+class SFAsset : public ISFAsset {
+	public:
+		SFAsset(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
+		SFAsset(const SFAsset&);
+		virtual ~SFAsset();
 
-			virtual void      SetPosition(Point2 &);
-			virtual Point2    GetPosition();
-			virtual Point2    GetCenter();
-			virtual void      OnRender();
-			virtual void      GoEast();
-			virtual void      GoWest();
-			virtual void      GoNorth();
-			virtual void      GoSouth();
-			virtual void      SetNotAlive();
-			virtual bool      IsAlive();
-			virtual void      HandleCollision();
+		void OnUpdate();
+		std::string GetName() const;
+		SFASSETTYPE GetType() const;
 
-			virtual bool                      CollidesWith(shared_ptr<SFAsset>);
-			virtual shared_ptr<SFBoundingBox> GetBoundingBox();
+		virtual void OnRender();
+
+		virtual void      SetPosition(Point2 &);
+		virtual Point2    GetPosition();
+		virtual Point2    GetCenter();
+		virtual bool	  IsInsideWindow();
+
+		virtual void      GoEast();
+		virtual void      GoWest();
+		virtual void      GoNorth();
+		virtual void      GoSouth();
+		virtual void      SetNotAlive();
+		virtual bool      IsAlive();
+		virtual void      HandleCollision();
+
+		virtual bool                      CollidesWith(shared_ptr<SFAsset>);
+		virtual shared_ptr<SFBoundingBox> GetBoundingBox();
+
 	protected:
-			virtual void SetupSprite(); 
+		virtual void SetupSprite(); 
+		std::string name;
+		bool alive = true;
 
-			SDL_Texture               * sprite;
-			shared_ptr<SFBoundingBox>   bbox;
-			SFASSETTYPE                 type;
-			std::shared_ptr<SFWindow>   sf_window;
+		SDL_Texture               * sprite;
+		shared_ptr<SFBoundingBox>   bbox;
+		SFASSETTYPE                 type;
+		std::shared_ptr<SFWindow>   sf_window;
 };
 
 #endif

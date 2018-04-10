@@ -9,15 +9,13 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window
 	int canvas_w = window->GetWidth();
 	int canvas_h = window->GetHeight();
 
-	player = make_shared<SFPlayer>(SFASSET_PLAYER, window);
+	SFAssetManager::CreateAsset<SFPlayer>("player", SFASSET_PLAYER, window);
+	player = SFAssetManager::FindAssetByName<SFPlayer>("player");
+
 	auto player_pos = Point2(canvas_w / 2 - player->GetBoundingBox()->GetWidth() / 2, canvas_h - player->GetBoundingBox()->GetHeight());
 	player->SetPosition(player_pos);
 
 	SpawnEnemies(10);
-
-	state = SFGAME;
-
-	SFAssetManager::CreateAsset<SFPlayer>("Test", SFASSET_PLAYER, window);
 }
 
 SFApp::~SFApp() {}
@@ -33,8 +31,10 @@ void SFApp::OnEvent(SFEvent& event) {
 			is_running = false;
 			break;
 		case SFEVENT_UPDATE:
+			assets = SFAssetManager::RetrieveAllAssets();
 			OnUpdate();
 			OnRender();
+			SFAssetManager::UpdateAssets(assets);
 			break;
 		case SFEVENT_PLAYER_LEFT:
 			player->GoWest();
@@ -68,12 +68,16 @@ void SFApp::StartMainLoop() {
 
 void SFApp::OnUpdate() {
 
-	player->Update();
+	for(auto asset : assets) {
+		asset->OnUpdate();
+	}
+
+//	player->OnUpdate();
 
 	// 1. Move / update game objects
-	for (auto p : projectiles) {
+/*	for (auto p : projectiles) {
 		p->GoNorth();
-	}
+	}*/
 
 	// 2. Update Coins
 	for (auto c : coins) {
@@ -87,7 +91,7 @@ void SFApp::OnUpdate() {
 	for (auto a : aliens) {
 
 		a->Update();
-		a->MoveTowards(player);
+		//a->MoveTowards(player);
 
 		if(a->CollidesWith(player)) {
 			player->TakeDamage(20);
@@ -96,8 +100,10 @@ void SFApp::OnUpdate() {
 		}
 	}
 
-	// 4. Detect collisions
+	// 4. Update Projectiles
 	for (auto p : projectiles) {
+//		p->GoNorth();
+
 		for (auto a : aliens) {
 			if (p->CollidesWith(a)) {
 
@@ -110,8 +116,9 @@ void SFApp::OnUpdate() {
 					enemies_remaining--;
 					SpawnCoin(a->GetPosition());
 				}
-			}
+			} 
 		}
+
 	}
 
 	// 5. Remove projectiles
@@ -133,8 +140,13 @@ void SFApp::OnRender() {
 	DrawHUD();
 
 	// 2. Draw game objects off-screen
-	player->OnRender();
+	//player->OnRender();
 
+	for(auto asset : assets) {
+		//if(asset->IsAlive())
+			asset->OnRender();
+	}
+	
 	for (auto p : projectiles) {
 		if (p->IsAlive()) { 
 			p->OnRender(); 
@@ -158,14 +170,17 @@ void SFApp::OnRender() {
 }
 
 void SFApp::FireProjectile() {
-	shared_ptr<SFProjectile> bullet = make_shared<SFProjectile>(SFASSET_PROJECTILE, window, BULLET);
 
+	shared_ptr<SFProjectile> bullet = make_shared<SFProjectile>("projectile", SFASSET_PROJECTILE, window, BULLET);
 	bullet->SetDamage(player->GetDamage());
 
 	auto v = player->GetCenter(); 
 	auto pos = Point2(v.getX() - bullet->GetBoundingBox()->GetWidth() / 2, v.getY());
 	bullet->SetPosition(pos);
-	projectiles.push_back(bullet);
+
+	SFAssetManager::AddAsset<SFProjectile>(bullet);
+
+//	projectiles.push_back(bullet);
 }
 
 void SFApp::DrawHUD() {
@@ -181,7 +196,7 @@ void SFApp::DrawHUD() {
 }
 
 void SFApp::SpawnCoin(Point2 position) {
-	auto coin = make_shared<SFCoin>	(SFASSET_COIN, window);
+	auto coin = make_shared<SFCoin>	("coin", SFASSET_COIN, window);
 	coin->SetPosition(position);
 	coins.push_back(coin);
 }
@@ -191,10 +206,20 @@ void SFApp::SpawnEnemies(int amount) {
 
 	for (int i = 0; i < amount; i++) {
 		// place an alien at width/number_of_aliens * i
-		auto alien = make_shared<SFEnemy>(SFASSET_ALIEN, window, ELITE);
+		auto alien = make_shared<SFEnemy>("alien" + i, SFASSET_ALIEN, window, ELITE);
 		auto pos = Point2((window->GetWidth() / amount) * i + alien->GetBoundingBox()->GetWidth() / 2, 200.0f);
 		alien->SetPosition(pos);
 		aliens.push_back(alien);
+	}
+}
+
+void SFApp::ClearAllDead() {
+	for(std::vector<std::shared_ptr<SFAsset>>::iterator it = assets.begin(); it != assets.end(); ) {
+		if(!(*it)->IsAlive()) { 
+			it = assets.erase(it); 
+		} else {
+			++it;
+		}
 	}
 }
 

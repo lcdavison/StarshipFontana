@@ -5,9 +5,9 @@
 
 class SFCoin : public SFAsset {
 public:
-	SFCoin(const SFASSETTYPE, const std::shared_ptr<SFWindow>);
+	SFCoin(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
 
-	void Update();
+	void OnUpdate();
 private:
 	void SetupSprite();
 };

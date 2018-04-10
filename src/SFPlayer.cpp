@@ -1,6 +1,6 @@
 #include "SFPlayer.h"
 
-SFPlayer::SFPlayer(const SFASSETTYPE type, const std::shared_ptr<SFWindow> window) : SFAsset (type, window) {
+SFPlayer::SFPlayer(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> window) : SFAsset (name, type, window) {
 	SetupSprite();
 }
 
@@ -13,7 +13,7 @@ void SFPlayer::SetupSprite() {
 	bbox = make_shared<SFBoundingBox>(Point2(0.0f, 0.0f), w, h);
 }
 
-void SFPlayer::Update() {
+void SFPlayer::OnUpdate() {
 }
 
 void SFPlayer::AddCoin() {

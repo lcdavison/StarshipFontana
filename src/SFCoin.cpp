@@ -1,6 +1,6 @@
 #include "SFCoin.h"
 
-SFCoin::SFCoin(const SFASSETTYPE type, const std::shared_ptr<SFWindow> window) : SFAsset(type, window) { 
+SFCoin::SFCoin(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> window) : SFAsset(name, type, window) { 
 	SetupSprite();
 }
 
@@ -18,6 +18,6 @@ void SFCoin::SetupSprite() {
 	bbox = make_shared<SFBoundingBox>(Point2(0.0f, 0.0f), w, h);
 }
 
-void SFCoin::Update() {
-
+void SFCoin::OnUpdate() {
+	
 }

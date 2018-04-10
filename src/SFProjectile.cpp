@@ -1,6 +1,6 @@
 #include "SFProjectile.h"
 
-SFProjectile::SFProjectile(const SFASSETTYPE type, const std::shared_ptr<SFWindow> window, const PROJECTILE_TYPE projectile_type) : SFAsset(type, window) {
+SFProjectile::SFProjectile(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> window, PROJECTILE_TYPE projectile_type) : SFAsset(name, type, window) {
 	projectile = projectile_type;
 
 	SetupSprite();
@@ -21,6 +21,15 @@ void SFProjectile::SetupSprite() {
 
 	bbox = make_shared<SFBoundingBox>(Point2(0.0f, 0.0f), w, h);
 
+}
+
+void SFProjectile::OnUpdate() {
+	GoNorth();
+
+	if(!IsInsideWindow()) {
+		SetNotAlive();
+		printf("Outside Screen");
+	}
 }
 
 void SFProjectile::SetDamage(short amount) {

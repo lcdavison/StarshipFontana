@@ -8,7 +8,7 @@ enum SFENEMYTYPE { GRUNT, BRAWLER, ELITE, BOSS };
 class SFEnemy : public SFAsset {
 
 	public:
-		SFEnemy(const SFASSETTYPE, const std::shared_ptr<SFWindow>, const SFENEMYTYPE);
+		SFEnemy(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>, const SFENEMYTYPE);
 
 		void Update();
 

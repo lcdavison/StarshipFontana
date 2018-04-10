@@ -3,6 +3,7 @@
 
 #include <memory>   // Pull in std::shared_ptr
 #include <list>     // Pull in list
+#include <vector>   // Pull in vector
 
 using namespace std;
 
@@ -42,19 +43,20 @@ class SFApp {
 		void SpawnCoin(Point2);
 		void SpawnEnemies(int);
 
+		void ClearAllDead();
 		void ClearDeadCoins();
 		void ClearDeadAliens();
 		void ClearProjectiles();
 
 		bool is_running;
+		int enemies_remaining;
 
 		SFGAMESTATE state;
 
-		int enemies_remaining;
-
 		shared_ptr<SFWindow> window;
-
 		shared_ptr<SFPlayer> player;
+
+		vector<std::shared_ptr<SFAsset>> assets;
 
 		list<shared_ptr<SFProjectile> > projectiles;
 		list<shared_ptr<SFEnemy> > aliens;

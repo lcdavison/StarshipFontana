@@ -1,6 +1,6 @@
 #include "SFAsset.h"
 
-SFAsset::SFAsset(SFASSETTYPE type, std::shared_ptr<SFWindow> window) : type(type), sf_window(window) {
+SFAsset::SFAsset(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> window) : type(type), sf_window(window), name(name) {
 }
 
 SFAsset::SFAsset(const SFAsset& a) {
@@ -20,10 +20,6 @@ SFAsset::~SFAsset() {
 
 void SFAsset::SetupSprite(){}
 
-void SFAsset::Update() {
-
-}
-
 void SFAsset::SetPosition(Point2 & point) {
 		Vector2 v(point.getX(), point.getY());
 		bbox->SetPosition(point);
@@ -36,6 +32,16 @@ Point2 SFAsset::GetPosition() {
 Point2 SFAsset::GetCenter() {
 		return Point2(bbox->GetX() + bbox->GetWidth() / 2, bbox->GetY() + bbox->GetHeight() / 2);
 }
+
+bool SFAsset::IsInsideWindow() {
+	return bbox->GetY() + bbox->GetHeight() < 0;
+}
+
+std::string SFAsset::GetName() const { return name; }
+
+SFASSETTYPE SFAsset::GetType() const { return type; }
+
+void SFAsset::OnUpdate() {}                         
 
 void SFAsset::OnRender() {
 		// 1. Get the SDL_Rect from SFBoundingBox
@@ -76,11 +82,11 @@ shared_ptr<SFBoundingBox> SFAsset::GetBoundingBox() {
 }
 
 void SFAsset::SetNotAlive() {
-		type = SFASSET_DEAD;
+		alive = false;
 }
 
 bool SFAsset::IsAlive() {
-		return (SFASSET_DEAD != type);
+		return alive;
 }
 
 void SFAsset::HandleCollision() {
