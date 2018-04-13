@@ -11,6 +11,8 @@ void SF_UILabel::DrawText(const std::string& text, const short& x, const short& 
 	SDL_Rect dst = { x, y, width, height };
 
 	SDL_RenderCopy(window->getRenderer(), texture, NULL, &dst);
+
+	SDL_DestroyTexture(texture);
 }
 
 SDL_Texture* SF_UILabel::CreateTextureFromString(const std::string& text, TTF_Font* font, SDL_Color colour, std::shared_ptr<SFWindow> window) {

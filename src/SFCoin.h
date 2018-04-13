@@ -1,7 +1,7 @@
 #ifndef SFCOIN_H
 #define SFCOIN_H
 
-#include "SFAsset.h"
+#include "SFAssetManager.h"
 
 class SFCoin : public SFAsset {
 public:
@@ -10,6 +10,8 @@ public:
 	void OnUpdate();
 private:
 	void SetupSprite();
+
+	std::shared_ptr<SFPlayer> player;
 };
 
 #endif

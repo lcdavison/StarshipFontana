@@ -1,7 +1,7 @@
 #ifndef SFENEMY_H
 #define SFENEMY_H
 
-#include "SFAsset.h"
+#include "SFAssetManager.h"
 
 enum SFENEMYTYPE { GRUNT, BRAWLER, ELITE, BOSS };
 
@@ -43,5 +43,7 @@ class SFEnemy : public SFAsset {
 
 		//	Enemy Type
 		SFENEMYTYPE type;
+
+		std::shared_ptr<SFPlayer> player;
 };                                                                        
 #endif                               	

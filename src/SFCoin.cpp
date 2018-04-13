@@ -2,6 +2,8 @@
 
 SFCoin::SFCoin(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> window) : SFAsset(name, type, window) { 
 	SetupSprite();
+
+	player = SFAssetManager::FindAssetByName<SFPlayer>("player");
 }
 
 
@@ -19,4 +21,8 @@ void SFCoin::SetupSprite() {
 }
 
 void SFCoin::OnUpdate() {
+	if(CollidesWith(player)) {
+		player->AddCoin();
+		SetNotAlive();
+	}
 }

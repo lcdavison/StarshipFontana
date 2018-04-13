@@ -5,6 +5,8 @@
 #include <list>     // Pull in list
 #include <vector>   // Pull in vector
 
+#include <assert.h>
+
 using namespace std;
 
 #include "SFCommon.h"
@@ -23,8 +25,6 @@ using namespace std;
  * 2. Update game world
  * 3. Render game world
  */
-enum SFGAMESTATE { SFGAME, SFEND };
-
 class SFApp {
 	public:
 		SFApp(std::shared_ptr<SFWindow>);
@@ -50,8 +50,6 @@ class SFApp {
 
 		bool is_running;
 		int enemies_remaining;
-
-		SFGAMESTATE state;
 
 		shared_ptr<SFWindow> window;
 		shared_ptr<SFPlayer> player;

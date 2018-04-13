@@ -79,15 +79,15 @@ void SFApp::OnUpdate() {
 		}*/
 
 	// 2. Update Coins
-	for (auto c : coins) {
+	/*for (auto c : coins) {
 		if(c->CollidesWith(player)) {
 			player->AddCoin();
 			c->SetNotAlive();	
 		}
-	}
+	}*/
 
 	// 3. Update Enemies
-	for (auto a : aliens) {
+	/*for (auto a : aliens) {
 
 		//a->Update();
 		//a->MoveTowards(player);
@@ -97,10 +97,10 @@ void SFApp::OnUpdate() {
 			a->HandleCollision();
 			SpawnCoin(a->GetPosition());
 		}
-	}
+	}*/
 
 	// 4. Update Projectiles
-	for (auto p : projectiles) {
+	/*for (auto p : projectiles) {
 		//		p->GoNorth();
 
 		for (auto a : aliens) {
@@ -119,7 +119,7 @@ void SFApp::OnUpdate() {
 			//}
 
 		}
-	}
+	}*/
 
 	ClearAllDead();
 
@@ -157,11 +157,11 @@ void SFApp::OnRender() {
 	  }
 	  }*/
 
-	for (auto a : aliens) {
+/*	for (auto a : aliens) {
 		if (a->IsAlive()) { 
 			a->OnRender(); 
 		}
-	}
+	}*/
 
 	/*for (auto c : coins) {
 		if(c->IsAlive()) {
@@ -221,8 +221,10 @@ void SFApp::SpawnEnemies(int amount) {
 
 void SFApp::ClearAllDead() {
 	for(auto asset : assets) {
+		assert(asset != NULL);
 		if(!asset->IsAlive()) SFAssetManager::RemoveAsset(asset);
 	}
+	//printf("CLEAR DEAD\n");
 }
 
 void SFApp::ClearDeadCoins() {
