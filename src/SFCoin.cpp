@@ -4,6 +4,8 @@ SFCoin::SFCoin(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> win
 	SetupSprite();
 
 	player = SFAssetManager::FindAssetByName<SFPlayer>("player");
+
+	movement_speed = 3.0f;
 }
 
 

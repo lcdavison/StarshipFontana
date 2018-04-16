@@ -41,6 +41,7 @@ class Point2 {
 
 		inline const Point2 operator +(const Point2& point) const { return Point2(point.x + x, point.y + y); }
 		inline const Vector2 operator -(const Point2& point) const { return Vector2(point.x - x, point.y - y); }
+		inline const bool operator != (const Point2& point) const { return point.x != x && point.y != y; }
 
 	private:
 		float x, y;

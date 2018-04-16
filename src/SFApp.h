@@ -38,13 +38,11 @@ class SFApp {
 		void FireProjectile();
 	private:
 		void DrawHUD();
-
 		void SpawnEnemies(int);
-
+		int  GetNumEnemies();
 		void ClearAllDead();
 
 		bool is_running;
-		int enemies_remaining;
 
 		shared_ptr<SFWindow> window;
 		shared_ptr<SFPlayer> player;

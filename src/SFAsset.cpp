@@ -75,27 +75,10 @@ void SFAsset::GoSouth() {
 
 void SFAsset::MoveTowards(const std::shared_ptr<SFAsset> other) {
 
-	float distance;	
-
-	if(!is_moving) {
-
-		end_point = make_shared<Point2>(other->GetCenter());
-
-		if(GetPosition().getX() == end_point->getX() && GetPosition().getY() == end_point->getY())
-			return;
-
-		initial_distance = GetPosition().DistanceTo(*end_point);
-
-		is_moving = true;
-	} else {
-		distance = GetPosition().DistanceTo(*end_point);
-	}
-
-	Vector2 direction = (GetPosition() - *end_point).normalize();
+	Vector2 direction = (GetPosition() - other->GetCenter()).normalize();
 	direction = direction * movement_speed;
 
-	if(distance < initial_distance) bbox->Translate(direction);
-	else is_moving = false; 
+	if(GetPosition() != other->GetCenter()) bbox->Translate(direction);
 }
 
 bool SFAsset::CollidesWith(shared_ptr<SFAsset> other) {

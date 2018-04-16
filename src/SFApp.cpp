@@ -108,7 +108,7 @@ void SFApp::DrawHUD() {
 	SDL_Color textColour = { 0, 255, 0, 255 };
 
 	std::string healthText = "HEALTH : " + std::to_string(player->GetHealth());
-	std::string enemies_remainingText = "ENEMIES : " + std::to_string(enemies_remaining);
+	std::string enemies_remainingText = "ENEMIES : " + std::to_string(GetNumEnemies());
 	std::string coinText = "COINS : " + std::to_string(player->GetCoins());
 
 	SF_UILabel::DrawText(healthText, window->GetWidth() / 2 - healthText.length(), 0, textColour, window);
@@ -117,8 +117,6 @@ void SFApp::DrawHUD() {
 }
 
 void SFApp::SpawnEnemies(int amount) {
-	enemies_remaining = amount;
-
 	for (int i = 0; i < amount; i++) {
 		// place an alien at width/number_of_aliens * i
 		auto alien = make_shared<SFEnemy>("alien" + i, SFASSET_ALIEN, window, ELITE);
@@ -127,6 +125,15 @@ void SFApp::SpawnEnemies(int amount) {
 
 		SFAssetManager::AddAsset<SFEnemy>(alien);
 	}
+}
+
+int SFApp::GetNumEnemies() {
+	int num = 0;
+	for(auto asset : assets) {
+		if(asset->GetType() == SFASSET_ALIEN) num++;
+	}
+
+	return num;
 }
 
 void SFApp::ClearAllDead() {
