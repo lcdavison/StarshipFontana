@@ -42,13 +42,6 @@ void SFEnemy::OnUpdate() {
 		HandleCollision();
 		SFAssetManager::SpawnAtPosition(std::make_shared<SFCoin>("coin", SFASSET_COIN, sf_window), GetPosition());
 	}
-
-	//	Get Player From Asset Manager
-	/*	if(CollidesWith()) {
-		player->TakeDamage(20);
-		HandleCollision();
-		SpawnCoin();	//	Should Go in Asset Manager When Ready, but something like CreateAsset();
-		}*/
 }
 
 void SFEnemy::TakeDamage(short damage) { health -= damage; }
@@ -88,38 +81,3 @@ void SFEnemy::GoWest() {
 	Vector2 v = Vector2(-0.5f, 0.0f) * movement_speed;
 	bbox->Translate(v);
 }
-
-/*void SFEnemy::MoveTowards(const std::shared_ptr<SFAsset> other) {
-
-	float distance;	
-
-	if(!isMoving) {
-
-		end_point = make_shared<Point2>(other->GetCenter());
-
-		if(GetPosition().getX() == end_point->getX() && GetPosition().getY() == end_point->getY())
-			return;
-
-		initial_distance = GetPosition().DistanceTo(*end_point);
-
-		Vector2 direction = *end_point - GetPosition();
-
-		float move_x;
-		float move_y;
-
-		if(direction.getX() < 0) move_x = 1;
-		else move_x = -1;
-
-		if(direction.getY() < 0) move_y = 1;
-		else move_y = -1;
-
-		move_direction = std::make_shared<Vector2>(Vector2(move_x, move_y) * movement_speed); 
-
-		isMoving = true;
-	} else {
-		distance = GetPosition().DistanceTo(*end_point);
-	}
-
-	if(distance > initial_distance) bbox->Translate(*move_direction);
-	else isMoving = false; 
-}*/
