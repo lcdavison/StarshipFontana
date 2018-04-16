@@ -21,7 +21,6 @@ void SFProjectile::SetupSprite() {
 	SDL_QueryTexture(sprite, NULL, NULL, &w, &h);
 
 	bbox = make_shared<SFBoundingBox>(Point2(0.0f, 0.0f), w, h);
-
 }
 
 void SFProjectile::OnUpdate() {

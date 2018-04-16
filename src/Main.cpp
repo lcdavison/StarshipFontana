@@ -67,7 +67,14 @@ int main(int arc, char ** argv) {
 				cout << e.what() << endl;
 				cout << "Exception details: " << SDL_GetError() << endl;
 		}
+		
+		// Close IMG library
+		IMG_Quit();
 
+		// Close TTF library
+		TTF_Quit();
+
+		// Close SDL library
 		SDL_Quit();
 
 		return 0;

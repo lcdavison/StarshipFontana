@@ -49,5 +49,4 @@ class SFApp {
 
 		vector<std::shared_ptr<SFAsset>> assets;
 };
-
 #endif

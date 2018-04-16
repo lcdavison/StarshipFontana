@@ -4,6 +4,7 @@
 // TODO: Add scenes to determine game behaviour
 // TODO: Add Query To Retrieve the pixel width of text, to set central text
 // TODO: Adjust collisions to be handled in relevant classes, eg. Enemy Collision in SFEnemy class
+// TODO: Add delta time to handle linear interpolation, and animations
 
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window) {
 	int canvas_w = window->GetWidth();
@@ -78,7 +79,7 @@ void SFApp::OnRender() {
 
 	// 1. Clear visible content
 	window->ClearScreen();
-	
+
 	// 2. Render Assets
 	for(auto asset : assets) {
 		if(!asset->IsOutsideWindow() && asset->IsAlive())

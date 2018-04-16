@@ -4,33 +4,33 @@ SFAsset::SFAsset(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> w
 }
 
 SFAsset::SFAsset(const SFAsset& a) {
-		sprite = a.sprite;
-		sf_window = a.sf_window;
-		bbox = a.bbox;
-		type = a.type;
+	sprite = a.sprite;
+	sf_window = a.sf_window;
+	bbox = a.bbox;
+	type = a.type;
 }
 
 SFAsset::~SFAsset() {
-		bbox.reset();
-		if (sprite) {
-				SDL_DestroyTexture(sprite);
-				sprite = nullptr;
-		}
+	bbox.reset();
+	if (sprite) {
+		SDL_DestroyTexture(sprite);
+		sprite = nullptr;
+	}
 }
 
 void SFAsset::SetupSprite(){}
 
 void SFAsset::SetPosition(Point2 & point) {
-		Vector2 v(point.getX(), point.getY());
-		bbox->SetPosition(point);
+	Vector2 v(point.getX(), point.getY());
+	bbox->SetPosition(point);
 }
 
 Point2 SFAsset::GetPosition() {
-		return Point2(bbox->GetX(), bbox->GetY());
+	return Point2(bbox->GetX(), bbox->GetY());
 }
 
 Point2 SFAsset::GetCenter() {
-		return Point2(bbox->GetX() + bbox->GetWidth() / 2, bbox->GetY() + bbox->GetHeight() / 2);
+	return Point2(bbox->GetX() + bbox->GetWidth() / 2, bbox->GetY() + bbox->GetHeight() / 2);
 }
 
 bool SFAsset::IsOutsideWindow() {
@@ -44,33 +44,33 @@ SFASSETTYPE SFAsset::GetType() const { return type; }
 void SFAsset::OnUpdate() {}                         
 
 void SFAsset::OnRender() {
-		// 1. Get the SDL_Rect from SFBoundingBox
-		SDL_Rect rect = bbox->GetBox();
+	// 1. Get the SDL_Rect from SFBoundingBox
+	SDL_Rect rect = bbox->GetBox();
 
-		// 2. Blit the sprite onto the level
-		SDL_RenderCopy(sf_window->getRenderer(), sprite, NULL, &rect);
+	// 2. Blit the sprite onto the level
+	SDL_RenderCopy(sf_window->getRenderer(), sprite, NULL, &rect);
 }
 
 void SFAsset::GoWest() {
-		Vector2 v = Vector2(-5.0f, 0);
-		if(GetPosition().getX() >= 0)	bbox->Translate(v);
+	Vector2 v = Vector2(-5.0f, 0);
+	if(GetPosition().getX() >= 0)	bbox->Translate(v);
 }
 
 void SFAsset::GoEast() {
-		Vector2 v = Vector2(5.0f, 0);
+	Vector2 v = Vector2(5.0f, 0);
 
-		//	Check that the asset is left of window width
-		if(GetPosition().getX() <= sf_window->GetWidth() - bbox->GetWidth())	bbox->Translate(v);
+	//	Check that the asset is left of window width
+	if(GetPosition().getX() <= sf_window->GetWidth() - bbox->GetWidth())	bbox->Translate(v);
 }
 
 void SFAsset::GoNorth() {
-		Vector2 v = Vector2(0.0f, -5.0f);
-		bbox->Translate(v);
+	Vector2 v = Vector2(0.0f, -5.0f);
+	bbox->Translate(v);
 }
 
 void SFAsset::GoSouth() {
-		Vector2 v = Vector2(0.0f, 5.0f);
-		bbox->Translate(v);
+	Vector2 v = Vector2(0.0f, 5.0f);
+	bbox->Translate(v);
 }
 
 float SFAsset::DistanceTo(std::shared_ptr<SFAsset> other) {
@@ -85,33 +85,32 @@ void SFAsset::MoveTowards(const std::shared_ptr<SFAsset> other) {
 	if(GetPosition() != other->GetCenter()) bbox->Translate(direction);
 }
 
-void SFAsset::LinearInterpolate(const std::shared_ptr<SFAsset> other) {
-	
-	float x = GetPosition().getX() + ((other->GetPosition().getX() - GetPosition().getX()) * 1);
-	float y = GetPosition().getY() + ((other->GetPosition().getY() - GetPosition().getY()) * 1);
+void SFAsset::Lerp(const std::shared_ptr<SFAsset> other, float time) {
 
-	Vector2 direction = Vector2(x, y).normalize();
-        if(GetPosition() != other->GetCenter()) bbox->Translate(direction);
+	Vector2 direction = (GetPosition() - other->GetPosition());
+	direction = direction * movement_speed * time;
+
+	if(GetPosition() != other->GetCenter()) bbox->Translate(direction);
 }
 
 bool SFAsset::CollidesWith(shared_ptr<SFAsset> other) {
-		return bbox->CollidesWith(other->bbox);
+	return bbox->CollidesWith(other->bbox);
 }
 
 shared_ptr<SFBoundingBox> SFAsset::GetBoundingBox() {
-		return bbox;
+	return bbox;
 }
 
 void SFAsset::SetNotAlive() {
-		alive = false;
+	alive = false;
 }
 
 bool SFAsset::IsAlive() {
-		return alive;
+	return alive;
 }
 
 void SFAsset::HandleCollision() {
-		if (SFASSET_PROJECTILE == type || SFASSET_ALIEN == type) {
-				SetNotAlive();
-		}
+	if (SFASSET_PROJECTILE == type || SFASSET_ALIEN == type) {
+		SetNotAlive();
+	}
 }

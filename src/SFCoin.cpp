@@ -29,8 +29,8 @@ void SFCoin::OnUpdate() {
 	}
 
 	if(DistanceTo(player) < 200.0f) {
-		MoveTowards(player);
+//		MoveTowards(player);
 	
-//		LinearInterpolate(player);
+		Lerp(player, 0.01f);
 	}
 }

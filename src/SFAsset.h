@@ -45,7 +45,7 @@ class SFAsset : public ISFAsset {
 		virtual void      SetPosition(Point2 &);
 		virtual Point2    GetPosition();
 		virtual Point2    GetCenter();
-		virtual bool	  IsOutsideWindow();	// Test assets position against window boundaries	
+		virtual bool	  IsOutsideWindow();	
 		virtual float     DistanceTo(std::shared_ptr<SFAsset>);
 
 		virtual void      GoEast();
@@ -62,7 +62,7 @@ class SFAsset : public ISFAsset {
 
 		// Movement
 		virtual void	  MoveTowards(std::shared_ptr<SFAsset>);
-		virtual void	  LinearInterpolate(std::shared_ptr<SFAsset>);
+		virtual void	  Lerp(std::shared_ptr<SFAsset>, float);
 
 	protected:
 		virtual void SetupSprite();
