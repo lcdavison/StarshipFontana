@@ -14,6 +14,7 @@ using namespace std;
 #include "SFEvent.h"
 #include "SFWindow.h"
 #include "SFBoundingBox.h"
+#include "SFMath.h"
 
 /**
  * We could create SFPlayer, SFProjectile and SFAsset which are subclasses
@@ -44,12 +45,13 @@ class SFAsset : public ISFAsset {
 		virtual void      SetPosition(Point2 &);
 		virtual Point2    GetPosition();
 		virtual Point2    GetCenter();
-		virtual bool	  IsOutsideWindow();	//Culls Objects That Are Outside Window Boundaries
+		virtual bool	  IsOutsideWindow();	// Test assets position against window boundaries	
 
 		virtual void      GoEast();
 		virtual void      GoWest();
 		virtual void      GoNorth();
 		virtual void      GoSouth();
+
 		virtual void      SetNotAlive();
 		virtual bool      IsAlive();
 		virtual void      HandleCollision();
@@ -57,8 +59,22 @@ class SFAsset : public ISFAsset {
 		virtual bool                      CollidesWith(shared_ptr<SFAsset>);
 		virtual shared_ptr<SFBoundingBox> GetBoundingBox();
 
+		// Movement
+		virtual void	  MoveTowards(std::shared_ptr<SFAsset>);
+
 	protected:
-		virtual void SetupSprite(); 
+		virtual void SetupSprite();
+
+		/*---Movement---*/
+		bool is_moving = false;
+
+		float movement_speed = 2.0f;
+		float initial_distance;
+
+		std::shared_ptr<Vector2> move_direction;
+		std::shared_ptr<Point2> end_point;
+
+		// Asset Data
 		std::string name;
 		bool alive = true;
 		int lifetime;

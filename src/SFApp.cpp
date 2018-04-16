@@ -71,105 +71,24 @@ void SFApp::OnUpdate() {
 		asset->OnUpdate();
 	}
 
-	//	player->OnUpdate();
-
-	// 1. Move / update game objects
-	/*	for (auto p : projectiles) {
-		p->GoNorth();
-		}*/
-
-	// 2. Update Coins
-	/*for (auto c : coins) {
-		if(c->CollidesWith(player)) {
-			player->AddCoin();
-			c->SetNotAlive();	
-		}
-	}*/
-
-	// 3. Update Enemies
-	/*for (auto a : aliens) {
-
-		//a->Update();
-		//a->MoveTowards(player);
-
-		if(a->CollidesWith(player)) {
-			player->TakeDamage(20);
-			a->HandleCollision();
-			SpawnCoin(a->GetPosition());
-		}
-	}*/
-
-	// 4. Update Projectiles
-	/*for (auto p : projectiles) {
-		//		p->GoNorth();
-
-		for (auto a : aliens) {
-			//if (p->CollidesWith(a)) {
-
-			//	a->TakeDamage(p->GetDamage());
-
-			//	p->HandleCollision();
-
-			//	if(a->IsDead()) { 
-			//		a->HandleCollision();
-			enemies_remaining--;
-			//SpawnCoin(a->GetPosition());
-			//	}
-
-			//}
-
-		}
-	}*/
-
 	ClearAllDead();
-
-	// 5. Remove projectiles
-	//ClearProjectiles();
-
-	// 6. Remove dead aliens
-	//ClearDeadAliens();
-
-	// 7. Remove collected coins
-	//ClearDeadCoins();
-
-
 }
 
 void SFApp::OnRender() {
 
 	// 1. Clear visible content
 	window->ClearScreen();
-
-	//	Draw HUD
-	DrawHUD();
-
-	// 2. Draw game objects off-screen
-	//player->OnRender();
-
+	
+	// 2. Render Assets
 	for(auto asset : assets) {
 		if(!asset->IsOutsideWindow() && asset->IsAlive())
 			asset->OnRender();
 	}
 
-	/*for (auto p : projectiles) {
-	  if (p->IsAlive()) { 
-	  p->OnRender(); 
-	  }
-	  }*/
+	// 3. Draw HUD
+	DrawHUD();
 
-/*	for (auto a : aliens) {
-		if (a->IsAlive()) { 
-			a->OnRender(); 
-		}
-	}*/
-
-	/*for (auto c : coins) {
-		if(c->IsAlive()) {
-			c->OnRender();
-		}
-	}*/
-
-	// 3. Switch the off-screen buffer to be on-screen
+	// 4. Switch the off-screen buffer to be on-screen
 	window->ShowScreen();
 }
 
@@ -183,8 +102,6 @@ void SFApp::FireProjectile() {
 	bullet->SetPosition(pos);
 
 	SFAssetManager::AddAsset<SFProjectile>(bullet);
-
-	//	projectiles.push_back(bullet);
 }
 
 void SFApp::DrawHUD() {
@@ -199,12 +116,6 @@ void SFApp::DrawHUD() {
 	SF_UILabel::DrawText(coinText, 10, 30, textColour, window);	
 }
 
-void SFApp::SpawnCoin(Point2 position) {
-	auto coin = make_shared<SFCoin>	("coin", SFASSET_COIN, window);
-	coin->SetPosition(position);
-	coins.push_back(coin);
-}
-
 void SFApp::SpawnEnemies(int amount) {
 	enemies_remaining = amount;
 
@@ -215,7 +126,6 @@ void SFApp::SpawnEnemies(int amount) {
 		alien->SetPosition(pos);
 
 		SFAssetManager::AddAsset<SFEnemy>(alien);
-		//aliens.push_back(alien);
 	}
 }
 
@@ -224,19 +134,4 @@ void SFApp::ClearAllDead() {
 		assert(asset != NULL);
 		if(!asset->IsAlive()) SFAssetManager::RemoveAsset(asset);
 	}
-	//printf("CLEAR DEAD\n");
 }
-
-void SFApp::ClearDeadCoins() {
-	coins.remove_if([](shared_ptr<SFCoin> coin) { return !coin->IsAlive(); });
-}
-
-void SFApp::ClearDeadAliens() {
-	aliens.remove_if([](shared_ptr<SFEnemy> alien) { return !alien->IsAlive(); });
-}
-
-void SFApp::ClearProjectiles() {
-	projectiles.remove_if([](shared_ptr<SFProjectile> projectile) { return !projectile->IsAlive(); });
-}
-
-shared_ptr<SFPlayer> SFApp::GetPlayer() { return player; }

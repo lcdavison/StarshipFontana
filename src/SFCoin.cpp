@@ -25,4 +25,8 @@ void SFCoin::OnUpdate() {
 		player->AddCoin();
 		SetNotAlive();
 	}
+
+	if(GetPosition().DistanceTo(player->GetPosition()) < 150.0f) {
+		MoveTowards(player);
+	}
 }

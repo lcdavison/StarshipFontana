@@ -2,6 +2,7 @@
 #define SFCOIN_H
 
 #include "SFAssetManager.h"
+#include "SFMath.h"
 
 class SFCoin : public SFAsset {
 public:

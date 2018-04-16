@@ -36,17 +36,12 @@ class SFApp {
 		void OnRender();
 
 		void FireProjectile();
-		shared_ptr<SFPlayer> GetPlayer();
 	private:
 		void DrawHUD();
 
-		void SpawnCoin(Point2);
 		void SpawnEnemies(int);
 
 		void ClearAllDead();
-		void ClearDeadCoins();
-		void ClearDeadAliens();
-		void ClearProjectiles();
 
 		bool is_running;
 		int enemies_remaining;
@@ -55,10 +50,6 @@ class SFApp {
 		shared_ptr<SFPlayer> player;
 
 		vector<std::shared_ptr<SFAsset>> assets;
-
-		list<shared_ptr<SFProjectile> > projectiles;
-		list<shared_ptr<SFEnemy> > aliens;
-		list<shared_ptr<SFCoin> > coins;
 };
 
 #endif

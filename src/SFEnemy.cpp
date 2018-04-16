@@ -89,7 +89,7 @@ void SFEnemy::GoWest() {
 	bbox->Translate(v);
 }
 
-void SFEnemy::MoveTowards(const std::shared_ptr<SFAsset> other) {
+/*void SFEnemy::MoveTowards(const std::shared_ptr<SFAsset> other) {
 
 	float distance;	
 
@@ -103,17 +103,9 @@ void SFEnemy::MoveTowards(const std::shared_ptr<SFAsset> other) {
 		initial_distance = GetPosition().DistanceTo(*end_point);
 
 		Vector2 direction = *end_point - GetPosition();
-//		Vector2 norm_direction = direction.normalize();
 
 		float move_x;
 		float move_y;
-/*
-		if(direction.getX() < 0) move_x = sqrt(direction.getX() * direction.getX());
-		else move_x = direction.getX() * -1;
-
-		if(direction.getY() < 0) move_y = sqrt(direction.getY() * direction.getY());
-		else move_y = direction.getY() * -1;
-		*/
 
 		if(direction.getX() < 0) move_x = 1;
 		else move_x = -1;
@@ -130,4 +122,4 @@ void SFEnemy::MoveTowards(const std::shared_ptr<SFAsset> other) {
 
 	if(distance > initial_distance) bbox->Translate(*move_direction);
 	else isMoving = false; 
-}
+}*/
