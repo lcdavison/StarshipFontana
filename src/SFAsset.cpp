@@ -73,12 +73,25 @@ void SFAsset::GoSouth() {
 		bbox->Translate(v);
 }
 
+float SFAsset::DistanceTo(std::shared_ptr<SFAsset> other) {
+	return GetPosition().DistanceTo(other->GetPosition());
+}
+
 void SFAsset::MoveTowards(const std::shared_ptr<SFAsset> other) {
 
 	Vector2 direction = (GetPosition() - other->GetCenter()).normalize();
 	direction = direction * movement_speed;
 
 	if(GetPosition() != other->GetCenter()) bbox->Translate(direction);
+}
+
+void SFAsset::LinearInterpolate(const std::shared_ptr<SFAsset> other) {
+	
+	float x = GetPosition().getX() + ((other->GetPosition().getX() - GetPosition().getX()) * 1);
+	float y = GetPosition().getY() + ((other->GetPosition().getY() - GetPosition().getY()) * 1);
+
+	Vector2 direction = Vector2(x, y).normalize();
+        if(GetPosition() != other->GetCenter()) bbox->Translate(direction);
 }
 
 bool SFAsset::CollidesWith(shared_ptr<SFAsset> other) {

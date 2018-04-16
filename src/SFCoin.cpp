@@ -28,7 +28,9 @@ void SFCoin::OnUpdate() {
 		SetNotAlive();
 	}
 
-	if(GetPosition().DistanceTo(player->GetPosition()) < 150.0f) {
+	if(DistanceTo(player) < 200.0f) {
 		MoveTowards(player);
+	
+//		LinearInterpolate(player);
 	}
 }

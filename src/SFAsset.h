@@ -46,6 +46,7 @@ class SFAsset : public ISFAsset {
 		virtual Point2    GetPosition();
 		virtual Point2    GetCenter();
 		virtual bool	  IsOutsideWindow();	// Test assets position against window boundaries	
+		virtual float     DistanceTo(std::shared_ptr<SFAsset>);
 
 		virtual void      GoEast();
 		virtual void      GoWest();
@@ -61,6 +62,7 @@ class SFAsset : public ISFAsset {
 
 		// Movement
 		virtual void	  MoveTowards(std::shared_ptr<SFAsset>);
+		virtual void	  LinearInterpolate(std::shared_ptr<SFAsset>);
 
 	protected:
 		virtual void SetupSprite();
@@ -74,7 +76,7 @@ class SFAsset : public ISFAsset {
 		std::shared_ptr<Vector2> move_direction;
 		std::shared_ptr<Point2> end_point;
 
-		// Asset Data
+		/*---Asset Data---*/
 		std::string name;
 		bool alive = true;
 		int lifetime;
