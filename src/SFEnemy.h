@@ -17,16 +17,12 @@ class SFEnemy : public SFAsset {
 		void TakeDamage(short);
 		short GetHealth();
 
-		//	Enemy Movement
-		void MoveAround();
 	private:
 		//	Enemy Movement
 		enum SFEnemyDirection { LEFT, RIGHT };
-
-		void GoEast();
-		void GoWest();
-
 		SFEnemyDirection movement_direction;
+
+		void MoveAround();
 
 		//	Texture Setup
 		void SetupSprite();
@@ -37,6 +33,7 @@ class SFEnemy : public SFAsset {
 		//	Enemy Type
 		SFENEMYTYPE type;
 
+		//	Asset Pointers
 		std::shared_ptr<SFPlayer> player;
 };                                                                        
 #endif                               	

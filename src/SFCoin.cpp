@@ -8,7 +8,6 @@ SFCoin::SFCoin(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> win
 	movement_speed = 3.0f;
 }
 
-
 void SFCoin::SetupSprite() {
 
 	sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/sprites/coin.png");

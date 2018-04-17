@@ -52,24 +52,24 @@ void SFAsset::OnRender() {
 }
 
 void SFAsset::GoWest() {
-	Vector2 v = Vector2(-5.0f, 0);
+	Vector2 v = Vector2(-5.0f, 0) * movement_speed;
 	if(GetPosition().getX() >= 0)	bbox->Translate(v);
 }
 
 void SFAsset::GoEast() {
-	Vector2 v = Vector2(5.0f, 0);
+	Vector2 v = Vector2(5.0f, 0) * movement_speed;
 
 	//	Check that the asset is left of window width
 	if(GetPosition().getX() <= sf_window->GetWidth() - bbox->GetWidth())	bbox->Translate(v);
 }
 
 void SFAsset::GoNorth() {
-	Vector2 v = Vector2(0.0f, -5.0f);
+	Vector2 v = Vector2(0.0f, -5.0f) * movement_speed;
 	bbox->Translate(v);
 }
 
 void SFAsset::GoSouth() {
-	Vector2 v = Vector2(0.0f, 5.0f);
+	Vector2 v = Vector2(0.0f, 5.0f) * movement_speed;
 	bbox->Translate(v);
 }
 

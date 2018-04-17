@@ -71,13 +71,3 @@ void SFEnemy::MoveAround() {
 			break;
 	}
 }
-
-void SFEnemy::GoEast() {
-	Vector2 v = Vector2(0.5f, 0.0f) * movement_speed;
-	bbox->Translate(v);
-}
-
-void SFEnemy::GoWest() {
-	Vector2 v = Vector2(-0.5f, 0.0f) * movement_speed;
-	bbox->Translate(v);
-}
