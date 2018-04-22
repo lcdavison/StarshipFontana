@@ -34,6 +34,12 @@ void SFAsset::SetupSprite(const std::string path) {
 	bbox = make_shared<SFBoundingBox>(Point2(0.0f, 0.0f), w, h);
 }
 
+void SFAsset::SetupSpriteSheet(const std::string path, const int number_of_sprites) {
+	SDL_Rect sprites[number_of_sprites];
+
+
+}
+
 void SFAsset::SetAlpha(const int value) { SDL_SetTextureAlphaMod(sprite, value); } 
 
 void SFAsset::SetPosition(Point2 & point) {

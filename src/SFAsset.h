@@ -66,7 +66,7 @@ class SFAsset : public ISFAsset {
 
 	protected:
 		virtual void SetupSprite(const std::string);
-		virtual void SetupSpriteSheet(const std::string);
+		virtual void SetupSpriteSheet(const std::string, const int);	//Assumes each sprite is the same width and height
 		virtual void SetAlpha(const int);
 
 		/*---Movement---*/
