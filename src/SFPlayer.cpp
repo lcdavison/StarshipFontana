@@ -1,16 +1,7 @@
 #include "SFPlayer.h"
 
 SFPlayer::SFPlayer(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> window) : SFAsset (name, type, window) {
-	SetupSprite();
-}
-
-void SFPlayer::SetupSprite() {
-	sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/sprites/player.png");
-
-	int w, h;
-	SDL_QueryTexture(sprite, NULL, NULL, &w, &h);
-
-	bbox = make_shared<SFBoundingBox>(Point2(0.0f, 0.0f), w, h);
+	SetupSprite("assets/sprites/player.png");
 }
 
 void SFPlayer::OnUpdate() {

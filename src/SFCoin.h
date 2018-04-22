@@ -10,8 +10,6 @@ public:
 
 	void OnUpdate();
 private:
-	void SetupSprite();
-
 	std::shared_ptr<SFPlayer> player;
 };
 

@@ -2,7 +2,7 @@
 
 SFEnemy::SFEnemy(std::string name, SFASSETTYPE assetType, std::shared_ptr<SFWindow> window, SFENEMYTYPE enemyType) : SFAsset(name, assetType, window) {
 
-	SetupSprite();
+	SetupSprite("assets/sprites/alien.png");
 
 	type = enemyType;
 	movement_direction = LEFT;
@@ -23,15 +23,6 @@ SFEnemy::SFEnemy(std::string name, SFASSETTYPE assetType, std::shared_ptr<SFWind
 	}
 	
 	player = SFAssetManager::FindAssetByName<SFPlayer>("player");	
-}
-
-void SFEnemy::SetupSprite() {
-	sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/sprites/alien.png");
-
-	int w, h;
-	SDL_QueryTexture(sprite, NULL, NULL, &w, &h);
-
-	bbox = make_shared<SFBoundingBox>(Point2(0.0f, 0.0f), w , h);
 }
 
 void SFEnemy::OnUpdate() {

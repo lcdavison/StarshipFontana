@@ -18,8 +18,6 @@ public:
 	float ProjectileSpeed = 1.0f;
 
 private:
-	void SetupSprite();
-
 	short damage;
 	PROJECTILE_TYPE projectile;
 };

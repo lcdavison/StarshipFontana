@@ -18,7 +18,16 @@ SFAsset::~SFAsset() {
 	}
 }
 
-void SFAsset::SetupSprite(){}
+void SFAsset::SetupSprite(const std::string path) {
+	sprite = IMG_LoadTexture(sf_window->getRenderer(), path.c_str());
+
+	if(!sprite) printf("Failed to load sprite");
+
+	int w, h;
+	SDL_QueryTexture(sprite, NULL, NULL, &w, &h);
+
+	bbox = make_shared<SFBoundingBox>(Point2(0.0f, 0.0f), w, h);
+}
 
 void SFAsset::SetPosition(Point2 & point) {
 	Vector2 v(point.getX(), point.getY());

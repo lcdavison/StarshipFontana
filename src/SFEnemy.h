@@ -24,9 +24,6 @@ class SFEnemy : public SFAsset {
 
 		void MoveAround();
 
-		//	Texture Setup
-		void SetupSprite();
-
 		//	Health
 		short health;
 
