@@ -21,13 +21,20 @@ SFAsset::~SFAsset() {
 void SFAsset::SetupSprite(const std::string path) {
 	sprite = IMG_LoadTexture(sf_window->getRenderer(), path.c_str());
 
-	if(!sprite) printf("Failed to load sprite");
+	if(!sprite) { 
+		printf("Failed to load sprite");
+		return;
+	}
+
+	SDL_SetTextureBlendMode(sprite, SDL_BLENDMODE_BLEND);
 
 	int w, h;
 	SDL_QueryTexture(sprite, NULL, NULL, &w, &h);
 
 	bbox = make_shared<SFBoundingBox>(Point2(0.0f, 0.0f), w, h);
 }
+
+void SFAsset::SetAlpha(const int value) { SDL_SetTextureAlphaMod(sprite, value); } 
 
 void SFAsset::SetPosition(Point2 & point) {
 	Vector2 v(point.getX(), point.getY());

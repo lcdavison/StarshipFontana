@@ -65,7 +65,9 @@ class SFAsset : public ISFAsset {
 		virtual void	  Lerp(std::shared_ptr<SFAsset>, float);
 
 	protected:
-		virtual void SetupSprite(std::string);
+		virtual void SetupSprite(const std::string);
+		virtual void SetupSpriteSheet(const std::string);
+		virtual void SetAlpha(const int);
 
 		/*---Movement---*/
 		bool is_moving = false;
