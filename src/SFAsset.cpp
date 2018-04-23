@@ -37,7 +37,7 @@ void SFAsset::SetupSprite(const std::string path) {
 void SFAsset::SetupSpriteSheet(const std::string path, const int number_of_sprites) {
 	
 	SDL_Rect sprites[number_of_sprites];
-	
+ 		
 
 
 }

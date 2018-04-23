@@ -79,6 +79,7 @@ class SFAsset : public ISFAsset {
 		bool alive = true;
 		int lifetime;
 
+//		shared_ptr<SFAnimation>	    animation;
 		SDL_Texture               * sprite;
 		shared_ptr<SFBoundingBox>   bbox;
 		SFASSETTYPE                 type;
