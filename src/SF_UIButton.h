@@ -1,26 +1,39 @@
 #ifndef SF_UIBUTTON_H
 #define SF_UIBUTTON_H
 
+#include <SDL.h>
+#include <SDL_ttf.h>
+
+#include <memory>
 #include <functional>
 #include <iostream>
-#include "SFBoundingBox.h"
+
+#include "SFMath.h"
+#include "SFWindow.h"
 
 enum SF_BUTTONSTATE { SFBUTTON_IDLE, SFBUTTON_HOVER, SFBUTTON_CLICK };
 
 class SF_UIButton {
 	public:
-		SF_UIButton(std::string, int, int, int, int, std::function<void (void)>);
+		SF_UIButton(std::string, int, int, int, int, std::shared_ptr<SFWindow>, std::function<void (void)>);
 		~SF_UIButton();
 
-		void OnClick(); // Function pointer
-	private:
+		void OnClick(); 
 
-		function<void (void)> OnClickFunction;
+		void OnRender();
+		void SetAlpha(int);
+	private:
+		std::function<void (void)> OnClickFunction;	//	Function to run when button is clicked
 
 		std::string text;
+
 		int x, y;
 		int width, height;
+
+		SDL_Texture* texture;
+		SDL_Rect	 bounds;
+
 		SF_BUTTONSTATE state;
-		shared_ptr<SFBoundingBox>	box;
+		std::shared_ptr<SFWindow>		sf_window;
 };
 #endif
