@@ -1,3 +1,6 @@
+#ifndef SF_UILABEL_H
+#define SF_UILABEL_H
+
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <string>
@@ -15,4 +18,4 @@ private:
 	static SDL_Texture* CreateTextureFromString(const std::string&, TTF_Font*, SDL_Color, std::shared_ptr<SFWindow>);
 
 };
-
+#endif

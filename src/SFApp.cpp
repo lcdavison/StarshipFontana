@@ -1,5 +1,7 @@
 #include "SFApp.h"
 
+#include "SF_UIButton.h" // Remove Later
+
 // TODO: Vary the enemy types when starting the level.
 // TODO: Add scenes to determine game behaviour
 // TODO: Add Query To Retrieve the pixel width of text, to set central text
@@ -19,6 +21,9 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window
 	SpawnEnemies(10);
 
 	game_state = SF_PLAY;
+
+	SF_UIButton button ("test", 0,0,0,0);
+	button.OnClick();
 }
 
 SFApp::~SFApp() {}
