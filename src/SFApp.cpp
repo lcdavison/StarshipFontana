@@ -22,7 +22,7 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window
 
 	game_state = SF_PLAY;
 
-	SF_UIButton button ("test", 0,0,0,0);
+	SF_UIButton button ("test", 0,0,0,0, [](void){ std::cout << "Hello World" << std::endl ;});
 	button.OnClick();
 }
 

@@ -9,7 +9,7 @@ enum SF_BUTTONSTATE { SFBUTTON_IDLE, SFBUTTON_HOVER, SFBUTTON_CLICK };
 
 class SF_UIButton {
 	public:
-		SF_UIButton(std::string, int, int, int, int);
+		SF_UIButton(std::string, int, int, int, int, std::function<void (void)>);
 		~SF_UIButton();
 
 		void OnClick(); // Function pointer
