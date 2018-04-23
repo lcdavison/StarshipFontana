@@ -2,8 +2,6 @@
 
 SFPlayer::SFPlayer(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> window) : SFAsset (name, type, window) {
 	SetupSprite("assets/sprites/player.png");
-
-	SetAlpha(100);
 }
 
 void SFPlayer::OnUpdate() {

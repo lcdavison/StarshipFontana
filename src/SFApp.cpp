@@ -5,8 +5,6 @@
 // TODO: Vary the enemy types when starting the level.
 // TODO: Add scenes to determine game behaviour
 // TODO: Add Query To Retrieve the pixel width of text, to set central text
-// TODO: Add an exit button
-// 		
 
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window) {
 	int canvas_w = window->GetWidth();
@@ -22,8 +20,6 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window
 
 	game_state = SF_PLAY;
 
-	SF_UIButton button ("test", 0,0,0,0, [](void){ std::cout << "Hello World" << std::endl ;});
-	button.OnClick();
 }
 
 SFApp::~SFApp() {}
@@ -132,6 +128,10 @@ void SFApp::DrawHUD() {
 	SF_UILabel::DrawText(health_text, window->GetWidth() / 2 - health_text.length(), 0, text_colour, window);
 	SF_UILabel::DrawText(enemies_remaining_text, 10, 0, text_colour, window);
 	SF_UILabel::DrawText(coin_text, 10, 30, text_colour, window);	
+
+	SF_UIButton exit_button ("test", 270, 400, 100, 50, window, [](void){ std::cout << "Hello World" << std::endl ;});
+	exit_button.SetAlpha(200);
+	exit_button.OnRender();
 }
 
 void SFApp::DrawEndScore() {
@@ -162,7 +162,6 @@ int SFApp::GetNumEnemies() {
 
 void SFApp::ClearAllDead() {
 	for(auto asset : assets) {
-		assert(asset != NULL);
 		if(!asset->IsAlive()) SFAssetManager::RemoveAsset(asset);
 	}
 }
