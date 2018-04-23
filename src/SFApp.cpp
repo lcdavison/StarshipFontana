@@ -3,8 +3,8 @@
 // TODO: Vary the enemy types when starting the level.
 // TODO: Add scenes to determine game behaviour
 // TODO: Add Query To Retrieve the pixel width of text, to set central text
-// TODO: Adjust collisions to be handled in relevant classes, eg. Enemy Collision in SFEnemy class
-// TODO: Add delta time to handle linear interpolation, and animations
+// TODO: Add an exit button
+// 		
 
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window) {
 	int canvas_w = window->GetWidth();
@@ -17,6 +17,8 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window
 	player->SetPosition(player_pos);
 
 	SpawnEnemies(10);
+
+	game_state = SF_PLAY;
 }
 
 SFApp::~SFApp() {}
@@ -51,6 +53,10 @@ void SFApp::OnEvent(SFEvent& event) {
 		case SFEVENT_FIRE:	
 			FireProjectile();
 			break;
+		case SFEVENT_MOUSEDOWN:
+			MousePos position = event.GetMousePosition();
+			std::cout << "X : " << position.x << " Y : " << position.y << std::endl;
+			break;
 	}
 }
 
@@ -68,11 +74,16 @@ void SFApp::StartMainLoop() {
 
 void SFApp::OnUpdate() {
 
-	for(auto asset : assets) {
-		asset->OnUpdate();
-	}
+	if(GetNumEnemies() == 0) game_state = SF_END;
 
-	ClearAllDead();
+	if(game_state != SF_END) {
+
+		for(auto asset : assets) {
+			asset->OnUpdate();
+		}
+
+		ClearAllDead();
+	}
 }
 
 void SFApp::OnRender() {
@@ -80,14 +91,17 @@ void SFApp::OnRender() {
 	// 1. Clear visible content
 	window->ClearScreen();
 
-	// 2. Render Assets
-	for(auto asset : assets) {
-		if(!asset->IsOutsideWindow() && asset->IsAlive())
-			asset->OnRender();
-	}
+	if(game_state != SF_END) {
 
-	// 3. Draw HUD
-	DrawHUD();
+		// 2. Render Assets
+		for(auto asset : assets) {
+			if(!asset->IsOutsideWindow() && asset->IsAlive())
+				asset->OnRender();
+		}
+
+		// 3. Draw HUD
+		DrawHUD();
+	} else { DrawEndScore(); }
 
 	// 4. Switch the off-screen buffer to be on-screen
 	window->ShowScreen();
@@ -106,16 +120,20 @@ void SFApp::FireProjectile() {
 }
 
 void SFApp::DrawHUD() {
-	SDL_Color textColour = { 0, 255, 0, 255 };
+	std::string health_text = "HEALTH : " + std::to_string(player->GetHealth());
+	std::string enemies_remaining_text = "ENEMIES : " + std::to_string(GetNumEnemies());
+	std::string coin_text = "COINS : " + std::to_string(player->GetCoins());
 
-	std::string healthText = "HEALTH : " + std::to_string(player->GetHealth());
-	std::string enemies_remainingText = "ENEMIES : " + std::to_string(GetNumEnemies());
-	std::string coinText = "COINS : " + std::to_string(player->GetCoins());
-
-	SF_UILabel::DrawText(healthText, window->GetWidth() / 2 - healthText.length(), 0, textColour, window);
-	SF_UILabel::DrawText(enemies_remainingText, 10, 0, textColour, window);
-	SF_UILabel::DrawText(coinText, 10, 30, textColour, window);	
+	SF_UILabel::DrawText(health_text, window->GetWidth() / 2 - health_text.length(), 0, text_colour, window);
+	SF_UILabel::DrawText(enemies_remaining_text, 10, 0, text_colour, window);
+	SF_UILabel::DrawText(coin_text, 10, 30, text_colour, window);	
 }
+
+void SFApp::DrawEndScore() {
+	std::string end_text = "FINAL SCORE : " + std::to_string(player->GetCoins() * 2);
+
+	SF_UILabel::DrawText(end_text, window->GetWidth() / 2, 0, text_colour, window);
+} 
 
 void SFApp::SpawnEnemies(int amount) {
 	for (int i = 0; i < amount; i++) {

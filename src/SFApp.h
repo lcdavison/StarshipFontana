@@ -37,7 +37,16 @@ class SFApp {
 
 		void FireProjectile();
 	private:
+
+		enum SFGAMESTATE { SF_PLAY, SF_END };
+		SFGAMESTATE game_state;
+
+		//UI
+		SDL_Color text_colour = { 0, 255, 0, 255 };
+
 		void DrawHUD();
+		void DrawEndScore();
+
 		void SpawnEnemies(int);
 		int  GetNumEnemies();
 		void ClearAllDead();
