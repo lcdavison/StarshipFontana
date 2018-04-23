@@ -65,18 +65,14 @@ class SFAsset : public ISFAsset {
 		virtual void	  Lerp(std::shared_ptr<SFAsset>, float);
 
 	protected:
+
+		/*---Sprites---*/
 		virtual void SetupSprite(const std::string);
 		virtual void SetupSpriteSheet(const std::string, const int);	//Assumes each sprite is the same width and height
 		virtual void SetAlpha(const int);
 
 		/*---Movement---*/
-		bool is_moving = false;
-
 		float movement_speed = 2.0f;
-		float initial_distance;
-
-		std::shared_ptr<Vector2> move_direction;
-		std::shared_ptr<Point2> end_point;
 
 		/*---Asset Data---*/
 		std::string name;
