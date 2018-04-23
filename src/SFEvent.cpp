@@ -11,6 +11,11 @@ SFEvent::SFEvent(const SDL_Event & event) {
     case SDL_USEREVENT:
         code = SFEVENT_UPDATE;
         break;
+	case SDL_MOUSEBUTTONDOWN:
+		code = SFEVENT_MOUSEDOWN;
+		mouse_position.x = event.button.x;
+		mouse_position.y = event.button.y;
+		break;
     case SDL_KEYDOWN:
         switch (event.key.keysym.sym) {
         case SDLK_LEFT:
@@ -42,3 +47,5 @@ SFEvent::SFEvent(const SDL_Event & event) {
 SFEVENT SFEvent::GetCode() {
     return code;
 }
+
+MousePos SFEvent::GetMousePosition() { return mouse_position; } 
