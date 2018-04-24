@@ -5,6 +5,7 @@
 // TODO: Vary the enemy types when starting the level.
 // TODO: Add scenes to determine game behaviour
 // TODO: Add Query To Retrieve the pixel width of text, to set central text
+// TODO: Kill player when health reaches 0
 
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window) {
 	int canvas_w = window->GetWidth();
@@ -55,8 +56,7 @@ void SFApp::OnEvent(SFEvent& event) {
 			FireProjectile();
 			break;
 		case SFEVENT_MOUSEDOWN:
-			MousePos position = event.GetMousePosition();
-			std::cout << "X : " << position.x << " Y : " << position.y << std::endl;
+			mouse_position = event.GetMousePosition();
 			break;
 	}
 }
@@ -106,6 +106,8 @@ void SFApp::OnRender() {
 
 	// 4. Switch the off-screen buffer to be on-screen
 	window->ShowScreen();
+
+	mouse_position = { 0 ,0 };
 }
 
 void SFApp::FireProjectile() {
@@ -129,15 +131,21 @@ void SFApp::DrawHUD() {
 	SF_UILabel::DrawText(enemies_remaining_text, 10, 0, text_colour, window);
 	SF_UILabel::DrawText(coin_text, 10, 30, text_colour, window);	
 
-	SF_UIButton exit_button ("test", 270, 400, 100, 50, window, [](void){ std::cout << "Hello World" << std::endl ;});
-	exit_button.SetAlpha(200);
-	exit_button.OnRender();
+	
+	
+	
+	
 }
 
 void SFApp::DrawEndScore() {
 	std::string end_text = "FINAL SCORE : " + std::to_string(player->GetCoins() * 2);
 
 	SF_UILabel::DrawText(end_text, window->GetWidth() / 2, 0, text_colour, window);
+
+	SF_UIButton exit_button ("Exit Game", 270, 400, 100, 50, window, [this](void){ is_running = false;});
+	exit_button.SetAlpha(200);
+	exit_button.OnClick(mouse_position);
+	exit_button.OnRender();
 } 
 
 void SFApp::SpawnEnemies(int amount) {

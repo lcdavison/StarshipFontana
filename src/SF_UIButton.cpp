@@ -32,8 +32,8 @@ SF_UIButton::~SF_UIButton() {
 	SDL_DestroyTexture(texture);
 } 
 
-void SF_UIButton::OnClick() {
-	OnClickFunction();
+void SF_UIButton::OnClick(MousePos position) {
+	if(position.x > x && position.x < x + width && position.y > y && position.y < y + height) OnClickFunction();
 } 
 
 void SF_UIButton::OnRender() {

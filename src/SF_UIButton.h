@@ -10,6 +10,7 @@
 
 #include "SFMath.h"
 #include "SFWindow.h"
+#include "SFEvent.h"
 
 enum SF_BUTTONSTATE { SFBUTTON_IDLE, SFBUTTON_HOVER, SFBUTTON_CLICK };
 
@@ -18,7 +19,7 @@ class SF_UIButton {
 		SF_UIButton(std::string, int, int, int, int, std::shared_ptr<SFWindow>, std::function<void (void)>);
 		~SF_UIButton();
 
-		void OnClick(); 
+		void OnClick(MousePos); 
 
 		void OnRender();
 		void SetAlpha(int);

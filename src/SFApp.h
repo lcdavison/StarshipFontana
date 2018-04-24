@@ -53,6 +53,8 @@ class SFApp {
 
 		bool is_running;
 
+		MousePos mouse_position;
+
 		shared_ptr<SFWindow> window;
 		shared_ptr<SFPlayer> player;
 
