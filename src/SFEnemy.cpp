@@ -23,10 +23,11 @@ SFEnemy::SFEnemy(std::string name, SFASSETTYPE assetType, std::shared_ptr<SFWind
 	}
 	
 	player = SFAssetManager::FindAssetByName<SFPlayer>("player");	
+	SetMovementSpeed(0.2f);
 }
 
 void SFEnemy::OnUpdate() {
-	//MoveAround();
+	MoveAround();
 	
 	if(CollidesWith(player)) {
 		player->TakeDamage(20);

@@ -5,6 +5,9 @@ SFPlayer::SFPlayer(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow>
 }
 
 void SFPlayer::OnUpdate() {
+	if(IsDead()) {
+		alive = false;
+	}
 }
 
 void SFPlayer::AddCoin() {

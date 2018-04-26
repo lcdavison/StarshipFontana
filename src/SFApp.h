@@ -37,7 +37,6 @@ class SFApp {
 
 		void FireProjectile();
 	private:
-
 		enum SFGAMESTATE { SF_PLAY, SF_END };
 		SFGAMESTATE game_state;
 

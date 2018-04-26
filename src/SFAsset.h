@@ -52,6 +52,7 @@ class SFAsset : public ISFAsset {
 		virtual void      GoWest();
 		virtual void      GoNorth();
 		virtual void      GoSouth();
+		virtual void	  SetMovementSpeed(float);
 
 		virtual void      SetNotAlive();
 		virtual bool      IsAlive();

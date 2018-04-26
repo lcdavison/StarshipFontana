@@ -5,7 +5,6 @@
 // TODO: Vary the enemy types when starting the level.
 // TODO: Add scenes to determine game behaviour
 // TODO: Add Query To Retrieve the pixel width of text, to set central text
-// TODO: Kill player when health reaches 0
 
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window) {
 	int canvas_w = window->GetWidth();
@@ -20,7 +19,6 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window
 	SpawnEnemies(10);
 
 	game_state = SF_PLAY;
-
 }
 
 SFApp::~SFApp() {}
@@ -74,14 +72,13 @@ void SFApp::StartMainLoop() {
 }
 
 void SFApp::OnUpdate() {
-
-	if(GetNumEnemies() == 0) game_state = SF_END;
-
-	if(game_state != SF_END) {
-
+	if(game_state == SF_PLAY) {
+		// Update assets before updating app
 		for(auto asset : assets) {
 			asset->OnUpdate();
 		}
+
+		if(GetNumEnemies() == 0 || !SFAssetManager::FindAssetByName<SFPlayer>("player")->IsAlive()) game_state = SF_END;
 
 		ClearAllDead();
 	}
@@ -92,7 +89,7 @@ void SFApp::OnRender() {
 	// 1. Clear visible content
 	window->ClearScreen();
 
-	if(game_state != SF_END) {
+	if(game_state == SF_PLAY) {
 
 		// 2. Render Assets
 		for(auto asset : assets) {
@@ -130,17 +127,12 @@ void SFApp::DrawHUD() {
 	SF_UILabel::DrawText(health_text, window->GetWidth() / 2 - health_text.length(), 0, text_colour, window);
 	SF_UILabel::DrawText(enemies_remaining_text, 10, 0, text_colour, window);
 	SF_UILabel::DrawText(coin_text, 10, 30, text_colour, window);	
-
-	
-	
-	
-	
 }
 
 void SFApp::DrawEndScore() {
 	std::string end_text = "FINAL SCORE : " + std::to_string(player->GetCoins() * 2);
 
-	SF_UILabel::DrawText(end_text, window->GetWidth() / 2, 0, text_colour, window);
+	SF_UILabel::DrawText(end_text, window->GetWidth() / 2 - end_text.length(), 0, text_colour, window);
 
 	SF_UIButton exit_button ("Exit Game", 270, 400, 100, 50, window, [this](void){ is_running = false;});
 	exit_button.SetAlpha(200);

@@ -97,6 +97,8 @@ void SFAsset::GoSouth() {
 	bbox->Translate(v);
 }
 
+void SFAsset::SetMovementSpeed(float speed) { movement_speed = speed; }
+
 float SFAsset::DistanceTo(std::shared_ptr<SFAsset> other) {
 	return GetPosition().DistanceTo(other->GetPosition());
 }
