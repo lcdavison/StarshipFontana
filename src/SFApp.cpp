@@ -134,8 +134,8 @@ void SFApp::DrawEndScore() {
 
 	SF_UILabel::DrawText(end_text, window->GetWidth() / 2 - end_text.length(), 0, text_colour, window);
 
-	SF_UIButton exit_button ("Exit Game", 270, 400, 100, 50, window, [this](void){ is_running = false;});
-	exit_button.SetAlpha(200);
+	SF_UIButton exit_button ("Exit Game", 270, 400, 100, 56, window, [this](void){ is_running = false;});
+	exit_button.SetBackgroundAlpha(200);
 	exit_button.OnClick(mouse_position);
 	exit_button.OnRender();
 } 
