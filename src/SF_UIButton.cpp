@@ -21,11 +21,14 @@ SF_UIButton::SF_UIButton(std::string text, int x, int y, int w, int h, std::shar
 	}
 
 	SDL_Surface* text_surface = TTF_RenderText_Blended(sf_window->getFont(), text.c_str(), text_color);
+	
+	int wi, he;
+	TTF_SizeText(sf_window->getFont(), "Exit Game", &wi, &he);
 
 	if(text_surface != nullptr) {
 		text_texture = SDL_CreateTextureFromSurface(sf_window->getRenderer(), text_surface);
 
-		SDL_SetTextureBlendMode(text_texture, SDL_BLENDMODE_BLEND);
+		//SDL_SetTextureBlendMode(text_texture, SDL_BLENDMODE_BLEND);
 
 		SDL_FreeSurface(text_surface);
 	} else {
@@ -33,7 +36,7 @@ SF_UIButton::SF_UIButton(std::string text, int x, int y, int w, int h, std::shar
 	}
 
 	background_bounds = { x, y, width, height };
-	text_bounds = { x + width / 4, y + height / 4, width / 2, height / 2 };	// Relative to button
+	text_bounds = { x + width / 2 - wi / 2, y + height / 2 - he / 2, wi, he };	// Relative to button
 }
 
 SF_UIButton::~SF_UIButton() {

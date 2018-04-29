@@ -52,6 +52,7 @@ void SFApp::OnEvent(SFEvent& event) {
 			break;
 		case SFEVENT_FIRE:	
 			FireProjectile();
+			game_state = SF_END;
 			break;
 		case SFEVENT_MOUSEDOWN:
 			mouse_position = event.GetMousePosition();
@@ -108,7 +109,6 @@ void SFApp::OnRender() {
 }
 
 void SFApp::FireProjectile() {
-
 	shared_ptr<SFProjectile> bullet = make_shared<SFProjectile>("projectile", SFASSET_PROJECTILE, window, BULLET);
 	bullet->SetDamage(player->GetDamage());
 
@@ -134,7 +134,7 @@ void SFApp::DrawEndScore() {
 
 	SF_UILabel::DrawText(end_text, window->GetWidth() / 2 - end_text.length(), 0, text_colour, window);
 
-	SF_UIButton exit_button ("Exit Game", 270, 400, 100, 56, window, [this](void){ is_running = false;});
+	SF_UIButton exit_button ("Exit Game", 270, 400, 130, 73, window, [this](void){ is_running = false;});
 	exit_button.SetBackgroundAlpha(200);
 	exit_button.OnClick(mouse_position);
 	exit_button.OnRender();
