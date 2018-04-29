@@ -1,6 +1,6 @@
 #include "SFProjectile.h"
 
-SFProjectile::SFProjectile(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> window, PROJECTILE_TYPE projectile_type) : SFAsset(name, type, window) {
+SFProjectile::SFProjectile(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> window, SFPROJECTILETYPE projectile_type) : SFAsset(name, type, window) {
 	projectile = projectile_type;
 
 	SetupSprite("assets/sprites/projectile.png");
@@ -19,16 +19,16 @@ SFProjectile::SFProjectile(std::string name, SFASSETTYPE type, std::shared_ptr<S
 void SFProjectile::OnUpdate() {
 	GoNorth();
 
-	for(auto a : SFAssetManager::FindAssetsOfType<SFEnemy>(SFASSET_ALIEN)) {
+	for(auto alien : SFAssetManager::GetAssetsOfType<SFEnemy>(SFASSET_ALIEN)) {
 
-		if(CollidesWith(a)) {
-			a->TakeDamage(GetDamage());
+		if(CollidesWith(alien)) {
+			alien->TakeDamage(GetDamage());
 
 			HandleCollision();
 
-			if(a->IsDead()) {
-				a->HandleCollision();
-				SFAssetManager::SpawnAtPosition<SFCoin>(std::make_shared<SFCoin>("coin", SFASSET_COIN, sf_window), a->GetPosition());
+			if(alien->IsDead()) {
+				alien->HandleCollision();
+				SFAssetManager::SpawnAtPosition<SFCoin>(std::make_shared<SFCoin>("coin", SFASSET_COIN, sf_window), alien->GetPosition());
 			}
 		}
 	}

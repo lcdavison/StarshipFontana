@@ -3,11 +3,8 @@
 SF_UIButton::SF_UIButton(std::string text, int x, int y, int w, int h, std::shared_ptr<SFWindow> window, std::function<void (void)> click_func) : text(text), x(x), y(y), width(w), height(h), sf_window(window) {
 
 	OnClickFunction	= click_func;
-	
-	SDL_Color text_color = { 0, 0, 255, 0 };
 
 	SDL_Surface* background_surface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
-
 	SDL_FillRect(background_surface, NULL, SDL_MapRGB(background_surface->format, 255, 0, 0));
 	
 	if(background_surface != nullptr) {
@@ -20,15 +17,15 @@ SF_UIButton::SF_UIButton(std::string text, int x, int y, int w, int h, std::shar
 		std::cout << "Failed to create background surface" << std::endl;
 	}
 
+	SDL_Color text_color = { 0, 0, 255, 0 };
 	SDL_Surface* text_surface = TTF_RenderText_Blended(sf_window->getFont(), text.c_str(), text_color);
 	
 	int wi, he;
-	TTF_SizeText(sf_window->getFont(), "Exit Game", &wi, &he);
 
 	if(text_surface != nullptr) {
 		text_texture = SDL_CreateTextureFromSurface(sf_window->getRenderer(), text_surface);
 
-		//SDL_SetTextureBlendMode(text_texture, SDL_BLENDMODE_BLEND);
+		TTF_SizeText(sf_window->getFont(), "Exit Game", &wi, &he);
 
 		SDL_FreeSurface(text_surface);
 	} else {
@@ -40,8 +37,15 @@ SF_UIButton::SF_UIButton(std::string text, int x, int y, int w, int h, std::shar
 }
 
 SF_UIButton::~SF_UIButton() {
-	SDL_DestroyTexture(text_texture);
-	SDL_DestroyTexture(background_texture);
+	if(text_texture) {
+		SDL_DestroyTexture(text_texture);
+		text_texture = nullptr;
+	}
+
+	if(background_texture) {
+		SDL_DestroyTexture(background_texture);
+		background_texture = nullptr;
+	}
 } 
 
 void SF_UIButton::OnClick(MousePos position) {

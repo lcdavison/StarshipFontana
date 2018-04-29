@@ -5,13 +5,14 @@
 // TODO: Vary the enemy types when starting the level.
 // TODO: Add scenes to determine game behaviour
 // TODO: Add Query To Retrieve the pixel width of text, to set central text
+// TODO: Adjust OnClick button event trigger 
 
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window) {
 	int canvas_w = window->GetWidth();
 	int canvas_h = window->GetHeight();
 
 	SFAssetManager::CreateAsset<SFPlayer>("player", SFASSET_PLAYER, window);
-	player = SFAssetManager::FindAssetByName<SFPlayer>("player");
+	player = SFAssetManager::GetAssetByName<SFPlayer>("player");
 
 	auto player_pos = Point2(canvas_w / 2 - player->GetBoundingBox()->GetWidth() / 2, canvas_h - player->GetBoundingBox()->GetHeight());
 	player->SetPosition(player_pos);
@@ -52,7 +53,6 @@ void SFApp::OnEvent(SFEvent& event) {
 			break;
 		case SFEVENT_FIRE:	
 			FireProjectile();
-			game_state = SF_END;
 			break;
 		case SFEVENT_MOUSEDOWN:
 			mouse_position = event.GetMousePosition();
@@ -79,7 +79,7 @@ void SFApp::OnUpdate() {
 			asset->OnUpdate();
 		}
 
-		if(GetNumEnemies() == 0 || !SFAssetManager::FindAssetByName<SFPlayer>("player")->IsAlive()) game_state = SF_END;
+		if(GetNumEnemies() == 0 || !SFAssetManager::GetAssetByName<SFPlayer>("player")->IsAlive()) game_state = SF_END;
 
 		ClearAllDead();
 	}
@@ -90,19 +90,20 @@ void SFApp::OnRender() {
 	// 1. Clear visible content
 	window->ClearScreen();
 
+	// 2. Test game state
 	if(game_state == SF_PLAY) {
 
-		// 2. Render Assets
+		// 3. Render Assets
 		for(auto asset : assets) {
 			if(!asset->IsOutsideWindow() && asset->IsAlive())
 				asset->OnRender();
 		}
 
-		// 3. Draw HUD
+		// 4. Draw HUD
 		DrawHUD();
 	} else { DrawEndScore(); }
 
-	// 4. Switch the off-screen buffer to be on-screen
+	// 5. Switch the off-screen buffer to be on-screen
 	window->ShowScreen();
 
 	mouse_position = { 0 ,0 };

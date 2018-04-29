@@ -18,7 +18,6 @@ class Vector2 {
 
 		inline const Vector2 operator +(const Vector2& vec) const { return Vector2(x + vec.x, y + vec.y); }
 		inline const Vector2 operator *(float scalar) const { return Vector2(x * scalar, y * scalar); }
-
 	private:
 		float x, y;
 };
@@ -42,7 +41,6 @@ class Point2 {
 		inline const Point2 operator +(const Point2& point) const { return Point2(point.x + x, point.y + y); }
 		inline const Vector2 operator -(const Point2& point) const { return Vector2(point.x - x, point.y - y); }
 		inline const bool operator != (const Point2& point) const { return point.x != x && point.y != y; }
-
 	private:
 		float x, y;
 };

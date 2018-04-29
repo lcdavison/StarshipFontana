@@ -22,7 +22,7 @@ SFEnemy::SFEnemy(std::string name, SFASSETTYPE assetType, std::shared_ptr<SFWind
 			break;
 	}
 	
-	player = SFAssetManager::FindAssetByName<SFPlayer>("player");	
+	player = SFAssetManager::GetAssetByName<SFPlayer>("player");	
 	SetMovementSpeed(0.2f);
 }
 
@@ -32,7 +32,6 @@ void SFEnemy::OnUpdate() {
 	if(CollidesWith(player)) {
 		player->TakeDamage(20);
 		HandleCollision();
-		SFAssetManager::SpawnAtPosition(std::make_shared<SFCoin>("coin", SFASSET_COIN, sf_window), GetPosition());
 	}
 }
 

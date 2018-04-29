@@ -6,7 +6,6 @@
 enum SFENEMYTYPE { GRUNT, BRAWLER, ELITE, BOSS };
 
 class SFEnemy : public SFAsset {
-
 	public:
 		SFEnemy(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>, const SFENEMYTYPE);
 
@@ -19,8 +18,8 @@ class SFEnemy : public SFAsset {
 
 	private:
 		//	Enemy Movement
-		enum SFEnemyDirection { LEFT, RIGHT };
-		SFEnemyDirection movement_direction;
+		enum SFENEMYDIRECTION { LEFT, RIGHT };
+		SFENEMYDIRECTION movement_direction;
 
 		void MoveAround();
 

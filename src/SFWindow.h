@@ -11,13 +11,13 @@ class SFWindow {
 	public:
 		SFWindow(Uint32 w, Uint32 h, SDL_Color drawColor);
 		~SFWindow();
+
 		void ClearScreen();
 		void ShowScreen();
 
-		void DrawGUI();
-
 		int GetWidth();
 		int GetHeight();
+
 		SDL_Window* getWindow();
 		SDL_Renderer* getRenderer();
 		TTF_Font* getFont();

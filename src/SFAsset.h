@@ -70,7 +70,7 @@ class SFAsset : public ISFAsset {
 		/*---Sprites---*/
 		virtual void SetupSprite(const std::string);
 		virtual void SetupSpriteSheet(const std::string, const int);	//Assumes each sprite is the same width and height
-		virtual void SetAlpha(const int);
+		void SetAlpha(const int);
 
 		/*---Movement---*/
 		float movement_speed = 2.0f;

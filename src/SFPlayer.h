@@ -7,27 +7,27 @@
 #include "SFAsset.h"
 
 class SFPlayer: public SFAsset {
+	public:
+		SFPlayer(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
 
-private:
-	short coins = 0;
-	short health = 100;
-	short damage = 25;
-public:
-	SFPlayer(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
+		void OnUpdate();
 
-	void OnUpdate();
-	
-	//	Player's Coins
-	void AddCoin();
-	short GetCoins();
+		//	Player's Coins
+		void AddCoin();
+		short GetCoins();
 
-	//	Player's Health
-	void TakeDamage(short);
-	short GetHealth();
-	bool IsDead();
+		//	Player's Health
+		void TakeDamage(short);
+		short GetHealth();
+		bool IsDead();
 
-	//	Player Damage
-	short GetDamage();
-	void ModifyDamage(short);
-};
-#endif
+		//	Player Damage
+		short GetDamage();
+		void ModifyDamage(short);
+	private:
+		short coins = 0;
+		short health = 100;
+		short damage = 25;
+};                               
+#endif                           
+

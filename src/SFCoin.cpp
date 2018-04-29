@@ -3,9 +3,9 @@
 SFCoin::SFCoin(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> window) : SFAsset(name, type, window) { 
 	SetupSprite("assets/sprites/coin.png");
 
-	player = SFAssetManager::FindAssetByName<SFPlayer>("player");
-
-	movement_speed = 3.0f;
+	player = SFAssetManager::GetAssetByName<SFPlayer>("player");
+	
+	SetMovementSpeed(3.0f);
 }
 
 void SFCoin::OnUpdate() {
@@ -15,8 +15,6 @@ void SFCoin::OnUpdate() {
 	}
 
 	if(DistanceTo(player) < 200.0f) {
-//		MoveTowards(player);
-	
 		Lerp(player, 0.01f);
 	}
 }
