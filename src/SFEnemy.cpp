@@ -27,15 +27,11 @@ SFEnemy::SFEnemy(std::string name, SFASSETTYPE assetType, std::shared_ptr<SFWind
 }
 
 void SFEnemy::OnUpdate() {
-	attack_interval++;
 
 	MoveAround();
 
-	if(attack_interval >= 100) {
-		Attack();
-		attack_interval = 0;
-	}
-	
+	Attack();
+
 	if(CollidesWith(player)) {
 		player->TakeDamage(20);
 		HandleCollision();
@@ -74,11 +70,16 @@ void SFEnemy::MoveAround() {
 }
 
 void SFEnemy::Attack() {
-	std::shared_ptr<SFProjectile> projectile = std::make_shared<SFProjectile>("projectile", SFASSET_PROJECTILE, sf_window, BULLET, SOUTH);
+	attack_interval++;
 
-	auto v = GetCenter();
-	auto pos = Point2(v.getX() - projectile->GetBoundingBox()->GetWidth() / 2, v.getY() + GetBoundingBox()->GetHeight());
-	projectile->SetPosition(pos);
+	if(attack_interval >= 100) {
+		std::shared_ptr<SFProjectile> projectile = std::make_shared<SFProjectile>("projectile", SFASSET_PROJECTILE, sf_window, BULLET, SOUTH);
 
-	SFAssetManager::AddAsset<SFProjectile>(projectile);
+		auto v = GetCenter();
+		auto pos = Point2(v.getX() - projectile->GetBoundingBox()->GetWidth() / 2, v.getY() + GetBoundingBox()->GetHeight());
+		projectile->SetPosition(pos);
+
+		SFAssetManager::AddAsset<SFProjectile>(projectile);
+		attack_interval = 0;
+	}
 }
