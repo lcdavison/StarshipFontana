@@ -17,7 +17,7 @@ SF_UIButton::SF_UIButton(std::string text, int x, int y, int w, int h, std::shar
 		std::cout << "Failed to create background surface" << std::endl;
 	}
 
-	SDL_Color text_color = { 0, 0, 255, 0 };
+	SDL_Color text_color = { 0, 0, 100, 0 };
 	SDL_Surface* text_surface = TTF_RenderText_Blended(sf_window->getFont(), text.c_str(), text_color);
 	
 	int wi, he;
