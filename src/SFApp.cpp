@@ -1,6 +1,10 @@
 #include "SFApp.h"
 
 // TODO: Vary the enemy types when starting the level.
+// TODO: Adjust projectile to store the asset that fired the bullet
+// TODO: Restart button
+// TODO: Main Menu
+// TODO: Improve drop for enemies
 // TODO: Adjust OnClick button event trigger 
 // TODO: Change the README.md 
 
