@@ -12,14 +12,14 @@ void SFPlayer::OnUpdate() {
 
 void SFPlayer::GoNorth() {
 	Vector2 v = Vector2(0.0f, -5.0f) * movement_speed;
-	bbox->Translate(v);
+	if(GetPosition().getY() >= 0) bbox->Translate(v);
 	
 	CheckCollision(v);
 }
 
 void SFPlayer::GoSouth() {
 	Vector2 v = Vector2(0.0f, 5.0f) * movement_speed;
-	bbox->Translate(v);
+	if(GetPosition().getY() <= sf_window->GetHeight() - bbox->GetHeight()) bbox->Translate(v);
 	
 	CheckCollision(v);
 }

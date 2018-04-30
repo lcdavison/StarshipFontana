@@ -58,7 +58,7 @@ Point2 SFAsset::GetCenter() {
 }
 
 bool SFAsset::IsOutsideWindow() {
-	return bbox->GetY() < 0 || bbox->GetY() > sf_window->GetHeight() || bbox->GetX() + bbox->GetWidth() < 0 || bbox->GetX() > sf_window->GetWidth();
+	return bbox->GetY() + bbox->GetHeight() < 0 || bbox->GetY() > sf_window->GetHeight() || bbox->GetX() + bbox->GetWidth() < 0 || bbox->GetX() > sf_window->GetWidth();
 }
 
 std::string SFAsset::GetName() const { return name; }
