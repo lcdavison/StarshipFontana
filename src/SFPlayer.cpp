@@ -6,12 +6,71 @@ SFPlayer::SFPlayer(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow>
 
 void SFPlayer::OnUpdate() {
 
+	printf("COLLISION : %d\n", has_collision);
+
 	if(IsDead()) {
 		alive = false;
 	}
 
+	
+}
+
+void SFPlayer::GoNorth() {
+	Vector2 v = Vector2(0.0f, -5.0f) * movement_speed;
+	bbox->Translate(v);
+	
+	CheckCollision();
+
+	if(has_collision) {
+		v = v * -1;
+		bbox->Translate(v);
+		has_collision = false;
+	}
+}
+
+void SFPlayer::GoSouth() {
+	Vector2 v = Vector2(0.0f, 5.0f) * movement_speed;
+	bbox->Translate(v);
+	
+	CheckCollision();
+
+	if(has_collision) {
+		v = v * -1;
+		bbox->Translate(v);
+		has_collision = false;
+	}
+}
+
+void SFPlayer::GoEast() {
+	Vector2 v = Vector2(5.0f, 0.0f) * movement_speed;
+	bbox->Translate(v);
+	
+	CheckCollision();
+
+	if(has_collision) {
+		v = v * -1;
+		bbox->Translate(v);
+		has_collision = false;
+	}
+}
+
+void SFPlayer::GoWest() {
+	Vector2 v = Vector2(-5.0f, 0.0f) * movement_speed;
+	bbox->Translate(v);
+	
+	CheckCollision();
+
+	if(has_collision) {
+		v = v * -1;
+		bbox->Translate(v);
+		has_collision = false;
+	}
+}
+
+void SFPlayer::CheckCollision() {
 	for(auto wall : SFAssetManager::GetAssetsOfType<SFObstacle>(SFASSET_OBSTACLE)) {
 		if(CollidesWith(wall)) {
+			has_collision = true;
 		}
 	}
 }

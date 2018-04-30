@@ -58,7 +58,9 @@ class SFAsset : public ISFAsset {
 		virtual bool      IsAlive();
 		virtual void      HandleCollision();
 
-		virtual bool                      CollidesWith(shared_ptr<SFAsset>);
+		/*---COLLISION TESTS---*/
+		virtual bool    CollidesWith(shared_ptr<SFAsset>);
+
 		virtual shared_ptr<SFBoundingBox> GetBoundingBox();
 
 		// Movement

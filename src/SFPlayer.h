@@ -21,6 +21,13 @@ class SFPlayer : public SFAsset {
 		//	Player Damage
 		short GetDamage();
 		void ModifyDamage(short);
+
+		void GoNorth();
+		void GoSouth();
+		void GoEast();
+		void GoWest();
+
+		void CheckCollision();
 	private:
 		short coins = 0;
 		short health = 100;
