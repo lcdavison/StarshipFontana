@@ -5,8 +5,14 @@ SFPlayer::SFPlayer(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow>
 }
 
 void SFPlayer::OnUpdate() {
+
 	if(IsDead()) {
 		alive = false;
+	}
+
+	for(auto wall : SFAssetManager::GetAssetsOfType<SFObstacle>(SFASSET_OBSTACLE)) {
+		if(CollidesWith(wall)) {
+		}
 	}
 }
 

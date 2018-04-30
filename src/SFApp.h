@@ -5,17 +5,10 @@
 #include <list>     // Pull in list
 #include <vector>   // Pull in vector
 
-#include <assert.h>
-
 using namespace std;
 
 #include "SFCommon.h"
 #include "SFEvent.h"
-#include "SFAsset.h"
-#include "SFPlayer.h"
-#include "SFEnemy.h"
-#include "SFCoin.h"
-#include "SFProjectile.h"
 #include "SF_UILabel.h"
 #include "SFAssetManager.h"
 
@@ -37,17 +30,23 @@ class SFApp {
 
 		void FireProjectile();
 	private:
+		/*---STATE---*/
 		enum SFGAMESTATE { SF_PLAY, SF_END };
 		SFGAMESTATE game_state;
 
-		//UI
+		/*---UI---*/
 		SDL_Color text_colour = { 0, 255, 0, 255 };
 
 		void DrawHUD();
 		void DrawEndScore();
 
+		/*---SPAWNING---*/
+		void SpawnObstacles(int);
 		void SpawnEnemies(int);
+
 		int  GetNumEnemies();
+		
+		/*---CLEARING---*/
 		void ClearAllDead();
 
 		bool is_running;

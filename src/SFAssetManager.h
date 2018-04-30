@@ -9,6 +9,7 @@
 #include "SFCoin.h"
 #include "SFEnemy.h"
 #include "SFProjectile.h"
+#include "SFObstacle.h"
 
 class SFAssetManager {
 	public:

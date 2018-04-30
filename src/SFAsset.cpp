@@ -65,7 +65,7 @@ std::string SFAsset::GetName() const { return name; }
 
 SFASSETTYPE SFAsset::GetType() const { return type; }
 
-void SFAsset::OnUpdate() {}                         
+void SFAsset::OnUpdate() { }                         
 
 void SFAsset::OnRender() {
 	// 1. Get the SDL_Rect from SFBoundingBox
@@ -82,8 +82,6 @@ void SFAsset::GoWest() {
 
 void SFAsset::GoEast() {
 	Vector2 v = Vector2(5.0f, 0) * movement_speed;
-
-	//	Check that the asset is left of window width
 	if(GetPosition().getX() <= sf_window->GetWidth() - bbox->GetWidth())	bbox->Translate(v);
 }
 

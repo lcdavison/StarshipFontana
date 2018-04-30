@@ -19,6 +19,7 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window
 	player->SetPosition(player_pos);
 
 	SpawnEnemies(10);
+	SpawnObstacles(3);
 
 	game_state = SF_PLAY;
 }
@@ -141,6 +142,16 @@ void SFApp::DrawEndScore() {
 	exit_button.OnClick(mouse_position);
 	exit_button.OnRender();
 } 
+
+void SFApp::SpawnObstacles(int amount) {
+	for(int i = 0; i < amount; i++) {
+		auto wall = make_shared<SFObstacle>("wall" + i, SFASSET_OBSTACLE, window);
+		auto pos = Point2((window->GetWidth() / amount) * i + wall->GetBoundingBox()->GetWidth() / 2, 300.0f);
+		wall->SetPosition(pos);
+
+		SFAssetManager::AddAsset<SFObstacle>(wall);
+	}
+}
 
 void SFApp::SpawnEnemies(int amount) {
 	for (int i = 0; i < amount; i++) {

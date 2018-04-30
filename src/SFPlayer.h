@@ -1,12 +1,9 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef SFPLAYER_H
+#define SFPLAYER_H
 
-#include <memory>
-#include <string>
+#include "SFAssetManager.h"
 
-#include "SFAsset.h"
-
-class SFPlayer: public SFAsset {
+class SFPlayer : public SFAsset {
 	public:
 		SFPlayer(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
 

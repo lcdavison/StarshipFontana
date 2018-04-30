@@ -22,7 +22,7 @@ using namespace std;
  * enum to mark the type of the SFAsset.  If we add more asset types then
  * the subclassing strategy becomes a better option.
  */
-enum SFASSETTYPE { SFASSET_PLAYER, SFASSET_PROJECTILE, SFASSET_ALIEN, SFASSET_COIN };
+enum SFASSETTYPE { SFASSET_PLAYER, SFASSET_PROJECTILE, SFASSET_ALIEN, SFASSET_COIN, SFASSET_OBSTACLE };
 
 /*--SFASSET INTERFACE--*/
 class ISFAsset {
@@ -78,6 +78,7 @@ class SFAsset : public ISFAsset {
 		/*---Asset Data---*/
 		std::string name;
 		bool alive = true;
+		bool has_collision = false;
 		int lifetime;
 
 //		shared_ptr<SFAnimation>	    animation;

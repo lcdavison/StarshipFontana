@@ -3,6 +3,8 @@
 
 #include "SFAssetManager.h"
 
+class SFPlayer;
+
 enum SFENEMYTYPE { GRUNT, BRAWLER, ELITE, BOSS };
 
 class SFEnemy : public SFAsset {
