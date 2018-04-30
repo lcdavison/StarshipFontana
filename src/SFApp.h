@@ -10,6 +10,7 @@ using namespace std;
 #include "SFCommon.h"
 #include "SFEvent.h"
 #include "SF_UILabel.h"
+#include "SF_UIButton.h"
 #include "SFAssetManager.h"
 
 /**
@@ -28,7 +29,6 @@ class SFApp {
 		void OnUpdate();
 		void OnRender();
 
-		void FireProjectile();
 	private:
 		/*---STATE---*/
 		enum SFGAMESTATE { SF_PLAY, SF_END };
@@ -43,6 +43,7 @@ class SFApp {
 		/*---SPAWNING---*/
 		void SpawnObstacles(int);
 		void SpawnEnemies(int);
+		void FireProjectile();
 
 		int  GetNumEnemies();
 		

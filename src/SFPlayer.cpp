@@ -51,7 +51,7 @@ void SFPlayer::GoEast() {
 
 void SFPlayer::GoWest() {
 	Vector2 v = Vector2(-5.0f, 0.0f) * movement_speed;
-	if( > 0) bbox->Translate(v);
+	if(GetPosition().getX() > 0) bbox->Translate(v);
 	
 	CheckCollision();
 

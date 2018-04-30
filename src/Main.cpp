@@ -28,6 +28,7 @@ shared_ptr<SFWindow> InitGraphics() {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) < 0) {
 		throw SFException("Failed to initialise SDL");
 	}
+
 	// Initialize TTF
 	if (TTF_Init() < 0) {
 		throw SFException("Failed to initialise TTF");
@@ -37,16 +38,17 @@ shared_ptr<SFWindow> InitGraphics() {
 	if(IMG_Init(IMG_INIT_PNG) < 0)
 		throw SFException("Failed to initialize IMG ");
 
+	// Window width & height
 	Uint32 width = 640;
 	Uint32 height = 480;
 
-	// color gray
+	// Background color 
 	SDL_Color draw_color = { 0, 100, 255, SDL_ALPHA_OPAQUE };
 
 	return make_shared<SFWindow>(width, height, draw_color);
 }
 
-int main(int arc, char ** argv) {
+int main(int argc, char ** argv) {
 
 	try {
 		// Initialise graphics context
@@ -55,7 +57,8 @@ int main(int arc, char ** argv) {
 		// Initialise world
 		shared_ptr<SFApp> game = make_shared<SFApp>(window);
 
-		int delay = SECOND_MILLIS / FRAME_RATE;
+		// Delay in milliseconds
+		int delay = SECOND_MILLIS / FRAME_RATE;	
 
 		// Set up the timer to call "PushUpdateEvent" every delay milliseconds
 		SDL_AddTimer(delay, PushUpdateEvent, NULL);
