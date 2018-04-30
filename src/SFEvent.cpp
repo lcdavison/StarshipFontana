@@ -36,6 +36,9 @@ SFEvent::SFEvent(const SDL_Event & event) {
         case SDLK_q:
             code = SFEVENT_QUIT;
             break;
+	case SDLK_ESCAPE:
+	    code = SFEVENT_PAUSE;
+	    break;
         }
         break;
     default:

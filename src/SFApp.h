@@ -31,8 +31,10 @@ class SFApp {
 
 	private:
 		/*---STATE---*/
-		enum SFGAMESTATE { SF_PLAY, SF_END };
+		enum SFGAMESTATE { SF_PLAY, SF_PAUSED, SF_END };
 		SFGAMESTATE game_state;
+
+		void TogglePause();
 
 		/*---UI---*/
 		SDL_Color text_colour = { 0, 255, 0, 255 };

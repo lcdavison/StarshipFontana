@@ -1,7 +1,6 @@
 #include "SFApp.h"
 
 // TODO: Vary the enemy types when starting the level.
-// TODO: Add Query To Retrieve the pixel width of text, to set central text
 // TODO: Adjust OnClick button event trigger 
 // TODO: Change the README.md 
 
@@ -32,6 +31,9 @@ void SFApp::OnEvent(SFEvent& event) {
 	switch (the_event) {
 		case SFEVENT_QUIT:
 			is_running = false;
+			break;
+		case SFEVENT_PAUSE:
+			TogglePause();
 			break;
 		case SFEVENT_UPDATE:
 			assets = SFAssetManager::RetrieveAllAssets();
@@ -100,12 +102,28 @@ void SFApp::OnRender() {
 
 		// 4. Draw HUD
 		DrawHUD();
-	} else { DrawEndScore(); }
+	} else if (game_state == SF_END) { 
+		DrawEndScore(); 
+	} else if (game_state == SF_PAUSED) {
+		int wi;
+		std::string pause_text = "PAUSED - PRESS ESC TO RESUME";
+		TTF_SizeText(window->getFont(), pause_text.c_str(), &wi, NULL);
+		SF_UILabel::DrawText(pause_text, window->GetWidth() / 2 - wi / 2, window->GetHeight() / 2, text_colour, window);
+	}
+
 
 	// 5. Switch the off-screen buffer to be on-screen
 	window->ShowScreen();
 
 	mouse_position = { 0 ,0 };
+}
+
+void SFApp::TogglePause() {
+	if(game_state == SF_PAUSED) {
+		game_state = SF_PLAY;
+	} else if(game_state == SF_PLAY) {
+		game_state = SF_PAUSED;
+	}
 }
 
 void SFApp::FireProjectile() {
@@ -124,7 +142,10 @@ void SFApp::DrawHUD() {
 	std::string enemies_remaining_text = "ENEMIES : " + std::to_string(GetNumEnemies());
 	std::string coin_text = "COINS : " + std::to_string(player->GetCoins());
 
-	SF_UILabel::DrawText(health_text, window->GetWidth() / 2 - health_text.length(), 0, text_colour, window);
+	int wi;
+	TTF_SizeText(window->getFont(), health_text.c_str(), &wi, NULL);
+
+	SF_UILabel::DrawText(health_text, window->GetWidth() / 2 - wi / 2, 0, text_colour, window);
 	SF_UILabel::DrawText(enemies_remaining_text, 10, 0, text_colour, window);
 	SF_UILabel::DrawText(coin_text, 10, 30, text_colour, window);	
 }
