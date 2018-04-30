@@ -5,14 +5,9 @@ SFPlayer::SFPlayer(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow>
 }
 
 void SFPlayer::OnUpdate() {
-
-	printf("COLLISION : %d\n", has_collision);
-
 	if(IsDead()) {
 		alive = false;
 	}
-
-	
 }
 
 void SFPlayer::GoNorth() {
@@ -43,7 +38,7 @@ void SFPlayer::GoSouth() {
 
 void SFPlayer::GoEast() {
 	Vector2 v = Vector2(5.0f, 0.0f) * movement_speed;
-	bbox->Translate(v);
+	if(GetPosition().getX() <= sf_window->GetWidth() - bbox->GetWidth())	bbox->Translate(v);
 	
 	CheckCollision();
 
@@ -56,7 +51,7 @@ void SFPlayer::GoEast() {
 
 void SFPlayer::GoWest() {
 	Vector2 v = Vector2(-5.0f, 0.0f) * movement_speed;
-	bbox->Translate(v);
+	if( > 0) bbox->Translate(v);
 	
 	CheckCollision();
 

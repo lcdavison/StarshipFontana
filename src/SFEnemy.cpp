@@ -47,10 +47,13 @@ void SFEnemy::MoveAround() {
 	Point2 currentPosition = GetPosition();
 
 	//	2.	Perform Movement Checks
-	if(currentPosition.getX() <= 0)
+	if(currentPosition.getX() <= 0) {
 		movement_direction = RIGHT;
-	else if(currentPosition.getX() >= sf_window->GetWidth() - bbox->GetWidth())
+		GoSouth();
+	} else if(currentPosition.getX() >= sf_window->GetWidth() - bbox->GetWidth()) {
 		movement_direction = LEFT;
+		GoSouth();
+	}
 
 	//	3.	Move
 	switch(movement_direction) {
