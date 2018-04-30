@@ -20,7 +20,6 @@ void SFProjectile::OnUpdate() {
 	GoNorth();
 
 	for(auto alien : SFAssetManager::GetAssetsOfType<SFEnemy>(SFASSET_ALIEN)) {
-
 		if(CollidesWith(alien)) {
 			alien->TakeDamage(GetDamage());
 
@@ -33,6 +32,11 @@ void SFProjectile::OnUpdate() {
 		}
 	}
 
+	for(auto wall : SFAssetManager::GetAssetsOfType<SFObstacle>(SFASSET_OBSTACLE)) {
+		if(CollidesWith(wall)) {
+			HandleCollision();
+		}
+	}
 
 	lifetime -= 10;
 
