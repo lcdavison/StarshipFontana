@@ -14,59 +14,41 @@ void SFPlayer::GoNorth() {
 	Vector2 v = Vector2(0.0f, -5.0f) * movement_speed;
 	bbox->Translate(v);
 	
-	CheckCollision();
-
-	if(has_collision) {
-		v = v * -1;
-		bbox->Translate(v);
-		has_collision = false;
-	}
+	CheckCollision(v);
 }
 
 void SFPlayer::GoSouth() {
 	Vector2 v = Vector2(0.0f, 5.0f) * movement_speed;
 	bbox->Translate(v);
 	
-	CheckCollision();
-
-	if(has_collision) {
-		v = v * -1;
-		bbox->Translate(v);
-		has_collision = false;
-	}
+	CheckCollision(v);
 }
 
 void SFPlayer::GoEast() {
 	Vector2 v = Vector2(5.0f, 0.0f) * movement_speed;
 	if(GetPosition().getX() <= sf_window->GetWidth() - bbox->GetWidth())	bbox->Translate(v);
 	
-	CheckCollision();
-
-	if(has_collision) {
-		v = v * -1;
-		bbox->Translate(v);
-		has_collision = false;
-	}
+	CheckCollision(v);
 }
 
 void SFPlayer::GoWest() {
 	Vector2 v = Vector2(-5.0f, 0.0f) * movement_speed;
 	if(GetPosition().getX() > 0) bbox->Translate(v);
 	
-	CheckCollision();
-
-	if(has_collision) {
-		v = v * -1;
-		bbox->Translate(v);
-		has_collision = false;
-	}
+	CheckCollision(v);
 }
 
-void SFPlayer::CheckCollision() {
+void SFPlayer::CheckCollision(Vector2& direction) {
 	for(auto wall : SFAssetManager::GetAssetsOfType<SFObstacle>(SFASSET_OBSTACLE)) {
 		if(CollidesWith(wall)) {
 			has_collision = true;
 		}
+	}
+
+	if(has_collision) {
+		direction = direction * -1;
+		bbox->Translate(direction);
+		has_collision = false;
 	}
 }
 

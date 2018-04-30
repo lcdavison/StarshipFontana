@@ -27,7 +27,7 @@ class SFPlayer : public SFAsset {
 		void GoEast();
 		void GoWest();
 
-		void CheckCollision();
+		void CheckCollision(Vector2&);
 	private:
 		short coins = 0;
 		short health = 100;
