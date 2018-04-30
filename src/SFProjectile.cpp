@@ -1,7 +1,8 @@
 #include "SFProjectile.h"
 
-SFProjectile::SFProjectile(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> window, SFPROJECTILETYPE projectile_type) : SFAsset(name, type, window) {
-	projectile = projectile_type;
+SFProjectile::SFProjectile(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> window, SFPROJECTILE_TYPE proj_type, SFPROJECTILE_DIRECTION proj_direction) : SFAsset(name, type, window) {
+	projectile = proj_type;
+	direction = proj_direction;
 
 	SetupSprite("assets/sprites/projectile.png");
 
@@ -17,7 +18,15 @@ SFProjectile::SFProjectile(std::string name, SFASSETTYPE type, std::shared_ptr<S
 }
 
 void SFProjectile::OnUpdate() {
-	GoNorth();
+
+	switch(direction) {
+		case NORTH:
+			GoNorth();
+			break;
+		case SOUTH:
+			GoSouth();
+			break;
+	}
 
 	for(auto alien : SFAssetManager::GetAssetsOfType<SFEnemy>(SFASSET_ALIEN)) {
 		if(CollidesWith(alien)) {

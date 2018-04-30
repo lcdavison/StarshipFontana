@@ -14,7 +14,7 @@ void SFCoin::OnUpdate() {
 		SetNotAlive();
 	}
 
-	if(DistanceTo(player) < 200.0f) {
+	if(DistanceTo(player) < 300.0f) {
 		Lerp(player, 0.01f);
 	}
 }

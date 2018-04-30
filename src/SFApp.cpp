@@ -127,7 +127,7 @@ void SFApp::TogglePause() {
 }
 
 void SFApp::FireProjectile() {
-	shared_ptr<SFProjectile> bullet = make_shared<SFProjectile>("projectile", SFASSET_PROJECTILE, window, BULLET);
+	shared_ptr<SFProjectile> bullet = make_shared<SFProjectile>("projectile", SFASSET_PROJECTILE, window, BULLET, NORTH);
 	bullet->SetDamage(player->GetDamage());
 
 	auto v = player->GetCenter(); 

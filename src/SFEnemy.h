@@ -19,11 +19,14 @@ class SFEnemy : public SFAsset {
 		short GetHealth();
 
 	private:
-		//	Enemy Movement
+		/*---ENEMY BEHAVIOUR---*/
 		enum SFENEMYDIRECTION { LEFT, RIGHT };
 		SFENEMYDIRECTION movement_direction;
 
 		void MoveAround();
+		void Attack();
+
+		int attack_interval = 0;
 
 		//	Health
 		short health;

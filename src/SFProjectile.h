@@ -3,19 +3,20 @@
 
 #include "SFAssetManager.h"
 
-enum SFPROJECTILETYPE { BULLET, ROCKET };
+enum SFPROJECTILE_TYPE { BULLET, ROCKET };
+enum SFPROJECTILE_DIRECTION { NORTH, SOUTH };
 
 class SFProjectile : public SFAsset {
 	public:
-		SFProjectile(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>, const SFPROJECTILETYPE);
+		SFProjectile(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>, const SFPROJECTILE_TYPE, const SFPROJECTILE_DIRECTION);
 
 		void OnUpdate();
 
 		void SetDamage(short);
 		short GetDamage();
 	private:
-	//	float projectile_speed = 1.0f;
 		short damage;
-		SFPROJECTILETYPE projectile;
+		SFPROJECTILE_TYPE projectile;
+		SFPROJECTILE_DIRECTION direction;
 };
 #endif
