@@ -75,6 +75,8 @@ void SFEnemy::Attack() {
 	if(attack_interval >= 100) {
 		std::shared_ptr<SFProjectile> projectile = std::make_shared<SFProjectile>("projectile", SFASSET_PROJECTILE, sf_window, BULLET, SOUTH);
 
+		projectile->SetDamage(10);
+
 		auto v = GetCenter();
 		auto pos = Point2(v.getX() - projectile->GetBoundingBox()->GetWidth() / 2, v.getY() + GetBoundingBox()->GetHeight());
 		projectile->SetPosition(pos);

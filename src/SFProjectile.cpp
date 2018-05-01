@@ -14,19 +14,12 @@ SFProjectile::SFProjectile(std::string name, SFASSETTYPE type, std::shared_ptr<S
 			break;
 	}*/ 
 
+	player = SFAssetManager::GetAssetByName<SFPlayer>("player");
 	lifetime = 1000;
 }
 
 void SFProjectile::OnUpdate() {
-
-	switch(direction) {
-		case NORTH:
-			GoNorth();
-			break;
-		case SOUTH:
-			GoSouth();
-			break;
-	}
+	Move();
 
 	for(auto alien : SFAssetManager::GetAssetsOfType<SFEnemy>(SFASSET_ALIEN)) {
 		if(CollidesWith(alien)) {
@@ -47,9 +40,25 @@ void SFProjectile::OnUpdate() {
 		}
 	}
 
+	if(CollidesWith(player)) {
+		player->TakeDamage(GetDamage());
+		HandleCollision();
+	}
+
 	lifetime -= 10;
 
 	if(IsOutsideWindow() || lifetime == 0) SetNotAlive();
+}
+
+void SFProjectile::Move() {
+	switch(direction) {
+		case NORTH:
+			GoNorth();
+			break;
+		case SOUTH:
+			GoSouth();
+			break;
+	}
 }
 
 void SFProjectile::SetDamage(short amount) {

@@ -15,8 +15,11 @@ class SFProjectile : public SFAsset {
 		void SetDamage(short);
 		short GetDamage();
 	private:
+		void Move();
+
 		short damage;
 		SFPROJECTILE_TYPE projectile;
 		SFPROJECTILE_DIRECTION direction;
+		std::shared_ptr<SFPlayer> player;
 };
 #endif
