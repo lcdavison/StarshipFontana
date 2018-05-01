@@ -1,1 +1,6 @@
 language: c++
+before install: 
+  - wget https://www.libsdl.org/release/SDL2-devel-2.0.8-mingw.tar.gz
+  - tar -zxvf SDL2-devel-2.0.8-mingw.tar.gz
+install:
+  - (cd SDL2-devel-2.0.8-mingw && ./configure && make && sudo make install)
