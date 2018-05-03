@@ -1,7 +1,6 @@
 #include "SFApp.h"
 
 // TODO: Vary the enemy types when starting the level.
-// TODO: Adjust projectile to store the asset that fired the bullet
 // TODO: Restart button
 // TODO: Main Menu
 // TODO: Improve drop for enemies
@@ -135,7 +134,7 @@ void SFApp::FireProjectile() {
 	bullet->SetDamage(player->GetDamage());
 
 	auto v = player->GetCenter(); 
-	auto pos = Point2(v.getX() - bullet->GetBoundingBox()->GetWidth() / 2, v.getY());
+	auto pos = Point2(v.getX() - bullet->GetBoundingBox()->GetWidth() / 2, v.getY() - bullet->GetBoundingBox()->GetWidth() * 2);
 	bullet->SetPosition(pos);
 
 	SFAssetManager::AddAsset<SFProjectile>(bullet);
