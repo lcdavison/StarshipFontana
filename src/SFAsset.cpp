@@ -103,7 +103,7 @@ void SFAsset::MoveTowards(const std::shared_ptr<SFAsset> other) {
 
 void SFAsset::Lerp(const std::shared_ptr<SFAsset> other, float time) {
 
-	Vector2 direction = (GetPosition() - other->GetPosition());
+	Vector2 direction = (GetPosition() - other->GetCenter());
 	direction = direction * movement_speed * time;
 
 	if(GetPosition() != other->GetCenter()) bbox->Translate(direction);
