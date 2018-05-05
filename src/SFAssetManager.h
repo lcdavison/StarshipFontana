@@ -25,6 +25,7 @@ class SFAssetManager {
 
 		static AssetContainer RetrieveAllAssets();
 		static void RemoveAsset(std::shared_ptr<SFAsset>);
+		static void Clear();
 	private:
 		static AssetContainer assets;
 };

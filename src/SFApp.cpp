@@ -1,6 +1,7 @@
 #include "SFApp.h"
 
 // TODO: Vary the enemy types when starting the level.
+
 // TODO: Restart button
 // TODO: Main Menu
 // TODO: Improve drop for enemies
@@ -8,15 +9,7 @@
 // TODO: Change the README.md 
 
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window) {
-	int canvas_w = window->GetWidth();
-	int canvas_h = window->GetHeight();
-
-	SFAssetManager::CreateAsset<SFPlayer>("player", SFASSET_PLAYER, window);
-	player = SFAssetManager::GetAssetByName<SFPlayer>("player");
-
-	auto player_pos = Point2(canvas_w / 2 - player->GetBoundingBox()->GetWidth() / 2, canvas_h - player->GetBoundingBox()->GetHeight());
-	player->SetPosition(player_pos);
-
+	SpawnPlayer();
 	SpawnEnemies(10);
 	SpawnObstacles(4);
 
@@ -114,11 +107,20 @@ void SFApp::OnRender() {
 		SF_UILabel::DrawText(pause_text, window->GetWidth() / 2 - wi / 2, window->GetHeight() / 2, text_colour, window);
 	}
 
-
 	// 5. Switch the off-screen buffer to be on-screen
 	window->ShowScreen();
 
 	mouse_position = { 0 ,0 };
+}
+
+void SFApp::RestartGame() {
+	SFAssetManager::Clear();
+
+	SpawnPlayer();
+	SpawnObstacles(4);
+	SpawnEnemies(10);
+
+	game_state = SF_PLAY;
 }
 
 void SFApp::TogglePause() {
@@ -161,11 +163,24 @@ void SFApp::DrawEndScore() {
 
 	SF_UILabel::DrawText(end_text, window->GetWidth() / 2 - wi / 2, 0, text_colour, window);
 
-	SF_UIButton exit_button ("Exit Game", 270, 400, 130, 73, window, [this](void){ is_running = false;});
+	SF_UIButton restart_button ("Restart Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2, 130, 73, window, [this](void){ RestartGame(); });
+	restart_button.SetBackgroundAlpha(200);
+	restart_button.OnClick(mouse_position);
+	restart_button.OnRender();
+
+	SF_UIButton exit_button ("Exit Game", window->GetWidth() / 2 - 65, 350, 130, 73, window, [this](void){ is_running = false;});
 	exit_button.SetBackgroundAlpha(200);
 	exit_button.OnClick(mouse_position);
 	exit_button.OnRender();
 } 
+
+void SFApp::SpawnPlayer() {
+	SFAssetManager::CreateAsset<SFPlayer>("player", SFASSET_PLAYER, window);
+	player = SFAssetManager::GetAssetByName<SFPlayer>("player");
+
+	auto player_pos = Point2(window->GetWidth() / 2 - player->GetBoundingBox()->GetWidth() / 2, window->GetHeight() - player->GetBoundingBox()->GetHeight());
+	player->SetPosition(player_pos);
+}
 
 void SFApp::SpawnObstacles(int amount) {
 	for(int i = 0; i < amount; i++) {

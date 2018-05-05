@@ -34,6 +34,7 @@ class SFApp {
 		enum SFGAMESTATE { SF_PLAY, SF_PAUSED, SF_END };
 		SFGAMESTATE game_state;
 
+		void RestartGame();
 		void TogglePause();
 
 		/*---UI---*/
@@ -43,6 +44,7 @@ class SFApp {
 		void DrawEndScore();
 
 		/*---SPAWNING---*/
+		void SpawnPlayer();
 		void SpawnObstacles(int);
 		void SpawnEnemies(int);
 		void FireProjectile();
