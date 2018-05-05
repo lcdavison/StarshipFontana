@@ -4,7 +4,7 @@
 // TODO: Restart button
 // TODO: Main Menu
 // TODO: Improve drop for enemies
-// TODO: Adjust OnClick button event trigger 
+// TODO: Complete Particle Effects
 // TODO: Change the README.md 
 
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window) {
@@ -156,7 +156,10 @@ void SFApp::DrawHUD() {
 void SFApp::DrawEndScore() {
 	std::string end_text = "FINAL SCORE : " + std::to_string(player->GetCoins() * 2);
 
-	SF_UILabel::DrawText(end_text, window->GetWidth() / 2 - end_text.length(), 0, text_colour, window);
+	int wi;
+	TTF_SizeText(window->getFont(), end_text.c_str(), &wi, NULL);
+
+	SF_UILabel::DrawText(end_text, window->GetWidth() / 2 - wi / 2, 0, text_colour, window);
 
 	SF_UIButton exit_button ("Exit Game", 270, 400, 130, 73, window, [this](void){ is_running = false;});
 	exit_button.SetBackgroundAlpha(200);
