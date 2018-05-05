@@ -71,7 +71,6 @@ class SFAsset : public ISFAsset {
 
 		/*---Sprites---*/
 		virtual void SetupSprite(const std::string);
-		virtual void SetupSpriteSheet(const std::string, const int);	//Assumes each sprite is the same width and height
 		void SetAlpha(const int);
 
 		/*---Movement---*/
@@ -83,7 +82,6 @@ class SFAsset : public ISFAsset {
 		bool has_collision = false;
 		int lifetime;
 
-//		shared_ptr<SFAnimation>	    animation;
 		SDL_Texture               * sprite;
 		shared_ptr<SFBoundingBox>   bbox;
 		SFASSETTYPE                 type;
