@@ -4,12 +4,17 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include "SFBoundingBox.h"
+#include "SFWindow.h"
+
+#include <cstdlib>
+#include <iostream>
 #include <memory>
 
 class SFParticle 
 {
 	public:
-		SFParticle();
+		SFParticle(int, int, std::shared_ptr<SFWindow>);
 
 		void Render();
 
@@ -17,6 +22,7 @@ class SFParticle
 	private:
 		int frame;
 
+		std::shared_ptr<SFWindow> sfwindow;
 		std::shared_ptr<SFBoundingBox> bbox;
 		SDL_Texture* sprite;
 };
