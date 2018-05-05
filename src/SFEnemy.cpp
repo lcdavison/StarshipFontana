@@ -72,7 +72,7 @@ void SFEnemy::MoveAround() {
 void SFEnemy::Attack() {
 	attack_interval++;
 
-	if(attack_interval >= 100) {
+	if(attack_interval >= 150) {
 		std::shared_ptr<SFProjectile> projectile = std::make_shared<SFProjectile>("projectile", SFASSET_PROJECTILE, sf_window, BULLET, SOUTH);
 
 		projectile->SetDamage(10);
