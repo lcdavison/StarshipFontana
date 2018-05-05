@@ -13,3 +13,9 @@ void SFAssetManager::RemoveAsset(std::shared_ptr<SFAsset> asset) {
 		}
 	}
 }
+
+void SFAssetManager::Clear() {
+	for(auto it = assets.begin(); it != assets.end(); ) {
+		it = assets.erase(it);
+	}
+}
