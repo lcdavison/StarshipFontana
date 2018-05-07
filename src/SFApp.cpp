@@ -2,9 +2,7 @@
 
 // TODO: Vary the enemy types when starting the level.
 
-// TODO: Main Menu
 // TODO: Render A Background Image
-// TODO: Improve drop for enemies
 // TODO: Complete Particle Effects
 // TODO: Change the README.md 
 

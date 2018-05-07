@@ -2,12 +2,21 @@
 
 SFPlayer::SFPlayer(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> window) : SFAsset (name, type, window) {
 	SetupSprite("assets/sprites/player.png");
+	std::shared_ptr<SFPlayer> player (this);
+	smoke_emitter = std::make_shared<SFParticleEmitter>(std::dynamic_pointer_cast<SFAsset>(player), 30, window);
 }
 
 void SFPlayer::OnUpdate() {
+	smoke_emitter->Emit();
+
 	if(IsDead()) {
 		alive = false;
 	}
+}
+
+void SFPlayer::OnRender() {
+	SFAsset::OnRender();	//	Run render code from parent class
+	smoke_emitter->OnRender();
 }
 
 void SFPlayer::GoNorth() {

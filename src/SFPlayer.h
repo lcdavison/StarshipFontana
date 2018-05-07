@@ -2,12 +2,14 @@
 #define SFPLAYER_H
 
 #include "SFAssetManager.h"
+#include "SFParticleEmitter.h"
 
 class SFPlayer : public SFAsset {
 	public:
 		SFPlayer(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
 
 		void OnUpdate();
+		void OnRender();
 
 		//	Player's Coins
 		void AddCoin();
@@ -32,6 +34,8 @@ class SFPlayer : public SFAsset {
 		short coins = 0;
 		short health = 100;
 		short damage = 25;
+
+		std::shared_ptr<SFParticleEmitter> smoke_emitter;
 };                               
 #endif                           
 

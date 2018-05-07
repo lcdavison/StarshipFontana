@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include "SFMath.h"
 #include "SFBoundingBox.h"
 #include "SFWindow.h"
 
@@ -16,7 +17,8 @@ class SFParticle
 	public:
 		SFParticle(int, int, std::shared_ptr<SFWindow>);
 
-		void Render();
+		void OnUpdate();
+		void OnRender();
 
 		bool IsDead();
 	private:
