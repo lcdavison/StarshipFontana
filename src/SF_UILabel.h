@@ -9,10 +9,12 @@
 
 #include "SFWindow.h"
 
+enum SFFONTSIZE { SF_FONT_NORMAL, SF_FONT_SMALL }; 
+
 class SF_UILabel {
 
 public:
-	static void DrawText(const std::string&, const short&, const short&, SDL_Color, std::shared_ptr<SFWindow>);
+	static void DrawText(const std::string&, const short&, const short&, SDL_Color, std::shared_ptr<SFWindow>, SFFONTSIZE);
 private:
 	static SDL_Texture* CreateTextureFromString(const std::string&, TTF_Font*, SDL_Color, std::shared_ptr<SFWindow>);
 };
