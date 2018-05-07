@@ -4,27 +4,40 @@ SFWindow::SFWindow(Uint32 w, Uint32 h, SDL_Color drawColor) {
     
     window = SDL_CreateWindow(
         "Starship Fontana",
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_CENTERED, 
+		SDL_WINDOWPOS_CENTERED,
         w, h,
         SDL_WINDOW_SHOWN
     );
 
-    if (!window) {
+    if (!window) 
         throw SFException("Failed to create window");
-    }
     
-    renderer = SDL_CreateRenderer(window, FIRST_SUPPORTED, SDL_RENDERER_ACCELERATED);
+    renderer = SDL_CreateRenderer(
+			window, 
+			FIRST_SUPPORTED, 
+			SDL_RENDERER_ACCELERATED
+	);
 
-    if (!renderer) {
+    if (!renderer) 
         throw SFException("Failed to create renderer");
-    }
+    
 
-    SDL_SetRenderDrawColor(renderer, drawColor.r, drawColor.g, drawColor.b, drawColor.a);
+    SDL_SetRenderDrawColor(
+			renderer, 
+			drawColor.r, 
+			drawColor.g, 
+			drawColor.b, 
+			drawColor.a
+	);
 
 	font = TTF_OpenFont("assets/fonts/arial.ttf", 20);
-	
 	if(!font)
-		printf("Failed To Load Font");
+		throw SFException("Failed to load font");
+
+	small_font = TTF_OpenFont("assets/fonts/arial.ttf", 14);
+	if(!small_font)
+		throw SFException("Failed to load font");
 }
 
 SFWindow::~SFWindow() {
@@ -62,4 +75,8 @@ SDL_Renderer* SFWindow::getRenderer() {
 
 TTF_Font* SFWindow::getFont() {
 	return font;
+}
+
+TTF_Font* SFWindow::getSmallFont() {
+	return small_font;
 }

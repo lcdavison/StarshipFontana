@@ -21,10 +21,12 @@ class SFWindow {
 		SDL_Window* getWindow();
 		SDL_Renderer* getRenderer();
 		TTF_Font* getFont();
+		TTF_Font* getSmallFont();
 	private:
 		SDL_Window*   window;
 		SDL_Renderer* renderer;
 		TTF_Font*	  font;
+		TTF_Font*	  small_font;
 };
 
 #endif
