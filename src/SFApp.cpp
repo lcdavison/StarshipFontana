@@ -189,7 +189,7 @@ void SFApp::DrawEndScore() {
 
 	SF_UILabel::DrawText(end_text, window->GetWidth() / 2 - wi / 2, 0, text_colour, window, SF_FONT_NORMAL);
 
-	SF_UIButton restart_button ("Restart Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2, 130, 73, window, [this](void){ RestartGame(); });
+	SF_UIButton restart_button ("Play Again", window->GetWidth() / 2 - 65, window->GetHeight() / 2, 130, 73, window, [this](void){ RestartGame(); });
 	restart_button.SetBackgroundAlpha(200);
 	restart_button.OnClick(mouse_position);
 	restart_button.OnRender();
