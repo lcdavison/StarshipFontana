@@ -31,7 +31,7 @@ class SFApp {
 
 	private:
 		/*---STATE---*/
-		enum SFGAMESTATE { SF_PLAY, SF_PAUSED, SF_END };
+		enum SFGAMESTATE { SF_MENU, SF_PLAY, SF_PAUSED, SF_END };
 		SFGAMESTATE game_state;
 
 		void RestartGame();
@@ -40,6 +40,7 @@ class SFApp {
 		/*---UI---*/
 		SDL_Color text_colour = { 0, 255, 0, 255 };
 
+		void DrawMainMenu();
 		void DrawHUD();
 		void DrawEndScore();
 

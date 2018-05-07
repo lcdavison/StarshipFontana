@@ -2,8 +2,8 @@
 
 // TODO: Vary the enemy types when starting the level.
 
-// TODO: Restart button
 // TODO: Main Menu
+// TODO: Render A Background Image
 // TODO: Improve drop for enemies
 // TODO: Complete Particle Effects
 // TODO: Change the README.md 
@@ -13,7 +13,7 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window
 	SpawnEnemies(10);
 	SpawnObstacles(4);
 
-	game_state = SF_PLAY;
+	game_state = SF_MENU;
 }
 
 SFApp::~SFApp() {}
@@ -37,16 +37,20 @@ void SFApp::OnEvent(SFEvent& event) {
 			OnRender();
 			break;
 		case SFEVENT_PLAYER_LEFT:
-			player->GoWest();
+			if(game_state == SF_PLAY)
+				player->GoWest();
 			break;
 		case SFEVENT_PLAYER_RIGHT:
-			player->GoEast();
+			if(game_state == SF_PLAY)
+				player->GoEast();
 			break;
 		case SFEVENT_PLAYER_UP:
-			player->GoNorth();
+			if(game_state == SF_PLAY)
+				player->GoNorth();
 			break;
 		case SFEVENT_PLAYER_DOWN:
-			player->GoSouth();
+			if(game_state == SF_PLAY)
+				player->GoSouth();
 			break;
 		case SFEVENT_FIRE:	
 			FireProjectile();
@@ -97,14 +101,16 @@ void SFApp::OnRender() {
 		}
 
 		// 4. Draw HUD
-		DrawHUD();
+		DrawHUD();	
+	} else if (game_state == SF_MENU) {
+		DrawMainMenu();
 	} else if (game_state == SF_END) { 
 		DrawEndScore(); 
 	} else if (game_state == SF_PAUSED) {
 		int wi;
 		std::string pause_text = "PAUSED - PRESS ESC TO RESUME";
 		TTF_SizeText(window->getFont(), pause_text.c_str(), &wi, NULL);
-		SF_UILabel::DrawText(pause_text, window->GetWidth() / 2 - wi / 2, window->GetHeight() / 2, text_colour, window);
+		SF_UILabel::DrawText(pause_text, window->GetWidth() / 2 - wi / 2, window->GetHeight() / 2, text_colour, window, SF_FONT_NORMAL);
 	}
 
 	// 5. Switch the off-screen buffer to be on-screen
@@ -142,6 +148,28 @@ void SFApp::FireProjectile() {
 	SFAssetManager::AddAsset<SFProjectile>(bullet);
 }
 
+void SFApp::DrawMainMenu() {
+	std::string title = "STARSHIP FONTANA";
+	std::string author = "by Luke Davison";
+
+	int wi;
+	TTF_SizeText(window->getFont(), title.c_str(), &wi, NULL);
+	SF_UILabel::DrawText(title, window->GetWidth() / 2 - wi / 2, 0, text_colour, window, SF_FONT_NORMAL);
+
+	TTF_SizeText(window->getSmallFont(), author.c_str(), &wi, NULL);
+	SF_UILabel::DrawText(author, window->GetWidth() / 2 - wi / 2, 20, text_colour, window, SF_FONT_SMALL);
+
+	SF_UIButton play_button ("Play Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2, 130, 73, window, [this](void){ game_state = SF_PLAY; });
+	play_button.SetBackgroundAlpha(200);
+	play_button.OnClick(mouse_position);
+	play_button.OnRender();
+
+	SF_UIButton exit_button ("Exit Game", window->GetWidth() / 2 - 65, 350, 130, 73, window, [this](void){ is_running = false;});
+	exit_button.SetBackgroundAlpha(200);
+	exit_button.OnClick(mouse_position);
+	exit_button.OnRender();
+}
+
 void SFApp::DrawHUD() {
 	std::string health_text = "HEALTH : " + std::to_string(player->GetHealth());
 	std::string enemies_remaining_text = "ENEMIES : " + std::to_string(GetNumEnemies());
@@ -150,9 +178,9 @@ void SFApp::DrawHUD() {
 	int wi;
 	TTF_SizeText(window->getFont(), health_text.c_str(), &wi, NULL);
 
-	SF_UILabel::DrawText(health_text, window->GetWidth() / 2 - wi / 2, 0, text_colour, window);
-	SF_UILabel::DrawText(enemies_remaining_text, 10, 0, text_colour, window);
-	SF_UILabel::DrawText(coin_text, 10, 30, text_colour, window);	
+	SF_UILabel::DrawText(health_text, window->GetWidth() / 2 - wi / 2, 0, text_colour, window, SF_FONT_NORMAL);
+	SF_UILabel::DrawText(enemies_remaining_text, 10, 0, text_colour, window, SF_FONT_NORMAL);
+	SF_UILabel::DrawText(coin_text, 10, 30, text_colour, window, SF_FONT_NORMAL);	
 }
 
 void SFApp::DrawEndScore() {
@@ -161,7 +189,7 @@ void SFApp::DrawEndScore() {
 	int wi;
 	TTF_SizeText(window->getFont(), end_text.c_str(), &wi, NULL);
 
-	SF_UILabel::DrawText(end_text, window->GetWidth() / 2 - wi / 2, 0, text_colour, window);
+	SF_UILabel::DrawText(end_text, window->GetWidth() / 2 - wi / 2, 0, text_colour, window, SF_FONT_NORMAL);
 
 	SF_UIButton restart_button ("Restart Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2, 130, 73, window, [this](void){ RestartGame(); });
 	restart_button.SetBackgroundAlpha(200);
