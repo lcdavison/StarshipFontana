@@ -25,7 +25,7 @@ SF_UIButton::SF_UIButton(std::string text, int x, int y, int w, int h, std::shar
 	if(text_surface != nullptr) {
 		text_texture = SDL_CreateTextureFromSurface(sf_window->getRenderer(), text_surface);
 
-		TTF_SizeText(sf_window->getFont(), "Exit Game", &wi, &he);
+		TTF_SizeText(sf_window->getFont(), text.c_str(), &wi, &he);
 
 		SDL_FreeSurface(text_surface);
 	} else {

@@ -87,7 +87,19 @@ void SFApp::OnRender() {
 	// 1. Clear visible content
 	window->ClearScreen();
 
-	// 2. Test game state
+	// 2. Test game state	
+	switch(game_state) {
+		case SF_MENU:
+			DrawMainMenu();
+			break;
+		case SF_END:
+			DrawEndScore();
+			break;
+		case SF_PAUSED:
+			DrawPauseMenu();
+			break;
+	}
+
 	if(game_state == SF_PLAY) {
 
 		// 3. Render Assets
@@ -98,20 +110,12 @@ void SFApp::OnRender() {
 
 		// 4. Draw HUD
 		DrawHUD();	
-	} else if (game_state == SF_MENU) {
-		DrawMainMenu();
-	} else if (game_state == SF_END) { 
-		DrawEndScore(); 
-	} else if (game_state == SF_PAUSED) {
-		int wi;
-		std::string pause_text = "PAUSED - PRESS ESC TO RESUME";
-		TTF_SizeText(window->getFont(), pause_text.c_str(), &wi, NULL);
-		SF_UILabel::DrawText(pause_text, window->GetWidth() / 2 - wi / 2, window->GetHeight() / 2, text_colour, window, SF_FONT_NORMAL);
 	}
 
 	// 5. Switch the off-screen buffer to be on-screen
 	window->ShowScreen();
 
+	// 6. Reset mouse position
 	mouse_position = { 0 ,0 };
 }
 
@@ -160,10 +164,27 @@ void SFApp::DrawMainMenu() {
 	play_button.OnClick(mouse_position);
 	play_button.OnRender();
 
-	SF_UIButton exit_button ("Exit Game", window->GetWidth() / 2 - 65, 350, 130, 73, window, [this](void){ is_running = false;});
+	SF_UIButton exit_button ("Exit Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 130, 73, window, [this](void){ is_running = false; });
 	exit_button.SetBackgroundAlpha(200);
 	exit_button.OnClick(mouse_position);
 	exit_button.OnRender();
+}
+
+void SFApp::DrawPauseMenu() {
+		int wi;
+		std::string pause_text = "PAUSED";
+		TTF_SizeText(window->getFont(), pause_text.c_str(), &wi, NULL);
+		SF_UILabel::DrawText(pause_text, window->GetWidth() / 2 - wi / 2, window->GetHeight() / 2 - 100, text_colour, window, SF_FONT_NORMAL);
+
+		SF_UIButton resume_button ("Resume Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2, 150, 84, window, [this](void){ game_state = SF_PLAY; });
+		resume_button.SetBackgroundAlpha(200);
+		resume_button.OnClick(mouse_position);
+		resume_button.OnRender();
+
+		SF_UIButton menu_button ("Return To Main", window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 150, 84, window, [this](void){ game_state = SF_MENU; });
+		menu_button.SetBackgroundAlpha(200);
+		menu_button.OnClick(mouse_position);
+		menu_button.OnRender();
 }
 
 void SFApp::DrawHUD() {
@@ -192,7 +213,7 @@ void SFApp::DrawEndScore() {
 	restart_button.OnClick(mouse_position);
 	restart_button.OnRender();
 
-	SF_UIButton exit_button ("Exit Game", window->GetWidth() / 2 - 65, 350, 130, 73, window, [this](void){ is_running = false;});
+	SF_UIButton exit_button ("Exit Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 130, 73, window, [this](void){ is_running = false; });
 	exit_button.SetBackgroundAlpha(200);
 	exit_button.OnClick(mouse_position);
 	exit_button.OnRender();

@@ -41,6 +41,7 @@ class SFApp {
 		SDL_Color text_colour = { 0, 255, 0, 255 };
 
 		void DrawMainMenu();
+		void DrawPauseMenu();
 		void DrawHUD();
 		void DrawEndScore();
 

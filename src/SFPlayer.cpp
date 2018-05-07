@@ -7,7 +7,7 @@ SFPlayer::SFPlayer(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow>
 }
 
 void SFPlayer::OnUpdate() {
-	if(health < 40)
+	if(health <= 40)
 		smoke_emitter->Emit();
 
 	if(IsDead()) {
