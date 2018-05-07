@@ -3,7 +3,7 @@
 // TODO: Add Alpha Blending
 
 SFParticle::SFParticle(int x, int y, std::shared_ptr<SFWindow> window) : sfwindow(window) {
-	sprite = IMG_LoadTexture(sfwindow->getRenderer(), "assets/sprites/coin.png");
+	sprite = IMG_LoadTexture(sfwindow->getRenderer(), "assets/sprites/smoke.png");
 
 	if(sprite == NULL) 
 		std::cout << "Failed to find sprite" << std::endl;
