@@ -7,7 +7,8 @@ SFPlayer::SFPlayer(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow>
 }
 
 void SFPlayer::OnUpdate() {
-	smoke_emitter->Emit();
+	if(health < 40)
+		smoke_emitter->Emit();
 
 	if(IsDead()) {
 		alive = false;
@@ -16,7 +17,9 @@ void SFPlayer::OnUpdate() {
 
 void SFPlayer::OnRender() {
 	SFAsset::OnRender();	//	Run render code from parent class
-	smoke_emitter->OnRender();
+
+	if(health <= 40)
+		smoke_emitter->OnRender();
 }
 
 void SFPlayer::GoNorth() {

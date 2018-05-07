@@ -1,9 +1,7 @@
 #include "SFApp.h"
 
 // TODO: Vary the enemy types when starting the level.
-
 // TODO: Render A Background Image
-// TODO: Complete Particle Effects
 // TODO: Change the README.md 
 
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window) {
