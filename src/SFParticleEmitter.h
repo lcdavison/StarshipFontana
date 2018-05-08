@@ -10,7 +10,7 @@
 
 class SFParticleEmitter {
 	public:
-		SFParticleEmitter(int, std::shared_ptr<SFWindow>);
+		SFParticleEmitter(int, int, std::shared_ptr<SFWindow>);
 		~SFParticleEmitter();
 	
 		void Emit(int, int);
@@ -19,6 +19,7 @@ class SFParticleEmitter {
 		void RemoveDeadParticles();
 
 		int num_particles;
+		int alpha;
 
 		std::shared_ptr<SFWindow> window;
 
