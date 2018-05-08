@@ -1,6 +1,7 @@
 #include "SFApp.h"
 
 // TODO: Code Cleanup - Make it more readable
+// TODO: Change emitter x, y to a Point2
 // TODO: Change the README.md 
 
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window)
@@ -130,9 +131,11 @@ void SFApp::OnRender()
 		case SF_MENU:
 			DrawMainMenu();
 			break;
+
 		case SF_END:
 			DrawEndScore();
 			break;
+
 		case SF_PAUSED:
 			DrawPauseMenu();
 			break;
