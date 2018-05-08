@@ -1,12 +1,14 @@
 #include "SFParticle.h"
 
-// TODO: Add Alpha Blending
-
-SFParticle::SFParticle(int x, int y, std::shared_ptr<SFWindow> window) : sfwindow(window) {
+SFParticle::SFParticle(int x, int y, int alpha, std::shared_ptr<SFWindow> window) : sfwindow(window) {
 	sprite = IMG_LoadTexture(sfwindow->getRenderer(), "assets/sprites/smoke.png");
 
 	if(sprite == NULL) 
 		std::cout << "Failed to find sprite" << std::endl;
+	
+	SDL_SetTextureBlendMode(sprite, SDL_BLENDMODE_BLEND);
+
+	SDL_SetTextureAlphaMod(sprite, alpha);
 
 	bbox = std::make_shared<SFBoundingBox>(Point2(x, y), 10, 10);
 
@@ -21,7 +23,7 @@ SFParticle::~SFParticle() {
 }
 
 void SFParticle::OnUpdate() {
-	float angle_degrees = atan2(bbox->GetX(), bbox->GetY()) * 180 / M_PI * std::rand();
+	float angle_degrees = atan2(bbox->GetY(), bbox->GetX()) * 180 / M_PI * std::rand();
 
 	int x = bbox->GetX() + cos(angle_degrees) * 0.02f;
 	int y = bbox->GetY() + sin(angle_degrees) * -0.02f;

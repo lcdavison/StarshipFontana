@@ -1,8 +1,6 @@
 #include "SFApp.h"
 
-// Segmentation fault on fifth click to menu and back to game
-// TODO: Put UI elements into a list, so that they can just be created once
-// TODO: Code Cleanup
+// TODO: Code Cleanup - Make it more readable
 // TODO: Change the README.md 
 
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window) {
@@ -121,7 +119,7 @@ void SFApp::StartGame() {
 
 	SpawnPlayer();
 	SpawnObstacles(4);
-	SpawnEnemies(10);
+	SpawnEnemies(15);
 
 	game_state = SF_PLAY;
 }
@@ -206,12 +204,11 @@ void SFApp::DrawHUD() {
 }
 
 void SFApp::DrawEndScore() {
-//	Create The Label When the state changes
 	std::string end_text = "FINAL SCORE : " + std::to_string(player->GetCoins() * 2);
 
 	int wi;
 	TTF_SizeText(window->getFont(), end_text.c_str(), &wi, NULL);
-//	SF_UILabel::DrawText(end_text, window->GetWidth() / 2 - wi / 2, 0, text_colour, window, SF_FONT_NORMAL);
+	SF_UILabel::DrawText(end_text, window->GetWidth() / 2 - wi / 2, 0, text_colour, window, SF_FONT_NORMAL);
 
 	restart_button->OnClick(mouse_position);
 	restart_button->OnRender();
@@ -240,7 +237,7 @@ void SFApp::SpawnObstacles(int amount) {
 
 void SFApp::SpawnEnemies(int amount) {
 	for (int i = 0; i < amount; i++) {
-		// place an alien at width/number_of_aliens * i
+		// Place an alien at width/number_of_aliens * i
 		auto alien = make_shared<SFEnemy>("alien" + i, SFASSET_ALIEN, window, ELITE);
 		auto pos = Point2((window->GetWidth() / amount) * i + alien->GetBoundingBox()->GetWidth() / 2, 100.0f);
 		alien->SetPosition(pos);

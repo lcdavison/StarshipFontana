@@ -3,7 +3,7 @@
 SFPlayer::SFPlayer(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> window) : SFAsset (name, type, window) {
 	SetupSprite("assets/sprites/player.png");
 
-	smoke_emitter = std::make_shared<SFParticleEmitter>(30, window);
+	smoke_emitter = std::make_shared<SFParticleEmitter>(30, 150, window);
 }
 
 void SFPlayer::OnUpdate() {

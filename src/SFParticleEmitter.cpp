@@ -1,6 +1,6 @@
 #include "SFParticleEmitter.h"
 
-SFParticleEmitter::SFParticleEmitter(int num_particles, std::shared_ptr<SFWindow> window) : num_particles(num_particles), window(window) {
+SFParticleEmitter::SFParticleEmitter(int num_particles, int alpha, std::shared_ptr<SFWindow> window) : num_particles(num_particles), alpha(alpha), window(window) {
 }	
 
 SFParticleEmitter::~SFParticleEmitter() {
@@ -10,7 +10,7 @@ SFParticleEmitter::~SFParticleEmitter() {
 void SFParticleEmitter::Emit(int x_pos, int y_pos) {
 	if(particles.size() != num_particles) {
 		for(int i = 0; i < num_particles - particles.size(); i++) {
-			particles.push_back(std::make_shared<SFParticle>(x_pos, y_pos, window));
+			particles.push_back(std::make_shared<SFParticle>(x_pos, y_pos, alpha, window));
 		}
 	} 
 
