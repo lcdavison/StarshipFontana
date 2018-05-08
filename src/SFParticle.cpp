@@ -13,6 +13,13 @@ SFParticle::SFParticle(int x, int y, std::shared_ptr<SFWindow> window) : sfwindo
 	frame = std::rand() % 5;
 }
 
+SFParticle::~SFParticle() {
+	if(sprite) {
+		SDL_DestroyTexture(sprite);
+		sprite = nullptr;
+	}
+}
+
 void SFParticle::OnUpdate() {
 	float angle_degrees = atan2(bbox->GetX(), bbox->GetY()) * 180 / M_PI * std::rand();
 

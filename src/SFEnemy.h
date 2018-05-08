@@ -2,6 +2,7 @@
 #define SFENEMY_H
 
 #include "SFAssetManager.h"
+#include "SFParticleEmitter.h"
 
 class SFPlayer;
 

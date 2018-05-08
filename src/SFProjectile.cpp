@@ -21,15 +21,15 @@ SFProjectile::SFProjectile(std::string name, SFASSETTYPE type, std::shared_ptr<S
 void SFProjectile::OnUpdate() {
 	Move();
 
-	for(auto alien : SFAssetManager::GetAssetsOfType<SFEnemy>(SFASSET_ALIEN)) {
-		if(CollidesWith(alien)) {
-			alien->TakeDamage(GetDamage());
+	for(auto enemy : SFAssetManager::GetAssetsOfType<SFEnemy>(SFASSET_ALIEN)) {
+		if(CollidesWith(enemy)) {
+			enemy->TakeDamage(GetDamage());
 
 			HandleCollision();
 
-			if(alien->IsDead()) {
-				alien->HandleCollision();
-				SFAssetManager::SpawnAtPosition<SFCoin>(std::make_shared<SFCoin>("coin", SFASSET_COIN, sf_window), alien->GetPosition());
+			if(enemy->IsDead()) {
+				enemy->HandleCollision();
+				SFAssetManager::SpawnAtPosition<SFCoin>(std::make_shared<SFCoin>("coin", SFASSET_COIN, sf_window), enemy->GetPosition());
 			}
 		}
 	}

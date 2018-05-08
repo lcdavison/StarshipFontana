@@ -2,13 +2,13 @@
 
 SFPlayer::SFPlayer(std::string name, SFASSETTYPE type, std::shared_ptr<SFWindow> window) : SFAsset (name, type, window) {
 	SetupSprite("assets/sprites/player.png");
-	std::shared_ptr<SFPlayer> player (this);
-	smoke_emitter = std::make_shared<SFParticleEmitter>(std::dynamic_pointer_cast<SFAsset>(player), 30, window);
+
+	smoke_emitter = std::make_shared<SFParticleEmitter>(30, window);
 }
 
 void SFPlayer::OnUpdate() {
 	if(health <= 40)
-		smoke_emitter->Emit();
+		smoke_emitter->Emit(bbox->GetX(), bbox->GetY());
 
 	if(IsDead()) {
 		alive = false;
@@ -65,7 +65,7 @@ void SFPlayer::CheckCollision(Vector2& direction) {
 }
 
 void SFPlayer::AddCoin() {
-	coins++;
+	++coins;
 }
 
 short SFPlayer::GetCoins() {

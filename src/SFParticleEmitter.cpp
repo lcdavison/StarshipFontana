@@ -1,14 +1,16 @@
 #include "SFParticleEmitter.h"
 
-#include <algorithm>
-
-SFParticleEmitter::SFParticleEmitter(std::shared_ptr<SFAsset> asset, int num_particles, std::shared_ptr<SFWindow> window) : parent(asset), num_particles(num_particles), window(window) {
+SFParticleEmitter::SFParticleEmitter(int num_particles, std::shared_ptr<SFWindow> window) : num_particles(num_particles), window(window) {
 }	
 
-void SFParticleEmitter::Emit() {
+SFParticleEmitter::~SFParticleEmitter() {
+	particles.clear();
+}
+
+void SFParticleEmitter::Emit(int x_pos, int y_pos) {
 	if(particles.size() != num_particles) {
 		for(int i = 0; i < num_particles - particles.size(); i++) {
-			particles.push_back(std::make_shared<SFParticle>(parent->GetBoundingBox()->GetX(), parent->GetBoundingBox()->GetY(), window));
+			particles.push_back(std::make_shared<SFParticle>(x_pos, y_pos, window));
 		}
 	} 
 

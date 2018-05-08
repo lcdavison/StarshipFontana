@@ -34,16 +34,29 @@ class SFApp {
 		enum SFGAMESTATE { SF_MENU, SF_PLAY, SF_PAUSED, SF_END };
 		SFGAMESTATE game_state;
 
-		void RestartGame();
+		void StartGame();
 		void TogglePause();
 
 		/*---UI---*/
 		SDL_Color text_colour = { 0, 255, 0, 255 };
 
+		void CreateButtons();
+		void CreateLabels();
+
 		void DrawMainMenu();
 		void DrawPauseMenu();
 		void DrawHUD();
 		void DrawEndScore();
+
+		std::shared_ptr<SF_UIButton> play_button;
+		std::shared_ptr<SF_UIButton> exit_button;
+		std::shared_ptr<SF_UIButton> restart_button;
+		std::shared_ptr<SF_UIButton> resume_button;
+		std::shared_ptr<SF_UIButton> menu_button;
+
+		std::shared_ptr<SF_UILabel> title;
+		std::shared_ptr<SF_UILabel> author;
+		std::shared_ptr<SF_UILabel> pause;
 
 		/*---SPAWNING---*/
 		void SpawnPlayer();

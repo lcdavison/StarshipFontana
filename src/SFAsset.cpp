@@ -22,7 +22,7 @@ void SFAsset::SetupSprite(const std::string path) {
 	sprite = IMG_LoadTexture(sf_window->getRenderer(), path.c_str());
 
 	if(!sprite) { 
-		printf("Failed to load sprite");
+		std::cout << name << " : Failed to load sprite" << std::endl;
 		return;
 	}
 

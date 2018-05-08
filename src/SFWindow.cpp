@@ -43,6 +43,9 @@ SFWindow::SFWindow(Uint32 w, Uint32 h, SDL_Color drawColor) {
 SFWindow::~SFWindow() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+
+	if(font) TTF_CloseFont(font);
+	if(small_font) TTF_CloseFont(small_font);
 }
 
 void SFWindow::ClearScreen() {

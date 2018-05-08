@@ -1,13 +1,14 @@
 #include "SFApp.h"
 
-// TODO: Vary the enemy types when starting the level.
-// TODO: Render A Background Image
+// Segmentation fault on fifth click to menu and back to game
+// TODO: Put UI elements into a list, so that they can just be created once
+// TODO: Code Cleanup
 // TODO: Change the README.md 
 
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window) {
-	SpawnPlayer();
-	SpawnEnemies(10);
-	SpawnObstacles(4);
+
+	CreateButtons();
+	CreateLabels();
 
 	game_state = SF_MENU;
 }
@@ -25,7 +26,7 @@ void SFApp::OnEvent(SFEvent& event) {
 			is_running = false;
 			break;
 		case SFEVENT_PAUSE:
-			TogglePause();
+			if(game_state == SF_PLAY || game_state == SF_PAUSED) TogglePause();
 			break;
 		case SFEVENT_UPDATE:
 			assets = SFAssetManager::RetrieveAllAssets();
@@ -33,23 +34,19 @@ void SFApp::OnEvent(SFEvent& event) {
 			OnRender();
 			break;
 		case SFEVENT_PLAYER_LEFT:
-			if(game_state == SF_PLAY)
-				player->GoWest();
+			if(game_state == SF_PLAY) player->GoWest();
 			break;
 		case SFEVENT_PLAYER_RIGHT:
-			if(game_state == SF_PLAY)
-				player->GoEast();
+			if(game_state == SF_PLAY) player->GoEast();
 			break;
 		case SFEVENT_PLAYER_UP:
-			if(game_state == SF_PLAY)
-				player->GoNorth();
+			if(game_state == SF_PLAY) player->GoNorth();
 			break;
 		case SFEVENT_PLAYER_DOWN:
-			if(game_state == SF_PLAY)
-				player->GoSouth();
+			if(game_state == SF_PLAY) player->GoSouth();
 			break;
 		case SFEVENT_FIRE:	
-			FireProjectile();
+			if(game_state == SF_PLAY) FireProjectile();
 			break;
 		case SFEVENT_MOUSEDOWN:
 			mouse_position = event.GetMousePosition();
@@ -119,7 +116,7 @@ void SFApp::OnRender() {
 	mouse_position = { 0 ,0 };
 }
 
-void SFApp::RestartGame() {
+void SFApp::StartGame() {
 	SFAssetManager::Clear();
 
 	SpawnPlayer();
@@ -130,11 +127,7 @@ void SFApp::RestartGame() {
 }
 
 void SFApp::TogglePause() {
-	if(game_state == SF_PAUSED) {
-		game_state = SF_PLAY;
-	} else if(game_state == SF_PLAY) {
-		game_state = SF_PAUSED;
-	}
+	game_state = (game_state == SF_PAUSED) ? SF_PLAY : SF_PAUSED;	
 }
 
 void SFApp::FireProjectile() {
@@ -148,43 +141,55 @@ void SFApp::FireProjectile() {
 	SFAssetManager::AddAsset<SFProjectile>(bullet);
 }
 
+void SFApp::CreateButtons() {
+	play_button = std::make_shared<SF_UIButton>("Play Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2, 130, 73, window, [this](void){ StartGame(); });
+	play_button->SetBackgroundAlpha(200);
+
+	exit_button = std::make_shared<SF_UIButton>("Exit Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 130, 73, window, [this](void){ is_running = false; });
+	exit_button->SetBackgroundAlpha(200);
+	
+		restart_button = std::make_shared<SF_UIButton>("Play Again", window->GetWidth() / 2 - 65, window->GetHeight() / 2, 130, 73, window, [this](void){ StartGame(); });
+	restart_button->SetBackgroundAlpha(200);
+
+	resume_button = std::make_shared<SF_UIButton>("Resume Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2, 150, 84, window, [this](void){ game_state = SF_PLAY; });
+	resume_button->SetBackgroundAlpha(200);
+
+	menu_button = std::make_shared<SF_UIButton>("Return To Main", window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 150, 84, window, [this](void){ game_state = SF_MENU; SFAssetManager::Clear(); });
+	menu_button->SetBackgroundAlpha(200);
+}
+
+void SFApp::CreateLabels() {
+	int text_width;
+	TTF_SizeText(window->getFont(), "STARSHIP FONTANA", &text_width, NULL);
+	title = std::make_shared<SF_UILabel>("STARSHIP FONTANA", window->GetWidth() / 2 - text_width / 2, 0, text_colour, window, SF_FONT_NORMAL);
+
+	TTF_SizeText(window->getSmallFont(), "by Luke Davison", &text_width, NULL);
+	author = std::make_shared<SF_UILabel>("by Luke Davison", window->GetWidth() / 2 - text_width / 2, 20, text_colour, window, SF_FONT_SMALL);
+	
+	TTF_SizeText(window->getFont(), "PAUSED", &text_width, NULL);
+	pause = std::make_shared<SF_UILabel>("PAUSED", window->GetWidth() / 2 - text_width / 2, window->GetHeight() / 2 - 100, text_colour, window, SF_FONT_NORMAL);
+
+}
+
 void SFApp::DrawMainMenu() {
-	std::string title = "STARSHIP FONTANA";
-	std::string author = "by Luke Davison";
+	title->OnRender();
+	author->OnRender();
 
-	int wi;
-	TTF_SizeText(window->getFont(), title.c_str(), &wi, NULL);
-	SF_UILabel::DrawText(title, window->GetWidth() / 2 - wi / 2, 0, text_colour, window, SF_FONT_NORMAL);
+	play_button->OnClick(mouse_position);
+	play_button->OnRender();
 
-	TTF_SizeText(window->getSmallFont(), author.c_str(), &wi, NULL);
-	SF_UILabel::DrawText(author, window->GetWidth() / 2 - wi / 2, 20, text_colour, window, SF_FONT_SMALL);
-
-	SF_UIButton play_button ("Play Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2, 130, 73, window, [this](void){ game_state = SF_PLAY; });
-	play_button.SetBackgroundAlpha(200);
-	play_button.OnClick(mouse_position);
-	play_button.OnRender();
-
-	SF_UIButton exit_button ("Exit Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 130, 73, window, [this](void){ is_running = false; });
-	exit_button.SetBackgroundAlpha(200);
-	exit_button.OnClick(mouse_position);
-	exit_button.OnRender();
+	exit_button->OnClick(mouse_position);
+	exit_button->OnRender();
 }
 
 void SFApp::DrawPauseMenu() {
-		int wi;
-		std::string pause_text = "PAUSED";
-		TTF_SizeText(window->getFont(), pause_text.c_str(), &wi, NULL);
-		SF_UILabel::DrawText(pause_text, window->GetWidth() / 2 - wi / 2, window->GetHeight() / 2 - 100, text_colour, window, SF_FONT_NORMAL);
+	pause->OnRender();
 
-		SF_UIButton resume_button ("Resume Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2, 150, 84, window, [this](void){ game_state = SF_PLAY; });
-		resume_button.SetBackgroundAlpha(200);
-		resume_button.OnClick(mouse_position);
-		resume_button.OnRender();
+	resume_button->OnClick(mouse_position);
+	resume_button->OnRender();
 
-		SF_UIButton menu_button ("Return To Main", window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 150, 84, window, [this](void){ game_state = SF_MENU; });
-		menu_button.SetBackgroundAlpha(200);
-		menu_button.OnClick(mouse_position);
-		menu_button.OnRender();
+	menu_button->OnClick(mouse_position);
+	menu_button->OnRender();
 }
 
 void SFApp::DrawHUD() {
@@ -201,22 +206,18 @@ void SFApp::DrawHUD() {
 }
 
 void SFApp::DrawEndScore() {
+//	Create The Label When the state changes
 	std::string end_text = "FINAL SCORE : " + std::to_string(player->GetCoins() * 2);
 
 	int wi;
 	TTF_SizeText(window->getFont(), end_text.c_str(), &wi, NULL);
+//	SF_UILabel::DrawText(end_text, window->GetWidth() / 2 - wi / 2, 0, text_colour, window, SF_FONT_NORMAL);
 
-	SF_UILabel::DrawText(end_text, window->GetWidth() / 2 - wi / 2, 0, text_colour, window, SF_FONT_NORMAL);
+	restart_button->OnClick(mouse_position);
+	restart_button->OnRender();
 
-	SF_UIButton restart_button ("Play Again", window->GetWidth() / 2 - 65, window->GetHeight() / 2, 130, 73, window, [this](void){ RestartGame(); });
-	restart_button.SetBackgroundAlpha(200);
-	restart_button.OnClick(mouse_position);
-	restart_button.OnRender();
-
-	SF_UIButton exit_button ("Exit Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 130, 73, window, [this](void){ is_running = false; });
-	exit_button.SetBackgroundAlpha(200);
-	exit_button.OnClick(mouse_position);
-	exit_button.OnRender();
+	exit_button->OnClick(mouse_position);
+	exit_button->OnRender();
 } 
 
 void SFApp::SpawnPlayer() {

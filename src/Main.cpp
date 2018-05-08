@@ -49,7 +49,6 @@ shared_ptr<SFWindow> InitGraphics() {
 }
 
 int main(int argc, char ** argv) {
-
 	try {
 		// Initialise graphics context
 		shared_ptr<SFWindow> window = InitGraphics();

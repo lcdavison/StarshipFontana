@@ -23,6 +23,7 @@ SFEnemy::SFEnemy(std::string name, SFASSETTYPE assetType, std::shared_ptr<SFWind
 	}
 	
 	player = SFAssetManager::GetAssetByName<SFPlayer>("player");	
+
 	SetMovementSpeed(0.2f);
 }
 

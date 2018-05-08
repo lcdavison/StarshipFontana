@@ -1,5 +1,32 @@
 #include "SF_UILabel.h"
 
+SF_UILabel::SF_UILabel(const std::string& text, const short& x, const short& y, SDL_Color colour, std::shared_ptr<SFWindow> window, SFFONTSIZE size) : window(window) {
+	switch(size) {
+		case SF_FONT_NORMAL:
+			texture = CreateTextureFromString(text, window->getFont(), colour, window);
+			break;
+		case SF_FONT_SMALL:
+			texture = CreateTextureFromString(text, window->getSmallFont(), colour, window);
+			break;
+	}
+
+	int width, height;
+	SDL_QueryTexture(texture, 0, 0, &width, &height);
+
+	destination = { x, y, width, height };
+}
+
+SF_UILabel::~SF_UILabel() {
+	if(texture) {
+		SDL_DestroyTexture(texture);
+		texture = nullptr;
+	}
+}
+
+void SF_UILabel::OnRender() {
+	SDL_RenderCopy(window->getRenderer(), texture, NULL, &destination);
+}
+
 void SF_UILabel::DrawText(const std::string& text, const short& x, const short& y, SDL_Color colour, std::shared_ptr<SFWindow> window, SFFONTSIZE size) {
 
 	SDL_Texture* texture;

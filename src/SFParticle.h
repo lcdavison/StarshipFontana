@@ -16,6 +16,7 @@ class SFParticle
 {
 	public:
 		SFParticle(int, int, std::shared_ptr<SFWindow>);
+		~SFParticle();
 
 		void OnUpdate();
 		void OnRender();
