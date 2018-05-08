@@ -21,7 +21,7 @@ SFProjectile::SFProjectile(std::string name, SFASSETTYPE type, std::shared_ptr<S
 void SFProjectile::OnUpdate() {
 	Move();
 
-	for(auto enemy : SFAssetManager::GetAssetsOfType<SFEnemy>(SFASSET_ALIEN)) {
+	for(auto enemy : SFAssetManager::GetAssetsOfType<SFEnemy>(SFASSET_ENEMY)) {
 		if(CollidesWith(enemy)) {
 			enemy->TakeDamage(GetDamage());
 

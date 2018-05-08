@@ -2,18 +2,39 @@
 
 SFAssetManager::AssetContainer SFAssetManager::assets;
 
-SFAssetManager::AssetContainer SFAssetManager::RetrieveAllAssets() { return assets; }
+//
+//	RetrieveAllAsset
+//		Returns all of the current loaded assets
+//
+SFAssetManager::AssetContainer SFAssetManager::RetrieveAllAssets() 
+{ 
+	return assets; 
+}
 
-void SFAssetManager::RemoveAsset(std::shared_ptr<SFAsset> asset) {
-	for(auto it = assets.begin(); it != assets.end(); ) {
-		if((*it) == asset) {
+//
+//	RemoveAsset
+//		Removes an asset from the asset manager
+//
+void SFAssetManager::RemoveAsset(std::shared_ptr<SFAsset> asset) 
+{
+	for(auto it = assets.begin(); it != assets.end(); ) 
+	{
+		if((*it) == asset) 
+		{
 			it = assets.erase(it);
-		} else {
+		} 
+		else 
+		{
 			++it;
 		}
 	}
 }
 
-void SFAssetManager::Clear() {
+//
+//	Clear
+//		Clears the asset manager
+//
+void SFAssetManager::Clear() 
+{
 	assets.clear();
 }

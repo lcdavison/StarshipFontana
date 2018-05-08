@@ -19,10 +19,10 @@ using namespace std;
  * 2. Update game world
  * 3. Render game world
  */
-class SFApp {
+class SFApp 
+{
 	public:
 		SFApp(std::shared_ptr<SFWindow>);
-		~SFApp();
 
 		void OnEvent(SFEvent &);
 		void StartMainLoop();
@@ -36,6 +36,8 @@ class SFApp {
 
 		void StartGame();
 		void TogglePause();
+
+		bool is_running;
 
 		/*---UI---*/
 		SDL_Color text_colour = { 0, 255, 0, 255 };
@@ -69,13 +71,14 @@ class SFApp {
 		/*---CLEARING---*/
 		void ClearAllDead();
 
-		bool is_running;
-
+		/*---INPUT---*/
 		MousePos mouse_position;
-
+		
+		/*---POINTERS---*/
 		shared_ptr<SFWindow> window;
 		shared_ptr<SFPlayer> player;
 
+		/*---ASSETS---*/
 		vector<std::shared_ptr<SFAsset>> assets;
 };
 #endif

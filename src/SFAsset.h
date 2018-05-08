@@ -22,21 +22,29 @@ using namespace std;
  * enum to mark the type of the SFAsset.  If we add more asset types then
  * the subclassing strategy becomes a better option.
  */
-enum SFASSETTYPE { SFASSET_PLAYER, SFASSET_PROJECTILE, SFASSET_ALIEN, SFASSET_COIN, SFASSET_OBSTACLE };
+enum SFASSETTYPE { SFASSET_PLAYER, 
+				   SFASSET_PROJECTILE, 
+				   SFASSET_ENEMY, 
+				   SFASSET_COIN, 
+				   SFASSET_OBSTACLE };
 
 /*--SFASSET INTERFACE--*/
-class ISFAsset {
+class ISFAsset 
+{
 	public:
 		virtual void OnUpdate() = 0;
 };
 
-class SFAsset : public ISFAsset {
+class SFAsset : public ISFAsset 
+{
 	public:
 		SFAsset(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
 		SFAsset(const SFAsset&);
 		virtual ~SFAsset();
 
 		void OnUpdate();
+
+		/*---PROPERTIES---*/
 		std::string GetName() const;
 		SFASSETTYPE GetType() const;
 
@@ -48,25 +56,25 @@ class SFAsset : public ISFAsset {
 		virtual bool	  IsOutsideWindow();	
 		virtual float     DistanceTo(std::shared_ptr<SFAsset>);
 
+		/*---MOVEMENT---*/
 		virtual void      GoEast();
 		virtual void      GoWest();
 		virtual void      GoNorth();
 		virtual void      GoSouth();
 		virtual void	  SetMovementSpeed(float);
 
-		virtual void      SetNotAlive();
-		virtual bool      IsAlive();
-		virtual void      HandleCollision();
-
-		/*---COLLISION TESTS---*/
-		virtual bool    CollidesWith(shared_ptr<SFAsset>);
-
-		virtual shared_ptr<SFBoundingBox> GetBoundingBox();
-
-		// Movement
 		virtual void	  MoveTowards(std::shared_ptr<SFAsset>);
 		virtual void	  Lerp(std::shared_ptr<SFAsset>, float);
 
+		/*---STATE---*/
+		virtual void      SetNotAlive();
+		virtual bool      IsAlive();
+
+		/*---COLLISION TESTS---*/
+		virtual bool      CollidesWith(shared_ptr<SFAsset>);
+		virtual void      HandleCollision();
+
+		virtual shared_ptr<SFBoundingBox> GetBoundingBox();
 	protected:
 
 		/*---Sprites---*/
@@ -82,6 +90,7 @@ class SFAsset : public ISFAsset {
 		bool has_collision = false;
 		int lifetime;
 
+		/*---POINTERS---*/
 		SDL_Texture               * sprite;
 		shared_ptr<SFBoundingBox>   bbox;
 		SFASSETTYPE                 type;

@@ -11,7 +11,6 @@ using namespace std;
 class SFBoundingBox {
 public:
     SFBoundingBox(const Point2, const int, const int);
-    virtual ~SFBoundingBox();
 
     void SetPosition(Point2 &);
     void Translate(Vector2 &);

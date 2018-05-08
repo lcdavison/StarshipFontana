@@ -1,42 +1,82 @@
 #include "SFBoundingBox.h"
 
-SFBoundingBox::SFBoundingBox(const Point2 position, const int width, const int height) {
-    box = { (int) position.getX(), (int) position.getY(), width, height };
+SFBoundingBox::SFBoundingBox(const Point2 position, 
+							 const int width, const int height) 
+{
+    box = { (int) position.getX(), (int) position.getY(),
+	   		width, height };
 }
 
-SFBoundingBox::~SFBoundingBox() {
-}
-
-void SFBoundingBox::SetPosition(Point2 & p) {
+//
+//	SetPosition
+//		Sets the position of the bounding box
+//
+void SFBoundingBox::SetPosition(Point2 & p) 
+{
     box.x = (int) p.getX();
     box.y = (int) p.getY();
 }
 
-void SFBoundingBox::Translate(Vector2 & v) {
+//
+//	Translate
+//		Translates the bounding box in a given direction
+//
+void SFBoundingBox::Translate(Vector2 & v) 
+{
     box.x += v.getX(); 
     box.y += v.getY();
 }
 
-int SFBoundingBox::GetX() {
+//	
+//	GetX
+//		Returns x position
+//
+int SFBoundingBox::GetX() 
+{
     return box.x;
 }
 
-int SFBoundingBox::GetY() {
+//	
+//	GetY
+//		Returns y position
+//
+int SFBoundingBox::GetY() 
+{
     return box.y;
 }
 
-int SFBoundingBox::GetWidth() {
+//	
+//	GetWidth
+//		Returns bounding box width
+//
+int SFBoundingBox::GetWidth() 
+{
     return box.w;
 }
 
-int SFBoundingBox::GetHeight() {
+//	
+//	GetHeight
+//		Returns bounding box height
+//
+int SFBoundingBox::GetHeight() 
+{
     return box.h;
 }
 
-SDL_Rect SFBoundingBox::GetBox() {
+//	
+//	GetBox
+//		Returns SDL_Rect representing the bounding box
+//
+SDL_Rect SFBoundingBox::GetBox() 
+{
     return box;
 }
 
-bool SFBoundingBox::CollidesWith(const shared_ptr<SFBoundingBox> b) {
+//	
+//	CollidesWith
+//		Checks for an intersection with another bounding box
+//
+bool SFBoundingBox::CollidesWith(const shared_ptr<SFBoundingBox> b) 
+{
     return SDL_HasIntersection(&box, &b->box) == SDL_TRUE;
 }

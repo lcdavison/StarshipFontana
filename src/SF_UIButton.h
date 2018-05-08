@@ -12,7 +12,8 @@
 #include "SFWindow.h"
 #include "SFEvent.h"
 
-class SF_UIButton {
+class SF_UIButton 
+{
 	public:
 		SF_UIButton(std::string, int, int, int, int, std::shared_ptr<SFWindow>, std::function<void (void)>);
 		~SF_UIButton();
@@ -24,7 +25,10 @@ class SF_UIButton {
 		void SetTextAlpha(int);
 		void SetBackgroundAlpha(int);
 	private:
-		std::function<void (void)> OnClickFunction;	//	Function to run when button is clicked
+		std::function<void (void)> OnClickFunction;	//	Function run on button click 
+
+		void CreateBackground();
+		void CreateText();
 
 		std::string text;
 

@@ -43,9 +43,9 @@ shared_ptr<SFWindow> InitGraphics() {
 	Uint32 height = 480;
 
 	// Background color 
-	SDL_Color draw_color = { 0, 100, 255, SDL_ALPHA_OPAQUE };
+	SDL_Color draw_colour = { 0, 100, 255, SDL_ALPHA_OPAQUE };
 
-	return make_shared<SFWindow>(width, height, draw_color);
+	return make_shared<SFWindow>(width, height, draw_colour);
 }
 
 int main(int argc, char ** argv) {
@@ -62,6 +62,7 @@ int main(int argc, char ** argv) {
 		// Set up the timer to call "PushUpdateEvent" every delay milliseconds
 		SDL_AddTimer(delay, PushUpdateEvent, NULL);
 
+		// Start game loop
 		game->StartMainLoop();
 
 	} catch (SFException& e) {

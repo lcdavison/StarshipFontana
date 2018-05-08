@@ -3,87 +3,130 @@
 // TODO: Code Cleanup - Make it more readable
 // TODO: Change the README.md 
 
-SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window) {
-
+SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window)
+{
 	CreateButtons();
 	CreateLabels();
 
 	game_state = SF_MENU;
 }
 
-SFApp::~SFApp() {}
 
-/**
- * Handle all events that come from SDL.
- * These are timer or keyboard events.
- */
-void SFApp::OnEvent(SFEvent& event) {
+//
+//	OnEvent
+//		Handle all events that come from SDL.
+//		These are timer or input events
+//
+void SFApp::OnEvent(SFEvent& event) 
+{
 	SFEVENT the_event = event.GetCode();
-	switch (the_event) {
+
+	switch (the_event) 
+	{
 		case SFEVENT_QUIT:
 			is_running = false;
 			break;
+
 		case SFEVENT_PAUSE:
-			if(game_state == SF_PLAY || game_state == SF_PAUSED) TogglePause();
+			if(game_state == SF_PLAY 
+			   || game_state == SF_PAUSED) 
+			   TogglePause();
 			break;
+
 		case SFEVENT_UPDATE:
 			assets = SFAssetManager::RetrieveAllAssets();
 			OnUpdate();
 			OnRender();
 			break;
+
 		case SFEVENT_PLAYER_LEFT:
-			if(game_state == SF_PLAY) player->GoWest();
+			if(game_state == SF_PLAY) 
+			   player->GoWest();
 			break;
+
 		case SFEVENT_PLAYER_RIGHT:
-			if(game_state == SF_PLAY) player->GoEast();
+			if(game_state == SF_PLAY) 
+			   player->GoEast();
 			break;
+
 		case SFEVENT_PLAYER_UP:
-			if(game_state == SF_PLAY) player->GoNorth();
+			if(game_state == SF_PLAY) 
+			   player->GoNorth();
 			break;
+
 		case SFEVENT_PLAYER_DOWN:
-			if(game_state == SF_PLAY) player->GoSouth();
+			if(game_state == SF_PLAY) 
+			   player->GoSouth();
 			break;
+
 		case SFEVENT_FIRE:	
-			if(game_state == SF_PLAY) FireProjectile();
+			if(game_state == SF_PLAY) 
+			   FireProjectile();
 			break;
+
 		case SFEVENT_MOUSEDOWN:
 			mouse_position = event.GetMousePosition();
 			break;
 	}
 }
 
-void SFApp::StartMainLoop() {
+//
+//	StartMainLoop
+//		While game is running, continues to check for SDL
+//		events.
+//
+void SFApp::StartMainLoop() 
+{
 	SDL_Event event;
-	while (SDL_WaitEvent(&event) && is_running) {
+	while (SDL_WaitEvent(&event) 
+		   && is_running) 
+	{
 
-		// wrap an SDL_Event with our SFEvent
+		// Wrap an SDL_Event with our SFEvent
 		SFEvent sfevent((const SDL_Event)event);
 
-		// handle our SFEvent
+		// Handle our SFEvent
 		OnEvent(sfevent);
 	}
 }
 
-void SFApp::OnUpdate() {
-	if(game_state == SF_PLAY) {
+//
+//	OnUpdate
+//		Updates each asset
+//		Checks end condition
+//		Clears dead assets
+//
+void SFApp::OnUpdate() 
+{
+	if(game_state == SF_PLAY) 
+	{
 		// Update assets before updating state 
-		for(auto asset : assets) {
+		for(auto asset : assets) 
+		{
 			asset->OnUpdate();
 		}
 
-		if(GetNumEnemies() == 0 || !SFAssetManager::GetAssetByName<SFPlayer>("player")->IsAlive()) game_state = SF_END;
+		if(GetNumEnemies() == 0 
+		   || !SFAssetManager::GetAssetByName<SFPlayer>("player")->IsAlive()) 
+		   game_state = SF_END;
 
 		ClearAllDead();
 	}
 }
 
-void SFApp::OnRender() {
-
+//
+//	OnRender
+//		Renders each asset and
+//		interfaces dependant on game_state
+//
+void SFApp::OnRender() 
+{
 	// 1. Clear visible content
 	window->ClearScreen();
 
 	// 2. Test game state	
-	switch(game_state) {
+	switch(game_state) 
+	{
 		case SF_MENU:
 			DrawMainMenu();
 			break;
@@ -95,12 +138,14 @@ void SFApp::OnRender() {
 			break;
 	}
 
-	if(game_state == SF_PLAY) {
-
+	if(game_state == SF_PLAY) 
+	{
 		// 3. Render Assets
-		for(auto asset : assets) {
-			if(!asset->IsOutsideWindow() && asset->IsAlive())
-				asset->OnRender();
+		for(auto asset : assets) 
+		{
+			if(!asset->IsOutsideWindow() 
+			   && asset->IsAlive())
+			   asset->OnRender();
 		}
 
 		// 4. Draw HUD
@@ -114,7 +159,13 @@ void SFApp::OnRender() {
 	mouse_position = { 0 ,0 };
 }
 
-void SFApp::StartGame() {
+//
+//	StartGame
+//		Clears any residual assets
+//		and sets up level
+//
+void SFApp::StartGame() 
+{
 	SFAssetManager::Clear();
 
 	SpawnPlayer();
@@ -124,52 +175,125 @@ void SFApp::StartGame() {
 	game_state = SF_PLAY;
 }
 
-void SFApp::TogglePause() {
+//
+//	TogglePause
+//		Determines game pause state
+//
+void SFApp::TogglePause() 
+{
 	game_state = (game_state == SF_PAUSED) ? SF_PLAY : SF_PAUSED;	
 }
 
-void SFApp::FireProjectile() {
-	shared_ptr<SFProjectile> bullet = make_shared<SFProjectile>("projectile", SFASSET_PROJECTILE, window, BULLET, NORTH);
+//
+//	FireProjectile
+//		Creates a projectile and sets its spawn position
+//
+void SFApp::FireProjectile() 
+{
+	shared_ptr<SFProjectile> bullet = make_shared<SFProjectile>("projectile", 
+																SFASSET_PROJECTILE, 
+																window, 
+																BULLET, 
+																NORTH);
+
 	bullet->SetDamage(player->GetDamage());
 
 	auto v = player->GetCenter(); 
-	auto pos = Point2(v.getX() - bullet->GetBoundingBox()->GetWidth() / 2, v.getY() - bullet->GetBoundingBox()->GetWidth() * 2);
-	bullet->SetPosition(pos);
+	auto pos = Point2(v.getX() - bullet->GetBoundingBox()->GetWidth() / 2, 
+					  v.getY() - bullet->GetBoundingBox()->GetWidth() * 2);
 
+	bullet->SetPosition(pos);
 	SFAssetManager::AddAsset<SFProjectile>(bullet);
 }
 
+//
+//	CreateButtons
+//		Creates the buttons for the user interface
+//
 void SFApp::CreateButtons() {
-	play_button = std::make_shared<SF_UIButton>("Play Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2, 130, 73, window, [this](void){ StartGame(); });
+	play_button = std::make_shared<SF_UIButton>("Play Game", 
+												window->GetWidth() / 2 - 65, window->GetHeight() / 2, 
+												130, 73, 
+												window, 
+												[this](void){ StartGame(); });
 	play_button->SetBackgroundAlpha(200);
 
-	exit_button = std::make_shared<SF_UIButton>("Exit Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 130, 73, window, [this](void){ is_running = false; });
+	exit_button = std::make_shared<SF_UIButton>("Exit Game", 
+												window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 
+												130, 73, 
+												window, 
+												[this](void){ is_running = false; });
 	exit_button->SetBackgroundAlpha(200);
 	
-		restart_button = std::make_shared<SF_UIButton>("Play Again", window->GetWidth() / 2 - 65, window->GetHeight() / 2, 130, 73, window, [this](void){ StartGame(); });
+	restart_button = std::make_shared<SF_UIButton>("Play Again", 
+												   window->GetWidth() / 2 - 65, window->GetHeight() / 2, 
+												   130, 73, 
+												   window, 
+												   [this](void){ StartGame(); });
 	restart_button->SetBackgroundAlpha(200);
 
-	resume_button = std::make_shared<SF_UIButton>("Resume Game", window->GetWidth() / 2 - 65, window->GetHeight() / 2, 150, 84, window, [this](void){ game_state = SF_PLAY; });
+	resume_button = std::make_shared<SF_UIButton>("Resume Game", 
+												  window->GetWidth() / 2 - 65, window->GetHeight() / 2, 
+												  150, 84, 
+												  window, 
+												  [this](void){ game_state = SF_PLAY; });
 	resume_button->SetBackgroundAlpha(200);
 
-	menu_button = std::make_shared<SF_UIButton>("Return To Main", window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 150, 84, window, [this](void){ game_state = SF_MENU; SFAssetManager::Clear(); });
+	menu_button = std::make_shared<SF_UIButton>("Return To Main", 
+												window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 
+												150, 84, 
+												window, 
+												[this](void){ game_state = SF_MENU; SFAssetManager::Clear(); });
 	menu_button->SetBackgroundAlpha(200);
 }
 
-void SFApp::CreateLabels() {
+//
+//	CreateLabels
+//		Creates the labels for the user interface
+//
+void SFApp::CreateLabels() 
+{
 	int text_width;
-	TTF_SizeText(window->getFont(), "STARSHIP FONTANA", &text_width, NULL);
-	title = std::make_shared<SF_UILabel>("STARSHIP FONTANA", window->GetWidth() / 2 - text_width / 2, 0, text_colour, window, SF_FONT_NORMAL);
+	TTF_SizeText(window->getFont(), 
+				 "STARSHIP FONTANA", 
+				 &text_width, 
+				 NULL);
 
-	TTF_SizeText(window->getSmallFont(), "by Luke Davison", &text_width, NULL);
-	author = std::make_shared<SF_UILabel>("by Luke Davison", window->GetWidth() / 2 - text_width / 2, 20, text_colour, window, SF_FONT_SMALL);
+	title = std::make_shared<SF_UILabel>("STARSHIP FONTANA", 
+										 window->GetWidth() / 2 - text_width / 2, 0, 
+										 text_colour, 
+										 window, 
+										 SF_FONT_NORMAL);
+
+	TTF_SizeText(window->getSmallFont(), 
+				 "by Luke Davison", 
+				 &text_width, 
+				 NULL);
+
+	author = std::make_shared<SF_UILabel>("by Luke Davison", 
+										  window->GetWidth() / 2 - text_width / 2, 20, 
+										  text_colour, 
+										  window, 
+										  SF_FONT_SMALL);
 	
-	TTF_SizeText(window->getFont(), "PAUSED", &text_width, NULL);
-	pause = std::make_shared<SF_UILabel>("PAUSED", window->GetWidth() / 2 - text_width / 2, window->GetHeight() / 2 - 100, text_colour, window, SF_FONT_NORMAL);
+	TTF_SizeText(window->getFont(), 
+				 "PAUSED", 
+				 &text_width, 
+				 NULL);
 
+	pause = std::make_shared<SF_UILabel>("PAUSED", 
+										 window->GetWidth() / 2 - text_width / 2, window->GetHeight() / 2 - 100, 
+										 text_colour, 
+										 window, 
+										 SF_FONT_NORMAL);
 }
 
-void SFApp::DrawMainMenu() {
+//
+//	DrawMainMenu
+//		Renders the main menu interface
+//
+void SFApp::DrawMainMenu() 
+{
 	title->OnRender();
 	author->OnRender();
 
@@ -180,7 +304,12 @@ void SFApp::DrawMainMenu() {
 	exit_button->OnRender();
 }
 
-void SFApp::DrawPauseMenu() {
+//
+//	DrawPauseMenu
+//		Renders the pause menu interface
+//
+void SFApp::DrawPauseMenu() 
+{
 	pause->OnRender();
 
 	resume_button->OnClick(mouse_position);
@@ -190,25 +319,66 @@ void SFApp::DrawPauseMenu() {
 	menu_button->OnRender();
 }
 
-void SFApp::DrawHUD() {
-	std::string health_text = "HEALTH : " + std::to_string(player->GetHealth());
-	std::string enemies_remaining_text = "ENEMIES : " + std::to_string(GetNumEnemies());
-	std::string coin_text = "COINS : " + std::to_string(player->GetCoins());
+//
+//	DrawHUD
+//		Renders the heads-up display
+//
+void SFApp::DrawHUD() 
+{
+	std::string health_text = "HEALTH : " 
+							  + std::to_string(player->GetHealth());
+
+	std::string enemies_remaining_text = "ENEMIES : " 
+										 + std::to_string(GetNumEnemies());
+
+	std::string coin_text = "COINS : " 
+							+ std::to_string(player->GetCoins());
 
 	int wi;
-	TTF_SizeText(window->getFont(), health_text.c_str(), &wi, NULL);
+	TTF_SizeText(window->getFont(), 
+				 health_text.c_str(), 
+				 &wi, 
+				 NULL);
 
-	SF_UILabel::DrawText(health_text, window->GetWidth() / 2 - wi / 2, 0, text_colour, window, SF_FONT_NORMAL);
-	SF_UILabel::DrawText(enemies_remaining_text, 10, 0, text_colour, window, SF_FONT_NORMAL);
-	SF_UILabel::DrawText(coin_text, 10, 30, text_colour, window, SF_FONT_NORMAL);	
+	SF_UILabel::DrawText(health_text, 
+						 window->GetWidth() / 2 - wi / 2, 0, 
+						 text_colour, 
+						 window, 
+						 SF_FONT_NORMAL);
+
+	SF_UILabel::DrawText(enemies_remaining_text, 
+						 10, 0, 
+						 text_colour, 
+						 window, 
+						 SF_FONT_NORMAL);
+
+	SF_UILabel::DrawText(coin_text, 
+						 10, 30, 
+						 text_colour, 
+						 window, 
+						 SF_FONT_NORMAL);	
 }
 
-void SFApp::DrawEndScore() {
-	std::string end_text = "FINAL SCORE : " + std::to_string(player->GetCoins() * 2);
+//
+//	DrawEndScore
+//		Renders the final score screen interface
+//
+void SFApp::DrawEndScore() 
+{
+	std::string end_text = "FINAL SCORE : " 
+						   + std::to_string(player->GetCoins() * 2);
 
 	int wi;
-	TTF_SizeText(window->getFont(), end_text.c_str(), &wi, NULL);
-	SF_UILabel::DrawText(end_text, window->GetWidth() / 2 - wi / 2, 0, text_colour, window, SF_FONT_NORMAL);
+	TTF_SizeText(window->getFont(), 
+			     end_text.c_str(), 
+				 &wi, 
+				 NULL);
+
+	SF_UILabel::DrawText(end_text, 
+						 window->GetWidth() / 2 - wi / 2, 0, 
+						 text_colour, 
+						 window, 
+						 SF_FONT_NORMAL);
 
 	restart_button->OnClick(mouse_position);
 	restart_button->OnRender();
@@ -217,46 +387,89 @@ void SFApp::DrawEndScore() {
 	exit_button->OnRender();
 } 
 
+//
+//	SpawnPlayer
+//		Creates a player asset
+//
 void SFApp::SpawnPlayer() {
-	SFAssetManager::CreateAsset<SFPlayer>("player", SFASSET_PLAYER, window);
+	SFAssetManager::CreateAsset<SFPlayer>("player", 
+										  SFASSET_PLAYER, 
+										  window);
+
 	player = SFAssetManager::GetAssetByName<SFPlayer>("player");
 
-	auto player_pos = Point2(window->GetWidth() / 2 - player->GetBoundingBox()->GetWidth() / 2, window->GetHeight() - player->GetBoundingBox()->GetHeight());
+	auto player_pos = Point2(window->GetWidth() / 2 - player->GetBoundingBox()->GetWidth() / 2, 
+							 window->GetHeight() - player->GetBoundingBox()->GetHeight());
+
 	player->SetPosition(player_pos);
 }
 
-void SFApp::SpawnObstacles(int amount) {
-	for(int i = 0; i < amount; i++) {
-		auto wall = make_shared<SFObstacle>("wall" + i, SFASSET_OBSTACLE, window);
-		auto pos = Point2((window->GetWidth() / amount) * i + wall->GetBoundingBox()->GetWidth() / 2, 300.0f);
-		wall->SetPosition(pos);
+//
+//	SpawnObstacles
+//		Creates the wall assets between the player and enemies
+//
+void SFApp::SpawnObstacles(int amount) 
+{
+	for(int i = 0; i < amount; i++) 
+	{
+		auto wall = make_shared<SFObstacle>("wall" + i, 
+											SFASSET_OBSTACLE, 
+											window);
 
+		auto pos = Point2((window->GetWidth() / amount) * i + wall->GetBoundingBox()->GetWidth() / 2, 
+						  300.0f);
+
+		wall->SetPosition(pos);
 		SFAssetManager::AddAsset<SFObstacle>(wall);
 	}
 }
 
-void SFApp::SpawnEnemies(int amount) {
-	for (int i = 0; i < amount; i++) {
-		// Place an alien at width/number_of_aliens * i
-		auto alien = make_shared<SFEnemy>("alien" + i, SFASSET_ALIEN, window, ELITE);
-		auto pos = Point2((window->GetWidth() / amount) * i + alien->GetBoundingBox()->GetWidth() / 2, 100.0f);
-		alien->SetPosition(pos);
+//
+//	SpawnEnemies
+//		Creates the enemy assets
+//
+void SFApp::SpawnEnemies(int amount) 
+{
+	for (int i = 0; i < amount; i++) 
+	{
+		// Place an enemy at width/number_of_enemies * i
+		auto enemy = make_shared<SFEnemy>("enemy" + i, 
+										  SFASSET_ENEMY, 
+										  window);
 
-		SFAssetManager::AddAsset<SFEnemy>(alien);
+		auto pos = Point2((window->GetWidth() / amount) * i + enemy->GetBoundingBox()->GetWidth() / 2,
+			   		      100.0f);
+
+		enemy->SetPosition(pos);
+		SFAssetManager::AddAsset<SFEnemy>(enemy);
 	}
 }
 
-int SFApp::GetNumEnemies() {
+//
+//	GetNumEnemies
+//		Returns the number of enemies that are alive
+//
+int SFApp::GetNumEnemies() 
+{
 	int num = 0;
-	for(auto asset : assets) {
-		if(asset->GetType() == SFASSET_ALIEN) num++;
+	for(auto asset : assets) 
+	{
+		if(asset->GetType() == SFASSET_ENEMY) 
+		   num++;
 	}
 
 	return num;
 }
 
-void SFApp::ClearAllDead() {
-	for(auto asset : assets) {
-		if(!asset->IsAlive()) SFAssetManager::RemoveAsset(asset);
+// 
+//	ClearAllDead
+//		Clears all the dead assets from the asset manager
+//
+void SFApp::ClearAllDead() 
+{
+	for(auto asset : assets) 
+	{
+		if(!asset->IsAlive()) 
+		   SFAssetManager::RemoveAsset(asset);
 	}
 }

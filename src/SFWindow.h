@@ -9,7 +9,7 @@
 
 class SFWindow {
 	public:
-		SFWindow(Uint32 w, Uint32 h, SDL_Color drawColor);
+		SFWindow(Uint32, Uint32, SDL_Color);
 		~SFWindow();
 
 		void ClearScreen();
