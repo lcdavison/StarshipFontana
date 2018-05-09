@@ -17,7 +17,7 @@ SFPlayer::SFPlayer(std::string name,
 void SFPlayer::OnUpdate() 
 {
 	if(health <= 40)
-	   smoke_emitter->Emit(GetPosition());
+	   smoke_emitter->Emit(GetCenter());
 
 	if(IsDead()) 
 	   alive = false;
