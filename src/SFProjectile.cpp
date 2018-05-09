@@ -3,11 +3,9 @@
 SFProjectile::SFProjectile(std::string name, 
 						   SFASSETTYPE type, 
 						   std::shared_ptr<SFWindow> window, 
-						   SFPROJECTILE_TYPE proj_type, 
 						   SFPROJECTILE_DIRECTION proj_direction) 
 						   : SFAsset(name, type, window) 
 {
-	projectile = proj_type;
 	direction = proj_direction;
 
 	SetupSprite("assets/sprites/projectile.png");

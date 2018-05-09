@@ -4,38 +4,40 @@
 #include "SFAssetManager.h"
 #include "SFParticleEmitter.h"
 
-class SFPlayer : public SFAsset {
+class SFPlayer : public SFAsset 
+{
 	public:
+
 		SFPlayer(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
 
-		void OnUpdate();
-		void OnRender();
+		void 								OnUpdate();
+		void 								OnRender();
 
-		//	Player's Coins
-		void AddCoin();
-		short GetCoins();
+		void 								AddCoin();
+		short 								GetCoins();
 
-		//	Player's Health
-		void TakeDamage(short);
-		short GetHealth();
-		bool IsDead();
+		void 								TakeDamage(short);
+		short 								GetHealth();
+		bool 								IsDead();
 
-		//	Player Damage
-		short GetDamage();
-		void ModifyDamage(short);
+		short 								GetDamage();
+		void 								ModifyDamage(short);
 
-		void GoNorth();
-		void GoSouth();
-		void GoEast();
-		void GoWest();
+		void 								GoNorth();
+		void 								GoSouth();
+		void 								GoEast();
+		void 								GoWest();
 
-		void CheckCollision(Vector2&);
+		void 								CheckCollision(Vector2&);
+
 	private:
-		short coins = 0;
-		short health = 100;
-		short damage = 25;
 
-		std::shared_ptr<SFParticleEmitter> smoke_emitter;
+		short 								coins = 0;
+		short 								health = 100;
+		short 								damage = 25;
+
+		std::shared_ptr<SFParticleEmitter>	smoke_emitter;
+
 };                               
 #endif                           
 

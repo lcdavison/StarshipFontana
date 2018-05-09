@@ -8,21 +8,25 @@
 #include <vector>
 #include <algorithm>
 
-class SFParticleEmitter {
+class SFParticleEmitter 
+{
 	public:
+
 		SFParticleEmitter(int, int, std::shared_ptr<SFWindow>);
 		~SFParticleEmitter();
 	
-		void Emit(int, int);
-		void OnRender();	
+		void 										Emit(int, int);
+		void 										OnRender();	
+
 	private:
-		void RemoveDeadParticles();
 
-		int num_particles;
-		int alpha;
+		void 										RemoveDeadParticles();
 
-		std::shared_ptr<SFWindow> window;
+		int 										num_particles;
+		int 										alpha;
 
-		std::vector<std::shared_ptr<SFParticle>> particles;
+		std::shared_ptr<SFWindow> 					window;
+		std::vector<std::shared_ptr<SFParticle>> 	particles;
+
 };
 #endif

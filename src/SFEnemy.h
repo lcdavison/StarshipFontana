@@ -6,36 +6,32 @@
 
 class SFPlayer;
 
-enum SFENEMYTYPE { GRUNT, BRAWLER, ELITE, BOSS };
-
-class SFEnemy : public SFAsset {
+class SFEnemy : public SFAsset 
+{
 	public:
+
 		SFEnemy(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
 
-		void OnUpdate();
+		void 						OnUpdate();
 
-		//	Enemy Health
-		bool IsDead();
-		void TakeDamage(short);
-		short GetHealth();
+		/*---HEALTH---*/
+		bool 						IsDead();
+		void 						TakeDamage(short);
+		short 						GetHealth();
 
 	private:
-		/*---ENEMY BEHAVIOUR---*/
+
 		enum SFENEMYDIRECTION { LEFT, RIGHT };
-		SFENEMYDIRECTION movement_direction;
 
-		void MoveAround();
-		void Attack();
+		SFENEMYDIRECTION 			movement_direction;
 
-		int attack_interval = 0;
+		void 						MoveAround();
+		void 						Attack();
 
-		//	Health
-		short health;
+		int	 						attack_interval = 0;
+		short 						health;
 
-		//	Enemy Type
-		SFENEMYTYPE type;
+		std::shared_ptr<SFPlayer> 	player;
 
-		//	Asset Pointers
-		std::shared_ptr<SFPlayer> player;
 };                                                                        
 #endif                               	

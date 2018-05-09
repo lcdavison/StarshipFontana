@@ -15,33 +15,36 @@
 class SF_UIButton 
 {
 	public:
+
 		SF_UIButton(std::string, int, int, int, int, std::shared_ptr<SFWindow>, std::function<void (void)>);
 		~SF_UIButton();
 
-		void OnClick(MousePos); 
+		void						OnClick(MousePos); 
+		void 						OnRender();
 
-		void OnRender();
+		void 						SetTextAlpha(int);
+		void						SetBackgroundAlpha(int);
 
-		void SetTextAlpha(int);
-		void SetBackgroundAlpha(int);
 	private:
-		std::function<void (void)> OnClickFunction;	//	Function run on button click 
 
-		void CreateBackground();
-		void CreateText();
+		std::function<void (void)>	OnClickFunction;	//	Function run on button click 
 
-		std::string text;
+		void 						CreateBackground();
+		void 						CreateText();
 
-		int x, y;
-		int width, height;
-		int text_alpha, background_alpha;
+		std::string 				text;
 
-		SDL_Texture* text_texture;
-		SDL_Texture* background_texture;
+		int 						x, y;
+		int 						width, height;
+		int 						text_alpha, background_alpha;
 
-		SDL_Rect	 background_bounds;
-		SDL_Rect	 text_bounds;
+		SDL_Rect	 				background_bounds;
+		SDL_Rect	 				text_bounds;
 
-		std::shared_ptr<SFWindow>		sf_window;
+		SDL_Texture* 				text_texture;
+		SDL_Texture* 				background_texture;
+
+		std::shared_ptr<SFWindow>	sf_window;
+
 };
 #endif

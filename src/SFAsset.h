@@ -42,59 +42,59 @@ class SFAsset : public ISFAsset
 		SFAsset(const SFAsset&);
 		virtual ~SFAsset();
 
-		void OnUpdate();
+		void 								OnUpdate();
 
 		/*---PROPERTIES---*/
-		std::string GetName() const;
-		SFASSETTYPE GetType() const;
+		std::string 						GetName() const;
+		SFASSETTYPE 						GetType() const;
 
-		virtual void OnRender();
+		virtual void 						OnRender();
 
-		virtual void      SetPosition(Point2 &);
-		virtual Point2    GetPosition();
-		virtual Point2    GetCenter();
-		virtual bool	  IsOutsideWindow();	
-		virtual float     DistanceTo(std::shared_ptr<SFAsset>);
+		virtual void      					SetPosition(Point2 &);
+		virtual Point2    					GetPosition();
+		virtual Point2    					GetCenter();
+		virtual bool	  					IsOutsideWindow();	
+		virtual float     					DistanceTo(std::shared_ptr<SFAsset>);
 
 		/*---MOVEMENT---*/
-		virtual void      GoEast();
-		virtual void      GoWest();
-		virtual void      GoNorth();
-		virtual void      GoSouth();
-		virtual void	  SetMovementSpeed(float);
+		virtual void      					GoEast();
+		virtual void      					GoWest();
+		virtual void      					GoNorth();
+		virtual void      					GoSouth();
+		virtual void	  					SetMovementSpeed(float);
 
-		virtual void	  MoveTowards(std::shared_ptr<SFAsset>);
-		virtual void	  Lerp(std::shared_ptr<SFAsset>, float);
+		virtual void	  					MoveTowards(std::shared_ptr<SFAsset>);
+		virtual void	  					Lerp(std::shared_ptr<SFAsset>, float);
 
 		/*---STATE---*/
-		virtual void      SetNotAlive();
-		virtual bool      IsAlive();
+		virtual void      					SetNotAlive();
+		virtual bool      					IsAlive();
 
 		/*---COLLISION TESTS---*/
-		virtual bool      CollidesWith(shared_ptr<SFAsset>);
-		virtual void      HandleCollision();
+		virtual bool      					CollidesWith(shared_ptr<SFAsset>);
+		virtual void      					HandleCollision();
 
-		virtual shared_ptr<SFBoundingBox> GetBoundingBox();
+		virtual shared_ptr<SFBoundingBox> 	GetBoundingBox();
 	protected:
 
 		/*---Sprites---*/
-		virtual void SetupSprite(const std::string);
-		void SetAlpha(const int);
+		virtual void 						SetupSprite(const std::string);
+		void 								SetAlpha(const int);
 
 		/*---Movement---*/
-		float movement_speed = 2.0f;
+		float 								movement_speed = 2.0f;
 
 		/*---Asset Data---*/
-		std::string name;
-		bool alive = true;
-		bool has_collision = false;
-		int lifetime;
+		std::string 						name;
+		bool 								alive = true;
+		bool 								has_collision = false;
+		int 								lifetime;
 
 		/*---POINTERS---*/
-		SDL_Texture               * sprite;
-		shared_ptr<SFBoundingBox>   bbox;
-		SFASSETTYPE                 type;
-		std::shared_ptr<SFWindow>   sf_window;
+		SDL_Texture* 						sprite;
+		shared_ptr<SFBoundingBox>  			bbox;
+		SFASSETTYPE                 		type;
+		std::shared_ptr<SFWindow>   		sf_window;
 };
 
 #endif

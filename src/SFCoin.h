@@ -6,13 +6,18 @@
 
 class SFPlayer;
 
-class SFCoin : public SFAsset {
-public:
-	SFCoin(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
+class SFCoin : public SFAsset 
+{
+	public:
 
-	void OnUpdate();
-private:
-	std::shared_ptr<SFPlayer> player;
+		SFCoin(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
+
+		void 						OnUpdate();
+
+	private:
+
+		std::shared_ptr<SFPlayer> 	player;
+
 };
 
 #endif

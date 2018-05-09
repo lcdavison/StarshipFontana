@@ -3,8 +3,11 @@
 
 #include "SFAsset.h"
 
-class SFObstacle : public SFAsset {
+class SFObstacle : public SFAsset 
+{
 	public:
+
 		SFObstacle(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
+
 };
 #endif

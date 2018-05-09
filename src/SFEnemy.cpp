@@ -105,7 +105,6 @@ void SFEnemy::Attack()
 		std::shared_ptr<SFProjectile> projectile = std::make_shared<SFProjectile>("projectile", 
 																				  SFASSET_PROJECTILE, 
 																				  sf_window, 
-																				  BULLET, 
 																				  SOUTH);
 		projectile->SetDamage(10);
 

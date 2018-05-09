@@ -15,18 +15,22 @@ enum SFFONTSIZE { SF_FONT_NORMAL,
 class SF_UILabel 
 {
 	public:
+
 		SF_UILabel(const std::string&, const short&, const short&, SDL_Color, std::shared_ptr<SFWindow>, SFFONTSIZE);
 		~SF_UILabel();
 
-		void OnRender();
+		void 						OnRender();
 
-		static void DrawText(const std::string&, const short&, const short&, SDL_Color, std::shared_ptr<SFWindow>, SFFONTSIZE);
+		static void 				DrawText(const std::string&, const short&, const short&, SDL_Color, std::shared_ptr<SFWindow>, SFFONTSIZE);
 
 	private:
-		static SDL_Texture* CreateTextureFromString(const std::string&, TTF_Font*, SDL_Color, std::shared_ptr<SFWindow>);
 
-		SDL_Rect destination;
-		SDL_Texture* texture;
-		std::shared_ptr<SFWindow> window;
+		static SDL_Texture* 		CreateTextureFromString(const std::string&, TTF_Font*, SDL_Color, std::shared_ptr<SFWindow>);
+
+		SDL_Rect 					destination;
+
+		SDL_Texture* 				texture;
+		std::shared_ptr<SFWindow>	window;
+
 };
 #endif

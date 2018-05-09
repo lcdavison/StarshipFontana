@@ -14,6 +14,7 @@
 class SFAssetManager 
 {
 	public:
+
 		typedef std::vector<std::shared_ptr<SFAsset>> 				AssetContainer;
 
 		template<class T> static void 								AddAsset(std::shared_ptr<T>);
@@ -27,8 +28,11 @@ class SFAssetManager
 		static AssetContainer 										RetrieveAllAssets();
 		static void 												RemoveAsset(std::shared_ptr<SFAsset>);
 		static void 												Clear();
+
 	private:
-		static AssetContainer assets;
+
+		static AssetContainer 										assets;
+
 };
 
 //

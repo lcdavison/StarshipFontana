@@ -15,18 +15,22 @@
 class SFParticle 
 {
 	public:
+
 		SFParticle(int, int, int, std::shared_ptr<SFWindow>);
 		~SFParticle();
 
-		void OnUpdate();
-		void OnRender();
+		void 							OnUpdate();
+		void 							OnRender();
 
-		bool IsDead();
+		bool 							IsDead();
+
 	private:
-		int frame;
 
-		std::shared_ptr<SFWindow> sfwindow;
-		std::shared_ptr<SFBoundingBox> bbox;
-		SDL_Texture* sprite;
+		int 							frame;
+
+		SDL_Texture* 					sprite;
+		std::shared_ptr<SFWindow> 		sfwindow;
+		std::shared_ptr<SFBoundingBox> 	bbox;
+
 };
 #endif
