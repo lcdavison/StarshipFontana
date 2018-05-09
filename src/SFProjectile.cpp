@@ -14,10 +14,10 @@ SFProjectile::SFProjectile(std::string name,
 	lifetime = 1000;
 }
 
-//	
-//	OnUpdate
-//		Custom update behaviour
-//
+/*
+	OnUpdate
+		Custom update behaviour
+*/
 void SFProjectile::OnUpdate() 
 {
 	Move();
@@ -60,10 +60,10 @@ void SFProjectile::OnUpdate()
 	   SetNotAlive();
 }
 
-//	
-//	Move
-//		Moves projectile in direction
-//
+/*
+	Move
+		Moves projectile in direction
+*/
 void SFProjectile::Move() 
 {
 	switch(direction) 
@@ -78,19 +78,19 @@ void SFProjectile::Move()
 	}
 }
 
-//	
-//	SetDamage
-//		Sets the projectiles damage amount
-//
+/*
+	SetDamage
+		Sets the projectiles damage amount
+*/
 void SFProjectile::SetDamage(short amount) 
 {
 	damage = amount;
 }
 
-//	
-//	GetDamage
-//		Returns the projectiles damage
-//
+/*
+	GetDamage
+		Returns the projectiles damage
+*/
 short SFProjectile::GetDamage() 
 {
 	return damage;

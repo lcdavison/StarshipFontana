@@ -12,9 +12,10 @@ SFCoin::SFCoin(std::string name,
 	SetMovementSpeed(3.0f);
 }
 
-//
-//	OnUpdate
-//		Updates the coin
+/*
+	OnUpdate
+		Updates the coin
+*/		
 void SFCoin::OnUpdate() 
 {
 	if(CollidesWith(player)) 

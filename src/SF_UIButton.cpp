@@ -31,10 +31,10 @@ SF_UIButton::~SF_UIButton()
 	}
 } 
 
-//	
-//	CreateBackground
-//	Creates the background for the button
-//
+/*	
+	CreateBackground
+		Creates the background for the button
+*/
 void SF_UIButton::CreateBackground() 
 {
 	SDL_Surface* background_surface = SDL_CreateRGBSurface(0, width, height, 
@@ -58,10 +58,10 @@ void SF_UIButton::CreateBackground()
 	background_bounds = { x, y, width, height };
 }
 
-//
-//	CreateText
-//	Creates the text for the button
-//
+/*
+	CreateText
+		Creates the text for the button
+*/
 void SF_UIButton::CreateText() 
 {
 	SDL_Color text_color = { 0, 0, 100, 0 };
@@ -95,9 +95,10 @@ void SF_UIButton::CreateText()
 					wi, he };
 }
 
-// 
-//	OnClick
-//	Runs OnClick function
+/* 
+	OnClick
+		Runs OnClick function
+*/
 void SF_UIButton::OnClick(MousePos position) 
 {
 	if(position.x > x && position.x < x + width 
@@ -105,10 +106,10 @@ void SF_UIButton::OnClick(MousePos position)
 	   OnClickFunction();
 } 
 
-//	
-//	OnRender
-//	Renders the button background and text
-//
+/*	
+	OnRender
+		Renders the button background and text
+*/
 void SF_UIButton::OnRender() 
 {
 	SDL_RenderCopy(sf_window->getRenderer(), 
@@ -122,19 +123,19 @@ void SF_UIButton::OnRender()
 				   &text_bounds);
 }
 
-//
-//	SetTextAlpha
-//	Sets alpha value for button text
-//
+/*
+	SetTextAlpha
+		Sets alpha value for button text
+*/
 void SF_UIButton::SetTextAlpha(int value) 
 { 
 	SDL_SetTextureAlphaMod(text_texture, value); 
 }
 
-//
-//	SetBackgroundAlpha
-//	Sets alpha value for button background
-//
+/*
+	SetBackgroundAlpha
+		Sets alpha value for button background
+*/
 void SF_UIButton::SetBackgroundAlpha(int value) 
 { 
 	SDL_SetTextureAlphaMod(background_texture, value); 

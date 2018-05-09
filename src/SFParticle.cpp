@@ -28,10 +28,10 @@ SFParticle::~SFParticle()
 	}
 }
 
-//	
-//	OnUpdate
-//		Updates the particle each frame
-//
+/*
+	OnUpdate
+		Updates the particle each frame
+*/
 void SFParticle::OnUpdate() 
 {
 	float angle_degrees = atan2(bbox->GetY(), bbox->GetX()) 
@@ -50,10 +50,10 @@ void SFParticle::OnUpdate()
 	bbox->SetPosition(pos);
 }
 
-//	
-//	OnRender
-//		Renders the particle
-//
+/*
+	OnRender
+		Renders the particle
+*/
 void SFParticle::OnRender() 
 {
 	SDL_Rect rect = bbox->GetBox();
@@ -61,10 +61,10 @@ void SFParticle::OnRender()
 	frame++;
 }
 
-//	
-//	IsDead
-//		Determines whether the particle is dead
-//
+/*
+	IsDead
+		Determines whether the particle is dead
+*/
 bool SFParticle::IsDead() 
 { 
 	return frame > 30; 

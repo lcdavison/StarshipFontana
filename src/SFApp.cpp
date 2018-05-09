@@ -1,9 +1,5 @@
 #include "SFApp.h"
 
-// TODO: Code Cleanup - Make it more readable
-// TODO: Change emitter x, y to a Point2
-// TODO: Change the README.md 
-
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window)
 {
 	CreateButtons();
@@ -13,11 +9,11 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : is_running(true), window(window
 }
 
 
-//
-//	OnEvent
-//		Handle all events that come from SDL.
-//		These are timer or input events
-//
+/*
+	OnEvent
+		Handle all events that come from SDL.
+		These are timer or input events
+*/
 void SFApp::OnEvent(SFEvent& event) 
 {
 	SFEVENT the_event = event.GetCode();
@@ -72,11 +68,11 @@ void SFApp::OnEvent(SFEvent& event)
 	}
 }
 
-//
-//	StartMainLoop
-//		While game is running, continues to check for SDL
-//		events.
-//
+/*
+	StartMainLoop
+		While game is running, continues to check for SDL
+		events.
+*/
 void SFApp::StartMainLoop() 
 {
 	SDL_Event event;
@@ -92,12 +88,12 @@ void SFApp::StartMainLoop()
 	}
 }
 
-//
-//	OnUpdate
-//		Updates each asset
-//		Checks end condition
-//		Clears dead assets
-//
+/*
+	OnUpdate
+		Updates each asset
+		Checks end condition
+		Clears dead assets
+*/
 void SFApp::OnUpdate() 
 {
 	if(game_state == SF_PLAY) 
@@ -116,11 +112,11 @@ void SFApp::OnUpdate()
 	}
 }
 
-//
-//	OnRender
-//		Renders each asset and
-//		interfaces dependant on game_state
-//
+/*
+	OnRender
+		Renders each asset and
+		interfaces dependant on game_state
+*/
 void SFApp::OnRender() 
 {
 	// 1. Clear visible content
@@ -163,11 +159,11 @@ void SFApp::OnRender()
 	mouse_position = { 0 ,0 };
 }
 
-//
-//	StartGame
-//		Clears any residual assets
-//		and sets up level
-//
+/*
+	StartGame
+		Clears any residual assets
+		and sets up level
+*/
 void SFApp::StartGame() 
 {
 	SFAssetManager::Clear();
@@ -179,19 +175,19 @@ void SFApp::StartGame()
 	game_state = SF_PLAY;
 }
 
-//
-//	TogglePause
-//		Determines game pause state
-//
+/*
+	TogglePause
+		Determines game pause state
+*/
 void SFApp::TogglePause() 
 {
 	game_state = (game_state == SF_PAUSED) ? SF_PLAY : SF_PAUSED;	
 }
 
-//
-//	FireProjectile
-//		Creates a projectile and sets its spawn position
-//
+/*
+	FireProjectile
+		Creates a projectile and sets its spawn position
+*/
 void SFApp::FireProjectile() 
 {
 	shared_ptr<SFProjectile> bullet = make_shared<SFProjectile>("projectile", 
@@ -209,10 +205,10 @@ void SFApp::FireProjectile()
 	SFAssetManager::AddAsset<SFProjectile>(bullet);
 }
 
-//
-//	CreateButtons
-//		Creates the buttons for the user interface
-//
+/*
+	CreateButtons
+		Creates the buttons for the user interface
+*/
 void SFApp::CreateButtons() 
 {	
 	auto play_button = std::make_shared<SF_UIButton> ("Play Game", 
@@ -267,10 +263,10 @@ void SFApp::CreateButtons()
 	pause_buttons.push_back(menu_button);
 }
 
-//
-//	CreateLabels
-//		Creates the labels for the user interface
-//
+/*
+	CreateLabels
+		Creates the labels for the user interface
+*/
 void SFApp::CreateLabels() 
 {
 	int text_width;
@@ -308,10 +304,10 @@ void SFApp::CreateLabels()
 										 SF_FONT_NORMAL);
 }
 
-//
-//	DrawMainMenu
-//		Renders the main menu interface
-//
+/*
+	DrawMainMenu
+		Renders the main menu interface
+*/
 void SFApp::DrawMainMenu() 
 {
 	SFAssetManager::Clear();
@@ -328,10 +324,10 @@ void SFApp::DrawMainMenu()
 	}
 }
 
-//
-//	DrawPauseMenu
-//		Renders the pause menu interface
-//
+/*
+	DrawPauseMenu
+		Renders the pause menu interface
+*/
 void SFApp::DrawPauseMenu() 
 {
 	pause->OnRender();
@@ -343,10 +339,10 @@ void SFApp::DrawPauseMenu()
 	}
 }
 
-//
-//	DrawHUD
-//		Renders the heads-up display
-//
+/*
+	DrawHUD
+		Renders the heads-up display
+*/
 void SFApp::DrawHUD() 
 {
 	std::string health_text = "HEALTH : " 
@@ -383,10 +379,10 @@ void SFApp::DrawHUD()
 						 SF_FONT_NORMAL);	
 }
 
-//
-//	DrawEndScore
-//		Renders the final score screen interface
-//
+/*
+	DrawEndScore
+		Renders the final score screen interface
+*/
 void SFApp::DrawEndScore() 
 {
 	SFAssetManager::Clear();
@@ -413,10 +409,10 @@ void SFApp::DrawEndScore()
 	}
 } 
 
-//
-//	SpawnPlayer
-//		Creates a player asset
-//
+/*
+	SpawnPlayer
+		Creates a player asset
+*/
 void SFApp::SpawnPlayer() {
 	SFAssetManager::CreateAsset<SFPlayer>("player", 
 										  SFASSET_PLAYER, 
@@ -430,10 +426,10 @@ void SFApp::SpawnPlayer() {
 	player->SetPosition(player_pos);
 }
 
-//
-//	SpawnObstacles
-//		Creates the wall assets between the player and enemies
-//
+/*
+	SpawnObstacles
+		Creates the wall assets between the player and enemies
+*/
 void SFApp::SpawnObstacles(int amount) 
 {
 	for(int i = 0; i < amount; i++) 
@@ -450,10 +446,10 @@ void SFApp::SpawnObstacles(int amount)
 	}
 }
 
-//
-//	SpawnEnemies
-//		Creates the enemy assets
-//
+/*
+	SpawnEnemies
+		Creates the enemy assets
+*/
 void SFApp::SpawnEnemies(int amount) 
 {
 	for (int i = 0; i < amount; i++) 
@@ -471,10 +467,10 @@ void SFApp::SpawnEnemies(int amount)
 	}
 }
 
-//
-//	GetNumEnemies
-//		Returns the number of enemies that are alive
-//
+/*
+	GetNumEnemies
+		Returns the number of enemies that are alive
+*/
 int SFApp::GetNumEnemies() 
 {
 	int num = 0;
@@ -487,10 +483,10 @@ int SFApp::GetNumEnemies()
 	return num;
 }
 
-// 
-//	ClearAllDead
-//		Clears all the dead assets from the asset manager
-//
+/* 
+	ClearAllDead
+		Clears all the dead assets from the asset manager
+*/
 void SFApp::ClearAllDead() 
 {
 	for(auto asset : assets) 

@@ -11,10 +11,10 @@ using namespace std;
 
 enum UserEvents { UPDATE_EVENT };
 
-//
-//	PushUpdateEvent
-//		Pushes a new update event to the SDL Event Queue
-//
+/*
+	PushUpdateEvent
+		Pushes a new update event to the SDL Event Queue
+*/
 Uint32 PushUpdateEvent(Uint32 interval, void *param) 
 {
 	SDL_Event event;
@@ -26,11 +26,11 @@ Uint32 PushUpdateEvent(Uint32 interval, void *param)
 	return interval;
 }
 
-//
-//	InitGraphics
-//		Initializes the libraries 
-//		Creates a window
-//
+/*
+	InitGraphics
+		Initializes the libraries 
+		Creates a window
+*/
 shared_ptr<SFWindow> InitGraphics() 
 {
 	// Initialise SDL - when using C/C++ it's common to have to

@@ -12,10 +12,10 @@ class SFParticleEmitter
 {
 	public:
 
-		SFParticleEmitter(int, int, std::shared_ptr<SFWindow>);
+		SFParticleEmitter(const int, const int, const std::shared_ptr<SFWindow>);
 		~SFParticleEmitter();
 	
-		void 										Emit(int, int);
+		void 										Emit(const Point2&);
 		void 										OnRender();	
 
 	private:

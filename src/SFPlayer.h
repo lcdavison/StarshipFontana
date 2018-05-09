@@ -21,7 +21,6 @@ class SFPlayer : public SFAsset
 		bool 								IsDead();
 
 		short 								GetDamage();
-		void 								ModifyDamage(short);
 
 		void 								GoNorth();
 		void 								GoSouth();

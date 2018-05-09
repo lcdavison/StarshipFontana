@@ -53,28 +53,28 @@ SFWindow::~SFWindow()
 	if(small_font) TTF_CloseFont(small_font);
 }
 
-//	
-//	ClearScreen	
-//		Clears the renderered images
-//
+/*
+	ClearScreen	
+		Clears the renderered images
+*/
 void SFWindow::ClearScreen() 
 {
     SDL_RenderClear(renderer);
 }
 
-//	
-//	ShowScreen
-//		Shows the buffered image
-//
+/*
+	ShowScreen
+		Shows the buffered image
+*/
 void SFWindow::ShowScreen() 
 {
     SDL_RenderPresent(renderer);
 }
 
-//	
-//	GetWidth
-//		Returns renderer width
-//
+/*
+	GetWidth
+		Returns renderer width
+*/
 int SFWindow::GetWidth() 
 {
     int w;
@@ -82,10 +82,10 @@ int SFWindow::GetWidth()
     return w;
 }
 
-//	
-//	GetHeight
-//		Returns renderer height
-//
+/*
+	GetHeight
+		Returns renderer height
+*/
 int SFWindow::GetHeight() 
 {
     int h;
@@ -93,37 +93,37 @@ int SFWindow::GetHeight()
     return h;
 }
 
-//	
-//	getWindow
-//		Returns SDL_Window handle
-//
+/*
+	getWindow
+		Returns SDL_Window handle
+*/
 SDL_Window* SFWindow::getWindow() 
 {
     return window;
 }
 
-//	
-//	getRenderer
-//		Returns SDL_Renderer handle
-//
+/*
+	getRenderer
+		Returns SDL_Renderer handle
+*/
 SDL_Renderer* SFWindow::getRenderer() 
 {
     return renderer;
 }
 
-//	
-//	getFont
-//		Returns font size 20
-//
+/*
+	getFont
+		Returns font size 20
+*/
 TTF_Font* SFWindow::getFont() 
 {
 	return font;
 }
 
-//	
-//	getSmallFont
-//		Returns font size 14
-//
+/*
+	getSmallFont
+		Returns font size 14
+*/
 TTF_Font* SFWindow::getSmallFont() 
 {
 	return small_font;

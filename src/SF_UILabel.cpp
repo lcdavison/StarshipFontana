@@ -34,19 +34,19 @@ SF_UILabel::~SF_UILabel()
 	}
 }
 
-//
-//	OnRender
-// 	Renders the label
-// 
+/*
+	OnRender
+ 		Renders the label
+*/ 
 void SF_UILabel::OnRender() 
 {
 	SDL_RenderCopy(window->getRenderer(), texture, NULL, &destination);
 }
 
-//
-//	DrawText
-//	Easily draw dynamic text to the screen
-//
+/*
+	DrawText
+		Easily draw dynamic text to the screen
+*/
 void SF_UILabel::DrawText(const std::string& text, 
 						  const short& x, const short& y, 
 						  SDL_Color colour, 
@@ -74,10 +74,10 @@ void SF_UILabel::DrawText(const std::string& text,
 	SDL_DestroyTexture(texture);
 }
 
-//
-//	CreateTextureFromString
-//	Creates an SDL_Texture using a string and TTF_Font
-//
+/*
+	CreateTextureFromString
+		Creates an SDL_Texture using a string and TTF_Font
+*/
 SDL_Texture* SF_UILabel::CreateTextureFromString(const std::string& text, 
 												 TTF_Font* font, 
 												 SDL_Color colour, 

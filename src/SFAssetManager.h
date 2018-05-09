@@ -35,20 +35,20 @@ class SFAssetManager
 
 };
 
-//
-//	AddAsset
-//		Adds an asset of any type to the asset manager
-//
+/*
+	AddAsset
+		Adds an asset of any type to the asset manager
+*/
 template<class T>
 void SFAssetManager::AddAsset(std::shared_ptr<T> asset) 
 {
 	assets.push_back(asset);
 }
 
-//
-//	CreateAsset
-//		Creates an asset in the asset manager
-//
+/*
+	CreateAsset
+		Creates an asset in the asset manager
+*/
 template<class T>
 void SFAssetManager::CreateAsset(const std::string name, 
 							 	 const SFASSETTYPE type, 
@@ -58,10 +58,10 @@ void SFAssetManager::CreateAsset(const std::string name,
 	assets.push_back(asset);
 }
 
-//
-//	GetAssetByName
-//		Searches manager for asset and returns it if found
-//
+/*
+	GetAssetByName
+		Searches manager for asset and returns it if found
+*/
 template<class T>
 std::shared_ptr<T> SFAssetManager::GetAssetByName(const std::string name) 
 {
@@ -77,10 +77,10 @@ std::shared_ptr<T> SFAssetManager::GetAssetByName(const std::string name)
 	return nullptr;
 }
 
-//
-//	GetAssetsOfType
-//		Returns all assets of a specific type
-//
+/*
+	GetAssetsOfType
+		Returns all assets of a specific type
+*/
 template<class T>
 std::vector<std::shared_ptr<T>> SFAssetManager::GetAssetsOfType(const SFASSETTYPE type) 
 {
@@ -98,10 +98,10 @@ std::vector<std::shared_ptr<T>> SFAssetManager::GetAssetsOfType(const SFASSETTYP
 	return found;
 }
 
-//
-//	SpawnAtPosition
-//		Spawns the provided asset at a location
-//
+/*
+	SpawnAtPosition
+		Spawns the provided asset at a location
+*/
 template<class T>
 void SFAssetManager::SpawnAtPosition(std::shared_ptr<T> asset, Point2 position) 
 {

@@ -15,10 +15,10 @@ SFEnemy::SFEnemy(std::string name,
 	SetMovementSpeed(0.2f);
 }
 
-//
-//	OnUpdate
-//		Custom update behaviour
-//
+/*
+	OnUpdate
+		Custom update behaviour
+*/
 void SFEnemy::OnUpdate() 
 {
 	MoveAround();
@@ -31,37 +31,37 @@ void SFEnemy::OnUpdate()
 	}
 }
 
-//	
-//	TakeDamage
-//		Deducts damage from health
-//
+/*
+	TakeDamage
+		Deducts damage from health
+*/
 void SFEnemy::TakeDamage(short damage) 
 { 
 	health -= damage; 
 }
 
-//	
-//	GetHealth
-//		Returns enemy health
-//
+/*
+	GetHealth
+		Returns enemy health
+*/
 short SFEnemy::GetHealth() 
 { 
 	return health; 
 }
 
-//	
-//	IsDead
-//		Determines if enemy is dead
-//
+/*
+	IsDead
+		Determines if enemy is dead
+*/
 bool SFEnemy::IsDead() 
 { 
 	return health <= 0; 
 }
 
-//	
-//	MoveAround
-//		Moves the enemy each frame
-//
+/*
+	MoveAround
+		Moves the enemy each frame
+*/
 void SFEnemy::MoveAround() 
 {
 	//	1.	Get Current Position
@@ -92,10 +92,10 @@ void SFEnemy::MoveAround()
 	}
 }
 
-//	
-//	Attack
-//		Causes the enemy to fire projectiles
-//
+/*
+	Attack
+		Causes the enemy to fire projectiles
+*/
 void SFEnemy::Attack() 
 {
 	attack_interval++;

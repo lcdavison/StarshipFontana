@@ -60,19 +60,19 @@ SFEvent::SFEvent(const SDL_Event & event)
 	}
 }
 
-//	
-//	GetCode
-//		Returns returns the SFEvent code
-//
+/*
+	GetCode
+		Returns returns the SFEvent code
+*/
 SFEVENT SFEvent::GetCode() 
 {
 	return code;
 }
 
-//	
-//	GetMousePosition
-//		Returns the mouse position
-//
+/*
+	GetMousePosition
+		Returns the mouse position
+*/
 MousePos SFEvent::GetMousePosition() 
 { 
 	return mouse_position; 
