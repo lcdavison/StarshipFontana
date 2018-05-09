@@ -26,6 +26,7 @@ void SFApp::OnEvent(SFEvent& event)
 	{
 		case SFEVENT_QUIT:
 			is_running = false;
+			SFAssetManager::Clear();
 			break;
 
 		case SFEVENT_PAUSE:
@@ -296,6 +297,8 @@ void SFApp::CreateLabels()
 //
 void SFApp::DrawMainMenu() 
 {
+	SFAssetManager::Clear();
+
 	title->OnRender();
 	author->OnRender();
 
@@ -367,6 +370,8 @@ void SFApp::DrawHUD()
 //
 void SFApp::DrawEndScore() 
 {
+	SFAssetManager::Clear();
+
 	std::string end_text = "FINAL SCORE : " 
 						   + std::to_string(player->GetCoins() * 2);
 
