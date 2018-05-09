@@ -25,10 +25,10 @@ class SFApp
 
 		SFApp(std::shared_ptr<SFWindow>);
 
-		void 								OnEvent(SFEvent &);
-		void 								StartMainLoop();
-		void 								OnUpdate();
-		void 								OnRender();
+		void 									OnEvent(SFEvent &);
+		void 									StartMainLoop();
+		void 									OnUpdate();
+		void 									OnRender();
 
 	private:
 
@@ -38,54 +38,52 @@ class SFApp
 						   SF_PAUSED, 
 						   SF_END };
 
-		SFGAMESTATE 						game_state;
+		SFGAMESTATE 							game_state;
 
-		void 								StartGame();
-		void 								TogglePause();
+		void 									StartGame();
+		void 									TogglePause();
 
-		bool 								is_running;
+		bool 									is_running;
 
 		/*---UI---*/
-		SDL_Color 							text_colour = { 0, 255, 0, 255 };
+		SDL_Color 								text_colour = { 0, 255, 0, 255 };
 
-		void 								CreateButtons();
-		void 								CreateLabels();
+		void 									CreateButtons();
+		void 									CreateLabels();
 
-		void 								DrawMainMenu();
-		void 								DrawPauseMenu();
-		void 								DrawHUD();
-		void 								DrawEndScore();
+		void 									DrawMainMenu();
+		void 									DrawPauseMenu();
+		void 									DrawHUD();
+		void 									DrawEndScore();
 
-		std::shared_ptr<SF_UIButton> 		play_button;
-		std::shared_ptr<SF_UIButton> 		exit_button;
-		std::shared_ptr<SF_UIButton> 		restart_button;
-		std::shared_ptr<SF_UIButton> 		resume_button;
-		std::shared_ptr<SF_UIButton> 		menu_button;
+		std::shared_ptr<SF_UILabel> 			pause;
 
-		std::shared_ptr<SF_UILabel> 		title;
-		std::shared_ptr<SF_UILabel> 		author;
-		std::shared_ptr<SF_UILabel> 		pause;
+		std::list<std::shared_ptr<SF_UIButton>>	menu_buttons;
+		std::list<std::shared_ptr<SF_UIButton>> pause_buttons;
+		std::list<std::shared_ptr<SF_UIButton>> end_buttons;
+
+		std::list<std::shared_ptr<SF_UILabel>>	menu_labels;
 
 		/*---SPAWNING---*/
-		void 								SpawnPlayer();
-		void 								SpawnObstacles(int);
-		void 								SpawnEnemies(int);
-		void 								FireProjectile();
+		void 									SpawnPlayer();
+		void 									SpawnObstacles(int);
+		void 									SpawnEnemies(int);
+		void 									FireProjectile();
 
-		int  								GetNumEnemies();
+		int  									GetNumEnemies();
 		
 		/*---CLEARING---*/
-		void						 		ClearAllDead();
+		void						 			ClearAllDead();
 
 		/*---INPUT---*/
-		MousePos 							mouse_position;
+		MousePos 								mouse_position;
 		
 		/*---POINTERS---*/
-		shared_ptr<SFWindow> 				window;
-		shared_ptr<SFPlayer> 				player;
+		shared_ptr<SFWindow> 					window;
+		shared_ptr<SFPlayer> 					player;
 
 		/*---ASSETS---*/
-		vector<std::shared_ptr<SFAsset>> 	assets;
+		vector<std::shared_ptr<SFAsset>> 		assets;
 
 };
 #endif

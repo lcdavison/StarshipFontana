@@ -213,41 +213,58 @@ void SFApp::FireProjectile()
 //	CreateButtons
 //		Creates the buttons for the user interface
 //
-void SFApp::CreateButtons() {
-	play_button = std::make_shared<SF_UIButton>("Play Game", 
-												window->GetWidth() / 2 - 65, window->GetHeight() / 2, 
-												130, 73, 
-												window, 
-												[this](void){ StartGame(); });
+void SFApp::CreateButtons() 
+{	
+	auto play_button = std::make_shared<SF_UIButton> ("Play Game", 
+													  window->GetWidth() / 2 - 65, window->GetHeight() / 2, 
+													  130, 73, 
+													  window, 
+													  [this](void){ StartGame(); });
+
 	play_button->SetBackgroundAlpha(200);
 
-	exit_button = std::make_shared<SF_UIButton>("Exit Game", 
-												window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 
-												130, 73, 
-												window, 
-												[this](void){ is_running = false; });
+	menu_buttons.push_back(play_button);
+
+	auto exit_button = std::make_shared<SF_UIButton>("Exit Game", 
+													 window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 
+													 130, 73, 
+													 window, 
+													 [this](void){ is_running = false; });
+
 	exit_button->SetBackgroundAlpha(200);
+
+	menu_buttons.push_back(exit_button);
+	end_buttons.push_back(exit_button);
 	
-	restart_button = std::make_shared<SF_UIButton>("Play Again", 
-												   window->GetWidth() / 2 - 65, window->GetHeight() / 2, 
-												   130, 73, 
-												   window, 
-												   [this](void){ StartGame(); });
+	auto restart_button = std::make_shared<SF_UIButton>("Play Again", 
+												   		window->GetWidth() / 2 - 65, window->GetHeight() / 2, 
+														130, 73, 
+														window, 
+														[this](void){ StartGame(); });
+
 	restart_button->SetBackgroundAlpha(200);
 
-	resume_button = std::make_shared<SF_UIButton>("Resume Game", 
-												  window->GetWidth() / 2 - 65, window->GetHeight() / 2, 
-												  150, 84, 
-												  window, 
-												  [this](void){ game_state = SF_PLAY; });
+	end_buttons.push_back(restart_button);
+
+	auto resume_button = std::make_shared<SF_UIButton>("Resume Game", 
+												  	   window->GetWidth() / 2 - 65, window->GetHeight() / 2, 
+													   150, 84, 
+													   window, 
+													   [this](void){ game_state = SF_PLAY; });
+
 	resume_button->SetBackgroundAlpha(200);
 
-	menu_button = std::make_shared<SF_UIButton>("Return To Main", 
-												window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 
-												150, 84, 
-												window, 
-												[this](void){ game_state = SF_MENU; SFAssetManager::Clear(); });
+	pause_buttons.push_back(resume_button);
+
+	auto menu_button = std::make_shared<SF_UIButton>("Return To Main", 
+													 window->GetWidth() / 2 - 65, window->GetHeight() / 2 + 100, 
+													 150, 84, 
+													 window, 
+													 [this](void){ game_state = SF_MENU; SFAssetManager::Clear(); });
+
 	menu_button->SetBackgroundAlpha(200);
+
+	pause_buttons.push_back(menu_button);
 }
 
 //
@@ -262,22 +279,22 @@ void SFApp::CreateLabels()
 				 &text_width, 
 				 NULL);
 
-	title = std::make_shared<SF_UILabel>("STARSHIP FONTANA", 
-										 window->GetWidth() / 2 - text_width / 2, 0, 
-										 text_colour, 
-										 window, 
-										 SF_FONT_NORMAL);
+	menu_labels.push_back(std::make_shared<SF_UILabel>("STARSHIP FONTANA", 
+						  window->GetWidth() / 2 - text_width / 2, 0, 
+						  text_colour, 
+						  window, 
+						  SF_FONT_NORMAL));
 
 	TTF_SizeText(window->getSmallFont(), 
 				 "by Luke Davison", 
 				 &text_width, 
 				 NULL);
 
-	author = std::make_shared<SF_UILabel>("by Luke Davison", 
+	menu_labels.push_back(std::make_shared<SF_UILabel>("by Luke Davison", 
 										  window->GetWidth() / 2 - text_width / 2, 20, 
 										  text_colour, 
 										  window, 
-										  SF_FONT_SMALL);
+										  SF_FONT_SMALL));
 	
 	TTF_SizeText(window->getFont(), 
 				 "PAUSED", 
@@ -299,14 +316,16 @@ void SFApp::DrawMainMenu()
 {
 	SFAssetManager::Clear();
 
-	title->OnRender();
-	author->OnRender();
+	for(auto label : menu_labels) 
+	{
+		label->OnRender();
+	}
 
-	play_button->OnClick(mouse_position);
-	play_button->OnRender();
-
-	exit_button->OnClick(mouse_position);
-	exit_button->OnRender();
+	for(auto button : menu_buttons) 
+	{
+		button->OnClick(mouse_position);
+		button->OnRender();
+	}
 }
 
 //
@@ -317,11 +336,11 @@ void SFApp::DrawPauseMenu()
 {
 	pause->OnRender();
 
-	resume_button->OnClick(mouse_position);
-	resume_button->OnRender();
-
-	menu_button->OnClick(mouse_position);
-	menu_button->OnRender();
+	for(auto button : pause_buttons) 
+	{
+		button->OnClick(mouse_position);
+		button->OnRender();
+	}
 }
 
 //
@@ -387,11 +406,11 @@ void SFApp::DrawEndScore()
 						 window, 
 						 SF_FONT_NORMAL);
 
-	restart_button->OnClick(mouse_position);
-	restart_button->OnRender();
-
-	exit_button->OnClick(mouse_position);
-	exit_button->OnRender();
+	for(auto button : end_buttons) 
+	{
+		button->OnClick(mouse_position);
+		button->OnRender();
+	}
 } 
 
 //
