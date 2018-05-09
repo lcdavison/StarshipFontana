@@ -29,11 +29,14 @@ class SFPlayer : public SFAsset
 
 		void 								CheckCollision(Vector2&);
 
+		bool								CanAttack();
+
 	private:
 
 		short 								coins = 0;
 		short 								health = 100;
 		short 								damage = 25;
+		short								attack_interval = 0;
 
 		std::shared_ptr<SFParticleEmitter>	smoke_emitter;
 

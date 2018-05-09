@@ -12,26 +12,28 @@ class SFEnemy : public SFAsset
 
 		SFEnemy(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
 
-		void 						OnUpdate();
+		void 								OnUpdate();
+		void								OnRender();
 
 		/*---HEALTH---*/
-		bool 						IsDead();
-		void 						TakeDamage(short);
-		short 						GetHealth();
+		bool 								IsDead();
+		void 								TakeDamage(short);
+		short 								GetHealth();
 
 	private:
 
 		enum SFENEMYDIRECTION { LEFT, RIGHT };
 
-		SFENEMYDIRECTION 			movement_direction;
+		SFENEMYDIRECTION 					movement_direction;
 
-		void 						MoveAround();
-		void 						Attack();
+		void 								MoveAround();
+		void 								Attack();
 
-		int	 						attack_interval = 0;
-		short 						health;
-
-		std::shared_ptr<SFPlayer> 	player;
+		int	 								attack_interval = 0;
+		short 								health;
+		
+		std::shared_ptr<SFParticleEmitter> 	smoke_emitter;
+		std::shared_ptr<SFPlayer> 			player;
 
 };                                                                        
 #endif                               	

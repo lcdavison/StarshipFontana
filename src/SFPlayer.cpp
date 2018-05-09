@@ -21,7 +21,11 @@ void SFPlayer::OnUpdate()
 
 	if(IsDead()) 
 	   alive = false;
-	
+
+	if(attack_interval >= 5)
+	   attack_interval = 0;
+
+	attack_interval++;	
 }
 
 /*
@@ -161,4 +165,13 @@ bool SFPlayer::IsDead()
 short SFPlayer::GetDamage() 
 {
 	return damage;
+}
+
+/*
+  	CanAttack
+		Determines whether player can attack
+ */ 	
+bool SFPlayer::CanAttack() 
+{
+	return attack_interval >= 5;
 }

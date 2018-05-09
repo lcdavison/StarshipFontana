@@ -7,10 +7,11 @@ SFEnemy::SFEnemy(std::string name,
 {
 	SetupSprite("assets/sprites/alien.png");
 
-	health = 100;
+	health = 150;
 	movement_direction = LEFT;
 	
 	player = SFAssetManager::GetAssetByName<SFPlayer>("player");	
+	smoke_emitter = std::make_shared<SFParticleEmitter>(30, 150, window);
 
 	SetMovementSpeed(0.2f);
 }
@@ -24,11 +25,23 @@ void SFEnemy::OnUpdate()
 	MoveAround();
 	Attack();
 
+	if(health <= 100)
+	   smoke_emitter->Emit(GetCenter());
+
 	if(CollidesWith(player)) 
 	{
 		player->TakeDamage(20);
 		HandleCollision();
 	}
+}
+
+void SFEnemy::OnRender() 
+{
+	// Run parent render code
+	SFAsset::OnRender();
+
+	if(health <= 100)
+	   smoke_emitter->OnRender();
 }
 
 /*
@@ -106,7 +119,7 @@ void SFEnemy::Attack()
 																				  SFASSET_PROJECTILE, 
 																				  sf_window, 
 																				  SOUTH);
-		projectile->SetDamage(10);
+		projectile->SetDamage(5);
 
 		auto v = GetCenter();
 		auto pos = Point2(v.getX() - projectile->GetBoundingBox()->GetWidth() / 2, 

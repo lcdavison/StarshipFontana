@@ -58,7 +58,8 @@ void SFApp::OnEvent(SFEvent& event)
 			break;
 
 		case SFEVENT_FIRE:	
-			if(game_state == SF_PLAY) 
+			if(game_state == SF_PLAY
+			   && player->CanAttack()) 
 			   FireProjectile();
 			break;
 
@@ -170,7 +171,7 @@ void SFApp::StartGame()
 
 	SpawnPlayer();
 	SpawnObstacles(4);
-	SpawnEnemies(15);
+	SpawnEnemies(12);
 
 	game_state = SF_PLAY;
 }
@@ -387,17 +388,30 @@ void SFApp::DrawEndScore()
 {
 	SFAssetManager::Clear();
 
-	std::string end_text = "FINAL SCORE : " 
+	std::string prefix = (player->GetCoins() > 0) ? "CONGRATULATIONS" : "BETTER LUCK NEXT TIME";
+	std::string end_text = "YOUR SCORE : " 
 						   + std::to_string(player->GetCoins() * 2);
 
 	int wi;
+
+	TTF_SizeText(window->getFont(),
+				 prefix.c_str(),
+				 &wi,
+				 NULL);
+
+	SF_UILabel::DrawText(prefix,
+						 window->GetWidth() / 2 - wi / 2, 0,
+						 text_colour,
+						 window,
+						 SF_FONT_NORMAL);
+
 	TTF_SizeText(window->getFont(), 
 			     end_text.c_str(), 
 				 &wi, 
 				 NULL);
 
 	SF_UILabel::DrawText(end_text, 
-						 window->GetWidth() / 2 - wi / 2, 0, 
+						 window->GetWidth() / 2 - wi / 2, 30, 
 						 text_colour, 
 						 window, 
 						 SF_FONT_NORMAL);
