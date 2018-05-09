@@ -43,6 +43,7 @@ void SFProjectile::OnUpdate()
 	{
 		if(CollidesWith(wall)) 
 		{
+			wall->TakeDamage(GetDamage());
 			HandleCollision();
 		}
 	}

@@ -9,5 +9,14 @@ class SFObstacle : public SFAsset
 
 		SFObstacle(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
 
+		void 	OnUpdate();
+
+		bool 	IsDead();
+		void 	TakeDamage(int);
+
+	private:
+	
+		int 	health = 100;
+
 };
 #endif
