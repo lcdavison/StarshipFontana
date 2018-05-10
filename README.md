@@ -24,13 +24,12 @@ $ make raspbian
 ```
 ## STARTING GAME ##
 
-After running the relevant makefile, an executable file called "starship" will be produced in the
-top-level directory.  To execute this file do the following
+After running the makefile relevant to your Operating System, an executable file called "starship" will be produced in the
+top-level directory.  To execute this file do the following from the top-level directory:
 
 `$ ./starship`
  
-from the top-level directory.  The game will expect to find the
-`assets` directory under its current working directory.
+The game will expect to find the `assets` directory under its current working directory.
 
 ## Credits ##
 The sprites in this game come directly from 
