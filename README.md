@@ -22,14 +22,9 @@ $ make fedora
 ```bash
 $ make raspbian
 ```
-## GCC ##
+## STARTING GAME ##
 
-```bash
-$ g++ -c src/*.cpp -I /usr/include/SDL2/
-$ g++ -o starship *.o -lSDL2 -lSDL2_image
-```
-
-which will produce an executable file called "starship" in the
+After running the relevant makefile, an executable file called "starship" will be produced in the
 top-level directory.  To execute this file do the following
 
 `$ ./starship`
