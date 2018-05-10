@@ -34,11 +34,11 @@ class SFApp
 
 		/*---STATE---*/
 		enum SFGAMESTATE { SF_MENU,
-		   				   SF_PLAY, 
-						   SF_PAUSED, 
-						   SF_END };
+				   SF_PLAY,
+				   SF_PAUSED,
+				   SF_END };
 
-		SFGAMESTATE 							game_state;
+		SFGAMESTATE 								game_state;
 
 		void 									StartGame();
 		void 									TogglePause();
@@ -56,13 +56,13 @@ class SFApp
 		void 									DrawHUD();
 		void 									DrawEndScore();
 
-		std::shared_ptr<SF_UILabel> 			pause;
+		std::shared_ptr<SF_UILabel> 						pause;
 
-		std::list<std::shared_ptr<SF_UIButton>>	menu_buttons;
-		std::list<std::shared_ptr<SF_UIButton>> pause_buttons;
-		std::list<std::shared_ptr<SF_UIButton>> end_buttons;
+		std::list<std::shared_ptr<SF_UIButton>>					menu_buttons;
+		std::list<std::shared_ptr<SF_UIButton>> 				pause_buttons;
+		std::list<std::shared_ptr<SF_UIButton>> 				end_buttons;
 
-		std::list<std::shared_ptr<SF_UILabel>>	menu_labels;
+		std::list<std::shared_ptr<SF_UILabel>>					menu_labels;
 
 		/*---SPAWNING---*/
 		void 									SpawnPlayer();
@@ -79,11 +79,11 @@ class SFApp
 		MousePos 								mouse_position;
 		
 		/*---POINTERS---*/
-		shared_ptr<SFWindow> 					window;
-		shared_ptr<SFPlayer> 					player;
+		shared_ptr<SFWindow> 							window;
+		shared_ptr<SFPlayer> 							player;
 
 		/*---ASSETS---*/
-		vector<std::shared_ptr<SFAsset>> 		assets;
+		vector<std::shared_ptr<SFAsset>> 					assets;
 
 };
 #endif

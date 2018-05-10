@@ -10,17 +10,17 @@
  * do not recognise.  SFEVENT_LAST marks the maximal element in the SFEVENT
  * enumeration.  This is a common C/C++ _idiom_.
  */
-enum SFEVENT { SFEVENT_NULL, 
-			   SFEVENT_QUIT, 
-			   SFEVENT_PAUSE, 
-		   	   SFEVENT_UPDATE, 
-		   	   SFEVENT_PLAYER_LEFT, 
-		   	   SFEVENT_PLAYER_RIGHT, 
-		   	   SFEVENT_PLAYER_UP, 
-		   	   SFEVENT_PLAYER_DOWN, 
-		   	   SFEVENT_MOUSEDOWN, 
-		   	   SFEVENT_FIRE, 
-		   	   SFEVENT_LAST };
+enum SFEVENT { SFEVENT_NULL,
+	       SFEVENT_QUIT,
+	       SFEVENT_PAUSE,
+	       SFEVENT_UPDATE,
+	       SFEVENT_PLAYER_LEFT,
+	       SFEVENT_PLAYER_RIGHT,
+	       SFEVENT_PLAYER_UP,
+	       SFEVENT_PLAYER_DOWN,
+	       SFEVENT_MOUSEDOWN,
+	       SFEVENT_FIRE,
+	       SFEVENT_LAST };
 
 struct MousePos 
 {

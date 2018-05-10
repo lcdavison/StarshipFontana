@@ -12,7 +12,7 @@ class SFCoin : public SFAsset
 
 		SFCoin(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
 
-		void 						OnUpdate();
+		void 				OnUpdate();
 
 	private:
 

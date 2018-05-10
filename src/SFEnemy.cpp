@@ -1,9 +1,9 @@
 #include "SFEnemy.h"
 
-SFEnemy::SFEnemy(std::string name, 
-				 SFASSETTYPE assetType, 
-				 std::shared_ptr<SFWindow> window) 
-				 : SFAsset(name, assetType, window) 
+SFEnemy::SFEnemy(std::string name,
+		 SFASSETTYPE assetType,
+		 std::shared_ptr<SFWindow> window)
+  		 : SFAsset(name, assetType, window) 
 {
 	SetupSprite("assets/sprites/alien.png");
 
@@ -115,15 +115,15 @@ void SFEnemy::Attack()
 
 	if(attack_interval >= 150) 
 	{
-		std::shared_ptr<SFProjectile> projectile = std::make_shared<SFProjectile>("projectile", 
-																				  SFASSET_PROJECTILE, 
-																				  sf_window, 
-																				  SOUTH);
+		std::shared_ptr<SFProjectile> projectile = std::make_shared<SFProjectile>("projectile",
+											  SFASSET_PROJECTILE,
+											  sf_window,
+											  SOUTH);
 		projectile->SetDamage(5);
 
 		auto v = GetCenter();
-		auto pos = Point2(v.getX() - projectile->GetBoundingBox()->GetWidth() / 2, 
-						  v.getY() + GetBoundingBox()->GetHeight());
+		auto pos = Point2(v.getX() - projectile->GetBoundingBox()->GetWidth() / 2,
+				  v.getY() + GetBoundingBox()->GetHeight());
 
 		projectile->SetPosition(pos);
 

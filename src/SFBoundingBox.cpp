@@ -1,10 +1,10 @@
 #include "SFBoundingBox.h"
 
-SFBoundingBox::SFBoundingBox(const Point2 position, 
-							 const int width, const int height) 
+SFBoundingBox::SFBoundingBox(const Point2 position,
+			     const int width, const int height) 
 {
     box = { (int) position.getX(), (int) position.getY(),
-	   		width, height };
+	    width, height };
 }
 
 /*

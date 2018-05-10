@@ -13,11 +13,11 @@ class Vector2
 		inline Vector2(const float x, const float y) : x(x), y(y) {}
 		inline Vector2(const Vector2& v) : x(v.x), y(v.y) {}
 
-		inline const float 				getX() const { return x; }
-		inline const float 				getY() const { return y; }
+		inline const float 		getX() const { return x; }
+		inline const float 		getY() const { return y; }
 
-		inline const float 				magnitude() const { return sqrt((x * x) + (y * y)); }
-		inline const Vector2 			normalize() const { return Vector2(x / magnitude(), y / magnitude()); }
+		inline const float 		magnitude() const { return sqrt((x * x) + (y * y)); }
+		inline const Vector2 		normalize() const { return Vector2(x / magnitude(), y / magnitude()); }
 
 		inline const Vector2 operator 	+(const Vector2& vec) const { return Vector2(x + vec.x, y + vec.y); }
 		inline const Vector2 operator 	*(float scalar) const { return Vector2(x * scalar, y * scalar); }
@@ -39,12 +39,12 @@ class Point2
 		inline Point2(const Vector2& v) : x(v.getX()), y(v.getY()) {}
 		inline Point2(const Point2& p) : x(p.x), y(p.y) {}
 
-		inline const float 				getX() const { return x; }
-		inline const float 				getY() const { return y; }
+		inline const float 		getX() const { return x; }
+		inline const float 		getY() const { return y; }
                                  
 		inline const Point2 operator 	+(const Point2& point) const { return Point2(point.x + x, point.y + y); }
 		inline const Vector2 operator 	-(const Point2& point) const { return Vector2(point.x - x, point.y - y); }
-		inline const bool operator 		!=(const Point2& point) const { return point.x != x && point.y != y; }
+		inline const bool operator 	!=(const Point2& point) const { return point.x != x && point.y != y; }
 
 		inline const float DistanceTo(const Point2& b) const 
 		{	

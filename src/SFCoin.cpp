@@ -1,9 +1,9 @@
 #include "SFCoin.h"
 
-SFCoin::SFCoin(std::string name, 
-			   SFASSETTYPE type, 
-			   std::shared_ptr<SFWindow> window) 
-			   : SFAsset(name, type, window) 
+SFCoin::SFCoin(std::string name,
+	       SFASSETTYPE type,
+	       std::shared_ptr<SFWindow> window)
+  	       : SFAsset(name, type, window) 
 { 
 	SetupSprite("assets/sprites/coin.png");
 

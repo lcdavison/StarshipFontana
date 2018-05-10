@@ -1,11 +1,11 @@
 #include "SF_UILabel.h"
 
-SF_UILabel::SF_UILabel(const std::string& text, 
-					   const short& x, const short& y, 
-					   SDL_Color colour, 
-					   std::shared_ptr<SFWindow> window, 
-					   SFFONTSIZE size) 
-					   : window(window) 
+SF_UILabel::SF_UILabel(const std::string& text,
+		       const short& x, const short& y,
+		       SDL_Color colour,
+		       std::shared_ptr<SFWindow> window,
+		       SFFONTSIZE size)
+  		       : window(window) 
 {
 	switch(size) 
 	{
@@ -19,8 +19,8 @@ SF_UILabel::SF_UILabel(const std::string& text,
 
 	int width, height;
 	SDL_QueryTexture(texture,
-		   			 0, 0, 
-					 &width, &height);
+			 0, 0,
+			 &width, &height);
 
 	destination = { x, y, width, height };
 }
@@ -47,18 +47,20 @@ void SF_UILabel::OnRender()
 	DrawText
 		Easily draw dynamic text to the screen
 */
-void SF_UILabel::DrawText(const std::string& text, 
-						  const short& x, const short& y, 
-						  SDL_Color colour, 
-						  std::shared_ptr<SFWindow> window, 
-						  SFFONTSIZE size) 
+void SF_UILabel::DrawText(const std::string& text,
+			  const short& x, const short& y,
+			  SDL_Color colour,
+			  std::shared_ptr<SFWindow> window,
+			  SFFONTSIZE size) 
 {
 	SDL_Texture* texture;
 
-	switch(size) {
+	switch(size)
+	{
 		case SF_FONT_NORMAL:
 			texture = CreateTextureFromString(text, window->getFont(), colour, window);
 			break;
+			
 		case SF_FONT_SMALL:
 			texture = CreateTextureFromString(text, window->getSmallFont(), colour, window);
 			break;
@@ -78,10 +80,10 @@ void SF_UILabel::DrawText(const std::string& text,
 	CreateTextureFromString
 		Creates an SDL_Texture using a string and TTF_Font
 */
-SDL_Texture* SF_UILabel::CreateTextureFromString(const std::string& text, 
-												 TTF_Font* font, 
-												 SDL_Color colour, 
-												 std::shared_ptr<SFWindow> window) 
+SDL_Texture* SF_UILabel::CreateTextureFromString(const std::string& text,
+						 TTF_Font* font,
+						 SDL_Color colour,
+						 std::shared_ptr<SFWindow> window) 
 {
 	SDL_Texture* TextTexture = nullptr;
 	SDL_Surface* TextSurface = TTF_RenderText_Blended(font, text.c_str(), colour);

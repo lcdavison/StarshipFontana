@@ -11,16 +11,16 @@ class SFProjectile : public SFAsset
 
 		SFProjectile(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>, const SFPROJECTILE_DIRECTION);
 
-		void 						OnUpdate();
+		void 				OnUpdate();
 
-		void 						SetDamage(short);
-		short 						GetDamage();
+		void 				SetDamage(short);
+		short 				GetDamage();
 
 	private:
 
-		void 						Move();
+		void 				Move();
 
-		short 						damage;
+		short 				damage;
 		SFPROJECTILE_DIRECTION 		direction;
 		std::shared_ptr<SFPlayer> 	player;
 

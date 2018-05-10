@@ -1,14 +1,14 @@
 #include "SF_UIButton.h" 
 
-SF_UIButton::SF_UIButton(std::string text, 
-						 int x, int y, 
-						 int w, int h, 
-						 std::shared_ptr<SFWindow> window, 
-						 std::function<void (void)> click_func) 
-						 : text(text), 
-						 x(x), y(y), 
-						 width(w), height(h), 
-						 sf_window(window) 
+SF_UIButton::SF_UIButton(std::string text,
+			 int x, int y,
+			 int w, int h,
+			 std::shared_ptr<SFWindow> window,
+			 std::function<void (void)> click_func)
+  			 : text(text),
+			   x(x), y(y),
+			   width(w), height(h),
+			   sf_window(window) 
 {
 	OnClickFunction	= click_func;
 
@@ -37,8 +37,8 @@ SF_UIButton::~SF_UIButton()
 */
 void SF_UIButton::CreateBackground() 
 {
-	SDL_Surface* background_surface = SDL_CreateRGBSurface(0, width, height, 
-														   32, 0, 0, 0, 0);
+	SDL_Surface* background_surface = SDL_CreateRGBSurface(0, width, height,
+							       32, 0, 0, 0, 0);
 
 	SDL_FillRect(background_surface, NULL, SDL_MapRGB(background_surface->format, 255, 0, 0));
 
@@ -66,9 +66,9 @@ void SF_UIButton::CreateText()
 {
 	SDL_Color text_color = { 0, 0, 100, 0 };
 
-	SDL_Surface* text_surface = TTF_RenderText_Blended(sf_window->getFont(), 
-													   text.c_str(), 
-													   text_color);
+	SDL_Surface* text_surface = TTF_RenderText_Blended(sf_window->getFont(),
+							   text.c_str(),
+							   text_color);
 	int wi, he;
 
 	if(text_surface != nullptr) 
@@ -77,9 +77,9 @@ void SF_UIButton::CreateText()
 		text_texture = SDL_CreateTextureFromSurface(sf_window->getRenderer(), text_surface);
 
 		// Retrieve Text Dimensions
-		TTF_SizeText(sf_window->getFont(), 
-					 text.c_str(), 
-				 	 &wi, &he);
+		TTF_SizeText(sf_window->getFont(),
+			     text.c_str(),
+			     &wi, &he);
 
 		// Destroy Surface
 		SDL_FreeSurface(text_surface);
@@ -90,9 +90,9 @@ void SF_UIButton::CreateText()
 	}
 
 	// Position text relative to button
-	text_bounds = { x + width / 2 - wi / 2, 
-				    y + height / 2 - he / 2, 
-					wi, he };
+	text_bounds = { x + width / 2 - wi / 2,
+			y + height / 2 - he / 2,
+			wi, he };
 }
 
 /* 
@@ -112,15 +112,15 @@ void SF_UIButton::OnClick(MousePos position)
 */
 void SF_UIButton::OnRender() 
 {
-	SDL_RenderCopy(sf_window->getRenderer(), 
-				   background_texture, 
-				   NULL, 
-				   &background_bounds);
+	SDL_RenderCopy(sf_window->getRenderer(),
+		       background_texture,
+		       NULL,
+		       &background_bounds);
 
-	SDL_RenderCopy(sf_window->getRenderer(), 
-				   text_texture, 
-				   NULL, 
-				   &text_bounds);
+	SDL_RenderCopy(sf_window->getRenderer(),
+		       text_texture,
+		       NULL,
+		       &text_bounds);
 }
 
 /*

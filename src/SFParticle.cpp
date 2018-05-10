@@ -1,9 +1,9 @@
 #include "SFParticle.h"
 
-SFParticle::SFParticle(int x, int y, 
-					   int alpha, 
-					   std::shared_ptr<SFWindow> window) 
-					   : sfwindow(window) 
+SFParticle::SFParticle(int x, int y,
+		       int alpha,
+		       std::shared_ptr<SFWindow> window)
+  		       : sfwindow(window) 
 {
 	sprite = IMG_LoadTexture(sfwindow->getRenderer(), "assets/sprites/smoke.png");
 
@@ -34,17 +34,17 @@ SFParticle::~SFParticle()
 */
 void SFParticle::OnUpdate() 
 {
-	float angle_degrees = atan2(bbox->GetY(), bbox->GetX()) 
-						  * 180 / M_PI 
-						  * std::rand();
+	float angle_degrees = atan2(bbox->GetY(), bbox->GetX())
+	  		      * 180 / M_PI
+	  		      * std::rand();
 
-	int x = bbox->GetX() 
-			+ cos(angle_degrees) 
-			* 0.02f;
+	int x = bbox->GetX()
+	  	+ cos(angle_degrees)
+	  	* 0.02f;
 	
-	int y = bbox->GetY() 
-			+ sin(angle_degrees) 
-			* -0.02f;
+	int y = bbox->GetY()
+	  	+ sin(angle_degrees)
+	  	* -0.02f;
 
 	Point2 pos = Point2(x, y);
 	bbox->SetPosition(pos);

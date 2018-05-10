@@ -1,9 +1,9 @@
 #include "SFPlayer.h"
 
 SFPlayer::SFPlayer(std::string name,
-	   			   SFASSETTYPE type, 
-				   std::shared_ptr<SFWindow> window) 
-				   : SFAsset (name, type, window) 
+		   SFASSETTYPE type,
+		   std::shared_ptr<SFWindow> window)
+  		   : SFAsset (name, type, window) 
 {
 	SetupSprite("assets/sprites/player.png");
 

@@ -1,10 +1,10 @@
 #include "SFProjectile.h"
 
-SFProjectile::SFProjectile(std::string name, 
-						   SFASSETTYPE type, 
-						   std::shared_ptr<SFWindow> window, 
-						   SFPROJECTILE_DIRECTION proj_direction) 
-						   : SFAsset(name, type, window) 
+SFProjectile::SFProjectile(std::string name,
+			   SFASSETTYPE type,
+			   std::shared_ptr<SFWindow> window,
+			   SFPROJECTILE_DIRECTION proj_direction)
+			   : SFAsset(name, type, window) 
 {
 	direction = proj_direction;
 
@@ -33,8 +33,8 @@ void SFProjectile::OnUpdate()
 			if(enemy->IsDead()) 
 			{
 				enemy->HandleCollision();
-				SFAssetManager::SpawnAtPosition<SFCoin>(std::make_shared<SFCoin>("coin", SFASSET_COIN, sf_window), 
-														enemy->GetPosition());
+				SFAssetManager::SpawnAtPosition<SFCoin>(std::make_shared<SFCoin>("coin", SFASSET_COIN, sf_window),
+									enemy->GetPosition());
 			}
 		}
 	}

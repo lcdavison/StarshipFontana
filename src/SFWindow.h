@@ -15,25 +15,25 @@ class SFWindow
 		SFWindow(Uint32, Uint32, SDL_Color);
 		~SFWindow();
 
-		void 			ClearScreen();
-		void 			ShowScreen();
+		void 		ClearScreen();
+		void 		ShowScreen();
 
-		int 			GetWidth();
-		int 			GetHeight();
+		int 		GetWidth();
+		int 		GetHeight();
 
-		SDL_Window* 	getWindow();
+		SDL_Window*     getWindow();
 		SDL_Renderer* 	getRenderer();
 
-		TTF_Font* 		getFont();
-		TTF_Font* 		getSmallFont();
+		TTF_Font* 	getFont();
+		TTF_Font* 	getSmallFont();
 
 	private:
 
 		SDL_Window*   	window;
 		SDL_Renderer* 	renderer;
 
-		TTF_Font*	  	font;
-		TTF_Font*	  	small_font;
+		TTF_Font*	font;
+		TTF_Font*	small_font;
 
 };
 

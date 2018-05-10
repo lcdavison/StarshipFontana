@@ -15,23 +15,23 @@ class SFAssetManager
 {
 	public:
 
-		typedef std::vector<std::shared_ptr<SFAsset>> 				AssetContainer;
+		typedef std::vector<std::shared_ptr<SFAsset>> 			AssetContainer;
 
-		template<class T> static void 								AddAsset(std::shared_ptr<T>);
-		template<class T> static void 								CreateAsset(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
+		template<class T> static void 					AddAsset(std::shared_ptr<T>);
+		template<class T> static void 					CreateAsset(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
 
-		template<class T> static std::shared_ptr<T> 				GetAssetByName(const std::string);
+		template<class T> static std::shared_ptr<T> 			GetAssetByName(const std::string);
 		template<class T> static std::vector<std::shared_ptr<T>> 	GetAssetsOfType(const SFASSETTYPE);
 
-		template<class T> static void 								SpawnAtPosition(std::shared_ptr<T>, Point2);
+		template<class T> static void 					SpawnAtPosition(std::shared_ptr<T>, Point2);
 
-		static AssetContainer 										RetrieveAllAssets();
-		static void 												RemoveAsset(std::shared_ptr<SFAsset>);
-		static void 												Clear();
+		static AssetContainer 						RetrieveAllAssets();
+		static void 							RemoveAsset(std::shared_ptr<SFAsset>);
+		static void 							Clear();
 
 	private:
 
-		static AssetContainer 										assets;
+		static AssetContainer 						assets;
 
 };
 
@@ -50,9 +50,9 @@ void SFAssetManager::AddAsset(std::shared_ptr<T> asset)
 		Creates an asset in the asset manager
 */
 template<class T>
-void SFAssetManager::CreateAsset(const std::string name, 
-							 	 const SFASSETTYPE type, 
-								 const std::shared_ptr<SFWindow> window) 
+void SFAssetManager::CreateAsset(const std::string name,
+				 const SFASSETTYPE type,
+				 const std::shared_ptr<SFWindow> window) 
 {
 	auto asset = std::make_shared<T>(name, type, window);
 	assets.push_back(asset);

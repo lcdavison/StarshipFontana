@@ -10,33 +10,33 @@ class SFPlayer : public SFAsset
 
 		SFPlayer(const std::string, const SFASSETTYPE, const std::shared_ptr<SFWindow>);
 
-		void 								OnUpdate();
-		void 								OnRender();
+		void 					OnUpdate();
+		void 					OnRender();
 
-		void 								AddCoin();
-		short 								GetCoins();
+		void 					AddCoin();
+		short 					GetCoins();
 
-		void 								TakeDamage(short);
-		short 								GetHealth();
-		bool 								IsDead();
+		void 					TakeDamage(short);
+		short 					GetHealth();
+		bool 					IsDead();
 
-		short 								GetDamage();
+		short 					GetDamage();
 
-		void 								GoNorth();
-		void 								GoSouth();
-		void 								GoEast();
-		void 								GoWest();
+		void 					GoNorth();
+		void 					GoSouth();
+		void 					GoEast();
+		void 					GoWest();
 
-		void 								CheckCollision(Vector2&);
+		void 					CheckCollision(Vector2&);
 
-		bool								CanAttack();
+		bool					CanAttack();
 
 	private:
 
-		short 								coins = 0;
-		short 								health = 100;
-		short 								damage = 25;
-		short								attack_interval = 0;
+		short 					coins = 0;
+		short 					health = 100;
+		short 					damage = 25;
+		short					attack_interval = 0;
 
 		std::shared_ptr<SFParticleEmitter>	smoke_emitter;
 

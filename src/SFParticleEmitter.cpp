@@ -1,11 +1,11 @@
 #include "SFParticleEmitter.h"
 
-SFParticleEmitter::SFParticleEmitter(int num_particles, 
-									 int alpha, 
-									 std::shared_ptr<SFWindow> window) 
-									 : num_particles(num_particles), 
-									   alpha(alpha), 
-									   window(window) 
+SFParticleEmitter::SFParticleEmitter(int num_particles,
+				     int alpha,
+				     std::shared_ptr<SFWindow> window)
+  				     : num_particles(num_particles),
+				       alpha(alpha),
+				       window(window) 
 { }	
 
 SFParticleEmitter::~SFParticleEmitter() 
@@ -51,8 +51,8 @@ bool ParticleDead(const std::shared_ptr<SFParticle> particle)
 */
 void SFParticleEmitter::RemoveDeadParticles() 
 {
-	particles.erase(std::remove_if(particles.begin(), particles.end(), ParticleDead), 
-								   particles.end());
+	particles.erase(std::remove_if(particles.begin(), particles.end(), ParticleDead),
+			particles.end());
 }
 
 /*
