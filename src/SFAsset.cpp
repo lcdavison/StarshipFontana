@@ -1,11 +1,11 @@
 #include "SFAsset.h"
 
-SFAsset::SFAsset(std::string name, 
-				 SFASSETTYPE type, 
-				 std::shared_ptr<SFWindow> window) 
-				 : type(type), 
-				 sf_window(window), 
-				 name(name) { }
+SFAsset::SFAsset(std::string name,
+		 SFASSETTYPE type,
+		 std::shared_ptr<SFWindow> window)
+  		 : type(type),
+		   sf_window(window),
+		   name(name) { }
 
 SFAsset::SFAsset(const SFAsset& a) 
 {
@@ -134,10 +134,10 @@ void SFAsset::OnRender()
 	SDL_Rect rect = bbox->GetBox();
 
 	// 2. Blit the sprite onto the level
-	SDL_RenderCopy(sf_window->getRenderer(), 
-				   sprite, 
-				   NULL, 
-				   &rect);
+	SDL_RenderCopy(sf_window->getRenderer(),
+		       sprite,
+		       NULL,
+		       &rect);
 }
 
 /*
@@ -220,9 +220,9 @@ void SFAsset::MoveTowards(const std::shared_ptr<SFAsset> other)
 void SFAsset::Lerp(const std::shared_ptr<SFAsset> other, float time) 
 {
 	Vector2 direction = (GetPosition() - other->GetCenter());
-	direction = direction 
-				* movement_speed 
-				* time;
+	direction = direction
+	  	    * movement_speed 
+		    * time;
 
 	if(GetPosition() != other->GetCenter()) bbox->Translate(direction);
 }
@@ -269,8 +269,8 @@ bool SFAsset::IsAlive()
 */		
 void SFAsset::HandleCollision() 
 {
-	if (SFASSET_PROJECTILE == type 
-		|| SFASSET_ENEMY == type) 
+	if (SFASSET_PROJECTILE == type
+	    || SFASSET_ENEMY == type) 
 	{
 		SetNotAlive();
 	}

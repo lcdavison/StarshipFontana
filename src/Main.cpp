@@ -35,16 +35,16 @@ shared_ptr<SFWindow> InitGraphics()
 {
 	// Initialise SDL - when using C/C++ it's common to have to
 	// initialise libraries by calling a function within them.
-	if (SDL_Init(SDL_INIT_VIDEO 
-				 | SDL_INIT_AUDIO 
-				 | SDL_INIT_TIMER) < 0) 
+	if (SDL_Init(SDL_INIT_VIDEO
+		     | SDL_INIT_AUDIO
+		     | SDL_INIT_TIMER) < 0) 
 	{
 		throw SFException("Failed to initialise SDL");
 	}
 
 	// Initialize TTF
-	if (TTF_Init() < 0) 
-		throw SFException("Failed to initialise TTF");
+	if (TTF_Init() < 0)
+	    throw SFException("Failed to initialise TTF");
 	
 	// Initialize IMG
 	if(IMG_Init(IMG_INIT_PNG) < 0)
