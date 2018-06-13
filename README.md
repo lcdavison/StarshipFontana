@@ -1,5 +1,7 @@
 # Starship Fontana #
 
+[![Build Status](https://travis-ci.org/lcdavison/StarshipFontana.svg?branch=master)](https://travis-ci.org/lcdavison/StarshipFontana)
+
 This is an example C++ application using the SDL2 library.
 
 ## Installation ##
